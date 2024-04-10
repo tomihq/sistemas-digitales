@@ -100,6 +100,52 @@ Pasaje del número \(128_{(10)}\) a \(128_{(2)}\) en 8 bits
 
 Luego, \(128_{(2)}\) = 1000 0000
 
+\subsection*{Bit más significativo / menos significativo}
+El bit más significativo en un número es el que se encuentra a la izquierda, mientras que el menos significativo es el que se encuentra a la derecha.
+\[\textcolor{blue}{\textbf{1}}000 000\textcolor{blue}{\textbf{0}}_{(2)}\]
+
+
+\subsection*{Tipos numéricos}
+Representemos números naturales y enteros a partir de la representación en base 2 (binario) \\
+
+\textbf{Sin signo}: Representa únicamente números positivos. No se pueden utilizar los símbolos de resta (\textbf{-}) ni tampoco coma (\textbf{,})
+\[1_{(10)} = 01_{(2)}\]
+\[128_{(10)} = 1000 0000_{(2)}\]
+
+\textbf{Signo + Magnitud}: Nos permite representar números negativos en binario. \\ El bit más significativo indica el signo
+\begin{itemize}
+    \item 0: número positivo
+    \item 1: número negativo.
+\end{itemize}
+
+\[18_{(10)} = \textcolor{blue}{\textbf{0}}0010010_{(2)}\]
+\[-18_{(10)} = \textcolor{blue}{\textbf{1}}0010010_{(2)}\]
+
+Representar números en S+M suele traer problemas porque el 0 puede representarse de dos maneras
+\[+0_{(10)} = \textcolor{blue}{\textbf{0}}0000000_{(2)}\]
+\[-0_{(10)} = \textcolor{blue}{\textbf{1}}0000000_{(2)}\]
+
+Para solucionar este problema, las CPU utilizan la notación Complemento a 2 \((C_{2})\) \\
+
+\textbf{Exceso m}: Sea \( m \in \mathbb{Z} \), decimos que un número n está con exceso \(m\) unidades cuando \(m>0\) 
+\[n_{0}=n+m\]
+\[n=1 \land m=10 \implica n_{0}=-9 \]
+Nota: \(n_{0}\) indica el valor original de \(n\)  antes de ser excedido \(m\) unidades.  \\
+
+\textbf{Complemento a 2}: Los positivos se representan igual. \\ 
+El bit más significativo indica el signo, facilitando saber si el número es positivo o negativo.
+Cosas a tener en cuenta
+\begin{itemize}
+    \item \textbf{Rango}: \( -2^{n-1} \ hasta \ 2^{n-1}-1 \)
+    \item \textbf{Cantidad} de representaciones del cero: Una sola
+    \item \textbf{Negación}: Invierto el número en representación binaria positiva y le sumo uno.
+    \item \textbf{Extender número a más bits}: Se rellena a la izquierda con el valor del bit del signo.
+    \item \textbf{Regla de Desbordamiento}: Si se suman dos números con el mismo signo, solo se produce desbordamiento cuando el resultado tiene signo opuesto.
+\end{itemize}
+
+
+\subsection*{Overflow}
+
 
 
 
