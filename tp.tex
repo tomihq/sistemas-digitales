@@ -1,0 +1,30 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{blindtext}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{tikz}
+\input{AEDmacros}
+
+\title{Sistemas Digitales}
+\author{Tomás Agustín Hernández}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[remember picture,overlay]
+        % Dibuja una cuadrícula para visualizar la posición
+        %\draw[step=1cm,gray,very thin] (current page.south west) grid (current page.north east);
+        \node[anchor=south east, inner sep=0pt, xshift=-1cm, yshift=2cm] at (current page.south east) {
+            \begin{minipage}[b]{0.5\textwidth}
+                \includegraphics[width=\linewidth]{logo_uba.jpg} % Ajusta el ancho de la imagen según tus necesidades
+                \label{fig:bottom}
+            \end{minipage}
+        };
+    \end{tikzpicture}
+\end{figure}
+
+\end{document}
