@@ -16,15 +16,27 @@
 \begin{figure}[b]
     \centering
     \begin{tikzpicture}[remember picture,overlay]
-        % Dibuja una cuadrícula para visualizar la posición
-        %\draw[step=1cm,gray,very thin] (current page.south west) grid (current page.north east);
         \node[anchor=south east, inner sep=0pt, xshift=-1cm, yshift=2cm] at (current page.south east) {
             \begin{minipage}[b]{0.5\textwidth}
-                \includegraphics[width=\linewidth]{logo_uba.jpg} % Ajusta el ancho de la imagen según tus necesidades
+                \includegraphics[width=\linewidth]{logo_uba.jpg}
                 \label{fig:bottom}
             \end{minipage}
         };
     \end{tikzpicture}
 \end{figure}
+
+\newpage
+
+\section*{Introducción}
+\subsection*{Magnitud}
+Llamamos magnitud al tamaño de algo, dicho en una medida específica. Es representada a través de un sistema.
+Este sistema debe cumplir 3 conceptos fundamentales: 
+\begin{itemize}
+    \item Finito: Debe haber una cantidad finita de elementos.
+    \item Composicional: El conjunto de elementos atómicos deben ser fáciles de implementar y componer.
+    \item Posicional: La posición de cada dígito determina en qué proporción modifica su valor a la magnitud total del número.
+  \end{itemize}
+Algunos de los sistemas de representación más utilizados son: binario, octal, decimal y hexadecimal.
+
 
 \end{document}
