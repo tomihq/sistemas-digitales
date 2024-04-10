@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{amssymb}
+\usepackage{caption}
+\usepackage{amsmath}
 \input{AEDmacros}
 
 \title{Sistemas Digitales}
@@ -57,18 +59,35 @@ Una base nos indica la cantidad de símbolos que podemos utilizar para poder rep
     \label{tab:bases}
 \end{table}
 
-La tabla anterior representa los símbolos disponibles para las bases 2, 8, 10 y 16.
+La tabla anterior representa los símbolos disponibles para las bases 2, 8, 10 y 16.\\
 
 
-Consideremos por un momento que estamos en binario; ¿sería correcto que 1 + 1 = 2? ¡No! Porque 2 no es un símbolo válido en base 2.
+Consideremos por un momento que estamos en binario; ¿sería correcto que 1 + 1 = 2? ¡No! Porque 2 no es un símbolo válido en base 2.\\
 
-\subsection*{Digítos vs Bits}
+Para indicar la base en la que está escrito un número, se coloca la base entre paréntesis en la esquina inferior derecha.\\
+
+\(1024_{(10)}\): 1024 representado en base 10 (decimal)
+
+    
+\subsection*{Digítos/Bits}
 Sea \( n \in \mathbb{Z} \), cuando decimos que tenemos n bits es lo mismo que decir que tenemos n dígitos.
 \\
 \begin{itemize}
 \item 0001: Representa el número 1 en binario, en 4 bits/dígitos.
 \item 0010: Representa el número 2 en binario, en 4 bits/dígitos.
 \end{itemize}
+
+\subsection*{Teorema de división}
+Es una manera de poder realizar un cambio de base de un número decimal a otra base. La representación en la otra base es el resto visto desde abajo hacia arriba.
+
+\[a = k \ast d + r \ con \ 0 \le r < \longitud{d}\]
+
+Pasaje del número \(1024_{(10)}\) a \(1024_{(2)}\)
+
+\[1024 = 512 \ast 2 + 0\]
+
+
+
+
+
 \end{document}
-
-
