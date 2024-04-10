@@ -143,9 +143,102 @@ Cosas a tener en cuenta
     \item \textbf{Regla de Desbordamiento}: Si se suman dos números con el mismo signo, solo se produce desbordamiento cuando el resultado tiene signo opuesto.
 \end{itemize}
 
+\subsection*{Overflow / Desbordamiento}
+Hablamos de overflow/desbordamiento cuando 
+\begin{itemize}
+    \item\label{item:overflow1} El número a representar en una base dada, excede la cantidad de bits que tenemos disponibles.
+    \item\label{item:overflow2} Si estamos en notación \(C_{2}\) al sumar dos números cambia el signo.
+\end{itemize} 
 
-\subsection*{Overflow}
+\subsection*{Acarreo / Carry}
+Ocurre cuando realizamos una suma de números binarios y el resultado tiene más bits que los números originales que estamos sumando
 
+\subsection*{Suma entre números binarios}
+Se hace exactamente igual que una suma común y corriente. \\
+Es importante prestar atención a la cantidad de dígitos que nos piden para representarlo, y en caso de estar en \(C_{2}\) que el signo no cambie.\\ 
+\\
+Hagamos sumas en \(C_{2}\) (sin límite de bits)
+
+\begin{align*}
+    &\begin{array}{@{} r@{}}
+      0010 = 2 \\
+    + 1001 = -7\\
+    \hline
+    \ 1011 = -5
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       0101 = 5 \\
+    + 1110 = -2 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}0011 = 3
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       1011 = -5 \\
+    + 1110 = -2 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}1001 = -7
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       0111 = 7 \\
+    + 0111 = 7\\
+    \hline
+    \textcolor{red}{\textbf{1}}110 = \text{Overflow}
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       1010 = -6 \\
+    + 1100 = -4 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}\textcolor{red}{\textbf{0}}110 = \text{Overflow}
+    \end{array}
+    \end{align*}
+
+Nota: El color azul indica el carry; El rojo indica qué es lo que produce overflow (cambio de signo).
+\\
+\\
+Hagamos sumas en \(C_{2}\) (límite de bits: 4)
+
+\begin{align*}
+    &\begin{array}{@{} r@{}}
+      0010 = 2 \\
+    + 1001 = -7\\
+    \hline
+    \ 1011 = -5
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       0101 = 5 \\
+    + 1110 = -2 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}0011 = Overflow
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       1011 = -5 \\
+    + 1110 = -2 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}1001 = Overflow
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       0111 = 7 \\
+    + 0111 = 7\\
+    \hline
+    \textcolor{red}{\textbf{1}}110 = \text{Overflow}
+    \end{array}
+    &&
+    \begin{array}{@{} r @{}}
+       1010 = -6 \\
+    + 1100 = -4 \\
+    \hline
+    \textcolor{blue}{\textbf{1}}\textcolor{red}{\textbf{0}}110 = \text{Overflow}
+    \end{array}
+    \end{align*}
+
+Nota: Al tener un límite de 4 bits, en las sumas que tenemos carry terminamos teniendo overflow.
 
 
 
