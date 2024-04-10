@@ -254,6 +254,30 @@ Sean \( n, m \in \mathbb{Z} \) decimos que el rango de representación en base \
     \item Por lo tanto, 1024 no es representable en 4 bits.
 \end{itemize} 
 
+\subsection*{Pasar número binario a decimal}
+Si tenemos el mismo número todo el tiempo podemos usar la serie geométrica \\
 
+¿Qué número decimal representa el número \(1111111111_{(2)}\)?
+\[
+\begin{array}{l}
+\sum_{i=0}^{j-1} 1 \cdot n^i = \begin{array}{@{} r @{}}
+    q^{n+1} - 1 \\
+    \hline
+    q-1
+ \end{array}
+\end{array}
+\]
+
+\[
+\begin{array}{l}
+\sum_{i=0}^{9} 1 \cdot 2^i = \begin{array}{@{} r @{}}
+    2^{10} - 1 \\
+ \end{array}
+\end{array}
+\]
+
+Si no tenemos el mismo número todo el tiempo podemos multiplicar cada dígito por la base y el exponente es la posición del bit. \\
+
+\(10_{(2)} = 1 \ast 2^{1} + 0 \ast 2^{0} = 2 \)
 
 \end{document}
