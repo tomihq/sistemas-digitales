@@ -80,12 +80,25 @@ Sea \( n \in \mathbb{Z} \), cuando decimos que tenemos n bits es lo mismo que de
 \subsection*{Teorema de división}
 Es una manera de poder realizar un cambio de base de un número decimal a otra base. La representación en la otra base es el resto visto desde abajo hacia arriba.
 
-\[a = k \ast d + r \ con \ 0 \le r < \longitud{d}\]
+\[a = k \ast d + r \ con \ 0 \le r < \longitud{d}\] donde:
+\begin{itemize}
+    \item k = cociente
+    \item d = divisor.
+    \item r = resto de la división de a por d.
+  \end{itemize}
 
-Pasaje del número \(1024_{(10)}\) a \(1024_{(2)}\)
+Pasaje del número \(128_{(10)}\) a \(128_{(2)}\) en 8 bits
 
-\[1024 = 512 \ast 2 + 0\]
+\[128 = 64 \ast 2 + 0\]
+\[64 = 32 \ast 2 + 0\]
+\[32 = 16 \ast 2 + 0\]
+\[16 = 8 \ast 2 + 0\]
+\[8 = 4 \ast 2 + 0\]
+\[4 = 2 \ast 2 + 0\]
+\[2 = 1 \ast 2 + 0\]
+\[1 = 0 \ast 2 + 1\]
 
+Luego, \(128_{(2)}\) = 1000 0000
 
 
 
