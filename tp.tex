@@ -150,6 +150,7 @@ Hablamos de overflow/desbordamiento cuando
     \item\label{item:overflow2} Si estamos en notación \(C_{2}\) al sumar dos números cambia el signo.
 \end{itemize} 
 
+
 \subsection*{Acarreo / Carry}
 Ocurre cuando realizamos una suma de números binarios y el resultado tiene más bits que los números originales que estamos sumando
 
@@ -239,6 +240,19 @@ Hagamos sumas en \(C_{2}\) (límite de bits: 4)
     \end{align*}
 
 Nota: Al tener un límite de 4 bits, en las sumas que tenemos carry terminamos teniendo overflow.
+
+\subsection*{Rango de valores representables en n bits}
+Sean \( n, m \in \mathbb{Z} \) decimos que el rango de representación en base \(n\) y \(m\) bits acepta el rango de valores de: 
+\(
+\left[ -n^m, n^m - 1 \right]
+\)
+
+¿Es posible representar el 1024 en binario y 4 bits? No.
+\begin{itemize}
+    \item \(2^4\) = 16 \(\implies [-16, 15]\)
+    \item Pero, 1024 \(\notin [-16, 15]\)
+    \item Por lo tanto, 1024 no es representable en 4 bits.
+\end{itemize} 
 
 
 
