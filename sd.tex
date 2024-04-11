@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{caption}
 \usepackage{amsmath}
+\usepackage{circuitikz}
 \input{AEDmacros}
 
 \title{Sistemas Digitales}
@@ -373,7 +374,25 @@ Sea \(p\) una variable proposicional, el opuesto de \(p\) lo escribimos como \(\
 
 \subsection*{Compuertas}
 Son modelos idealizados de dispositivos electrónicos que realizan operaciones booleanas.
-\and
 
+\subsection*{Tablas de verdad}
+Nos permiten observar todas las salidas para todas las combinaciones de entradas dada una función. \\
+
+Veamos un ejemplo con una función F: 
+\[Sea \ F = X + \bar{Y}\]
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c | c | c|}
+    \hline
+    \textbf{X} & \textbf{Y} & \textbf{F}  \\[0.1cm]
+    \hline\hline
+    1 & 1 & 1 \\
+    1 & 0 & 1 \\
+    0 & 1 & 1 \\
+    0 & 0 & 0 \\
+    \hline
+    \end{tabular}
+    \label{tab:x_y}
+\end{table}
 
 \end{document}
