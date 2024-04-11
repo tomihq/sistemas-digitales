@@ -325,17 +325,20 @@ Encontremos en base 5, el número que corresponde a \(17_{(8)}\):
 \section{Desplazamientos}
 Utilizamos los desplazamientos para poder mover los bits. Cada casillero representa los bits.
 \begin{itemize}
-    \item Desplazamiento hacia la izquierda: \(variable << cantidad\)\\ \begin{minipage}[b]{0.32\textwidth}
+    \item Desplazamiento hacia la izquierda: Se desplazan los bits del dato tantas posiciones como se indiquen a la izquierda. \\
+     \(variable << cantidad\)\\ \begin{minipage}[b]{0.32\textwidth}
         \includegraphics[width=\linewidth]{assets/desplazamiento_izquierda.png}
         \label{fig:desplazamiento_izquierda}
     \end{minipage}
 
-    \item Desplazamiento lógico hacia la derecha: \(variable >>_{l} cantidad\)\\ \begin{minipage}[b]{0.3\textwidth}
+    \item Desplazamiento lógico hacia la derecha: Se aplica desplazando los bits del dato tantas posiciones como se indiquen a la derecha. \\
+    \(variable >>_{l} cantidad\)\\ \begin{minipage}[b]{0.3\textwidth}
             \includegraphics[width=\linewidth]{assets/desplazamiento_logico_der.png}
             \label{fig:desplazamiento_der_logico}
         \end{minipage}
 
-    \item Desplazamiento aritmético hacia la derecha: \(variable >>_{a} cantidad\)\\ \begin{minipage}[b]{0.33\textwidth}
+    \item Desplazamiento aritmético hacia la derecha: Se aplica desplazando los bits del dato tantas posiciones como se indiquen a la derecha, pero copiando el valor del bit más significativo. \\
+     \(variable >>_{a} cantidad\)\\ \begin{minipage}[b]{0.33\textwidth}
             \includegraphics[width=\linewidth]{assets/desplazamiento_aritmetico_der.png}
             \label{fig:desplazamiento_der_aritmetico}
         \end{minipage}
