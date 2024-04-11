@@ -283,7 +283,7 @@ Luego,
 
 2. Si no tenemos el mismo número todo el tiempo podemos multiplicar cada dígito por la base donde el exponente es la posición del bit. \\
 
-\(10_{(2)} = 1 \ast 2^{1} + 0 \ast 2^{0} = 2 \)
+\(10_{(2)} = 1 \ast 2^{1} + 0 \ast 2^{0} = 2_{(10)} \)
 
 \subsection*{Extender un número de n bits a m bits}
 Sea \( n, m \in \mathbb{Z} \) donde \(n\) es la cantidad de bits inicial y \(m\) es la cantidad a la que se quiere extender.
@@ -300,6 +300,26 @@ Sea \( n, m \in \mathbb{Z} \) donde \(n\) es la cantidad de bits inicial y \(m\)
         \item En 3 bits, -2 = 110
         \item En 8 bits, -2 = \textcolor{blue}{\textbf{1}}\textcolor{cyan}{\textbf{11111}}10
     \end{itemize}
+\end{itemize} 
+
+\subsection*{Cambios de base} 
+Sea \( n, m \in \mathbb{Z} \) dos bases distintas, para pasar de base \(n\) a base \(m\) se debe realizar el siguiente proceso
+
+\begin{itemize}
+    \item Pasar el número a base decimal.
+    \item Aplicar el teorema de división utilizando la base deseada.
+\end{itemize}
+
+Encontremos en base 5, el número que corresponde a \(17_{(8)}\):
+\begin{itemize}
+    \item  \( 17_{(8)} = 1 \ast 8^{1} + 7 \ast 8^{0} = 15_{(10)} \)
+    \item Usando ahora el teorema de división
+    \begin{itemize}
+    \item  \( 15 = 3 \ast 5 + 0 \)
+    \item  \( 3 = 0 \ast 5 + 3 \)
+    \item Luego, \( 30_{(5)} \)
+    \end{itemize} 
+    \item Por lo tanto, \( 17_{(8)} = 30_{(5)} \)
 \end{itemize} 
 
 \end{document}
