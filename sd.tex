@@ -139,6 +139,11 @@ Cosas a tener en cuenta
     \item \textbf{Rango}: \( -2^{n-1} \ hasta \ 2^{n-1}-1 \)
     \item \textbf{Cantidad} de representaciones del cero: Una sola
     \item \textbf{Negación}: Invierto el número en representación binaria positiva y le sumo uno.
+    \begin{itemize}
+        \item \(-2_{(2)} = inv(010) + 1\)
+        \item \(-2_{(2)} = 101 + 1\)
+        \item \(-2_{(2)} = 110\)
+    \end{itemize}
     \item \textbf{Extender número a más bits}: Se rellena a la izquierda con el valor del bit del signo.
     \item \textbf{Regla de Desbordamiento}: Si se suman dos números con el mismo signo, solo se produce desbordamiento cuando el resultado tiene signo opuesto.
 \end{itemize}
@@ -255,7 +260,7 @@ Sean \( n, m \in \mathbb{Z} \) decimos que el rango de representación en base \
 \end{itemize} 
 
 \subsection*{Pasar número binario a decimal}
-Si tenemos el mismo número todo el tiempo podemos usar la serie geométrica \\
+1. Si tenemos el mismo número todo el tiempo podemos usar la serie geométrica \\
 
 ¿Qué número decimal representa el número \(1111111111_{(2)}\)?
 \[
@@ -266,18 +271,35 @@ Si tenemos el mismo número todo el tiempo podemos usar la serie geométrica \\
     q-1
  \end{array}
 \end{array}
+Luego, 
 \]
-
 \[
 \begin{array}{l}
 \sum_{i=0}^{9} 1 \cdot 2^i = \begin{array}{@{} r @{}}
-    2^{10} - 1 \\
+    2^{10} - 1 = 1023 \\
  \end{array}
 \end{array}
 \]
 
-Si no tenemos el mismo número todo el tiempo podemos multiplicar cada dígito por la base y el exponente es la posición del bit. \\
+2. Si no tenemos el mismo número todo el tiempo podemos multiplicar cada dígito por la base donde el exponente es la posición del bit. \\
 
 \(10_{(2)} = 1 \ast 2^{1} + 0 \ast 2^{0} = 2 \)
+
+\subsection*{Extender un número de n bits a m bits}
+Sea \( n, m \in \mathbb{Z} \) donde \(n\) es la cantidad de bits inicial y \(m\) es la cantidad a la que se quiere extender.
+\[n = 3 \land m = 8\]
+
+\begin{itemize}
+    \item Signo + Magnitud y exceso m: Se extiende con 0's luego del signo.
+    \begin{itemize}
+        \item En 3 bits, -2 = 110
+        \item En 8 bits, -2 = \textcolor{blue}{\textbf{1}}\textcolor{cyan}{\textbf{00000}}10
+    \end{itemize}
+    \item Complemento 2 (\(C_{2}\)): Se extiende con el bit más significativo.
+    \begin{itemize}
+        \item En 3 bits, -2 = 110
+        \item En 8 bits, -2 = \textcolor{blue}{\textbf{1}}\textcolor{cyan}{\textbf{1111}}110
+    \end{itemize}
+\end{itemize} 
 
 \end{document}
