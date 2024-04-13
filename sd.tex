@@ -7,6 +7,7 @@
 \usepackage{caption}
 \usepackage{amsmath}
 \usepackage{circuitikz}
+\usepackage{hyperref}
 \input{AEDmacros}
 
 \title{Sistemas Digitales}
@@ -359,11 +360,16 @@ Utilizamos los desplazamientos para poder mover los bits. Cada casillero represe
 Sea \(p\) una variable proposicional, el opuesto de \(p\) lo escribimos como \(\bar{p}\).
 \[ p = 1 \iff \bar{p} = 0 \]
 
-\subsection*{Propiedades para operaciones lógicas}
+\subsection*{Propiedades para operaciones lógicas} 
+\label{subsec:PPOL}
 \begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/propiedades_operaciones_logicas.png}
     \label{fig:propiedades_operaciones_logicas}
 \end{minipage}
+
+
+\subsection*{Operaciones booleanas}
+Se resuelven utilizando las \hyperref[subsec:PPOL]{propiedades para operaciones lógicas}
 
 \subsection*{Funciones booleanas}
 \begin{itemize}
