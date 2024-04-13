@@ -443,6 +443,24 @@ Se representan con flechas. En SystemVerilog se llaman input y output.\\
 
 Nota: En las ALU no son funcionalmente iguales ni las entradas ni las salidas.
 
+\subsection*{Caja Blanca / Caja Negra en Circuitos}
+\begin{figure}[h]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[width=1\linewidth]{assets/caja_blanca.png}
+    \caption{Caja Blanca}
+    \label{fig:cajaBlanca}
+    \end{subfigure}
+    %
+    \begin{subfigure}{0.6\textwidth}
+    \centering
+    \includegraphics[width=0.7\linewidth]{assets/caja_negra.png}
+    \caption{Caja Negra. 16 indica los bits de entrada \(\&\) salida}
+    \label{fig:cajaNegra}
+    \end{subfigure}
+    \end{figure}
+Nota: Ov indica Overflow
+
 \subsection*{Mecanismo de Traducción fórmula a circuito}
 Llamaremos \(\phi\) a una fórmula proposicional cualquiera
 \begin{itemize}
@@ -500,24 +518,6 @@ Si eliminamos el carry se nos pierde el caso 1 \( + \) 1, por lo tanto lo ideal 
     \label{fig:suma_carry}
 \end{minipage}\]
 
-\newpage
-\subsection*{Caja Blanca / Caja Negra en Circuitos}
-\begin{figure}[h]
-    \begin{subfigure}{0.5\textwidth}
-        \centering
-    \includegraphics[width=1\linewidth]{assets/caja_blanca.png}
-    \caption{Caja Blanca}
-    \label{fig:cajaBlanca}
-    \end{subfigure}
-    %
-    \begin{subfigure}{0.6\textwidth}
-    \centering
-    \includegraphics[width=0.7\linewidth]{assets/caja_negra.png}
-    \caption{Caja Negra. 16 indica los bits de entrada \(\&\) salida}
-    \label{fig:cajaNegra}
-    \end{subfigure}
-    \end{figure}
-Nota: Ov indica Overflow
 \subsection*{Timing}
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
 
