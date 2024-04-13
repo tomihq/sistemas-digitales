@@ -366,19 +366,18 @@ Sea \(p\) una variable proposicional, el opuesto de \(p\) lo escribimos como \(\
     \includegraphics[width=\linewidth]{assets/propiedades_operaciones_logicas.png}
     \label{fig:propiedades_operaciones_logicas}
 \end{minipage}
-
-
 \subsection*{Operaciones booleanas}
 Se resuelven utilizando las \hyperref[subsec:PPOL]{propiedades para operaciones lógicas}
 \[Verifique \ si \ son \ equivalentes \ (X + \bar{Y} = \overline{(\bar{X} \ast Y)} \ast Z + X \ast \bar{Z} + \overline{(Y+Z)})\]
 \begin{itemize}
-    \item 1. \(\overline{\bar{X} \ast Y} \ast Z + X \ast \bar{Z} + \textcolor{blue}{(\bar{Y} \ast \bar{Z})} \implies De \ Morgan\) 
-    \item 2. \(\textcolor{blue}{(X + \bar{Y})} \ast Z + \textcolor{purple}{X \ast \bar{Z}} + \textcolor{purple}{(\bar{Y} \ast \bar{Z})}\implies De \ Morgan \ \land \ Distributiva \) 
-    \item 3. \((X + \bar{Y}) \ast Z + \bar{Z} \ast (X + \bar{Y})\)
-    \item 4. \((X + \bar{Y}) \ast \textcolor{red}{(Z + \bar{Z})} \implies Inverso\) 
-    \item 5. \((X + \bar{Y}) \ast \textcolor{cyan}{1} \implies Identidad \) 
-    \item 6. \((X + \bar{Y})\)
+    \item  \(\overline{\bar{X} \ast Y} \ast Z + X \ast \bar{Z} + \textcolor{blue}{(\bar{Y} \ast \bar{Z})} \implies De \ Morgan\) 
+    \item  \(\textcolor{blue}{(X + \bar{Y})} \ast Z + \textcolor{purple}{X \ast \bar{Z}} + \textcolor{purple}{(\bar{Y} \ast \bar{Z})}\implies De \ Morgan \ \land \ Distributiva \) 
+    \item  \((X + \bar{Y}) \ast Z + \bar{Z} \ast (X + \bar{Y})\)
+    \item  \((X + \bar{Y}) \ast \textcolor{red}{(Z + \bar{Z})} \implies Inverso\) 
+    \item  \((X + \bar{Y}) \ast \textcolor{cyan}{1} \implies Identidad \) 
+    \item  \((X + \bar{Y})\)
 \end{itemize}
+Nota: También se pueden probar equivalencias utilizando \hyperref[subsec:TDV]{tablas de verdad}
 \subsection*{Funciones booleanas}
 \begin{itemize}
     \item AND = A \(\ast \) B
@@ -388,9 +387,9 @@ Se resuelven utilizando las \hyperref[subsec:PPOL]{propiedades para operaciones 
 
 \subsection*{Compuertas}
 Son modelos idealizados de dispositivos electrónicos que realizan operaciones booleanas.
-
-\subsection*{Tablas de verdad}
-Nos permiten observar todas las salidas para todas las combinaciones de entradas dada una función. \\
+\newpage
+\subsection*{Tablas de verdad} \label{subsec:TDV}
+Nos permiten observar todas las salidas para todas las combinaciones de entradas dada una función. 
 
 Veamos un ejemplo con una función F: 
 \[Sea \ F = X + \bar{Y}\]
