@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{circuitikz}
 \usepackage{hyperref}
+\usepackage{amssymb}
 \input{AEDmacros}
 
 \title{Sistemas Digitales}
@@ -385,8 +386,7 @@ Nota: También se pueden probar equivalencias utilizando \hyperref[subsec:TDV]{t
     \item NOT = \(\bar{A}\)
     \end{itemize} 
 
-\subsection*{Compuertas}
-Son modelos idealizados de dispositivos electrónicos que realizan operaciones booleanas.
+
 \newpage
 \subsection*{Tablas de verdad} \label{subsec:TDV}
 Nos permiten observar todas las salidas para todas las combinaciones de entradas dada una función. 
@@ -407,5 +407,38 @@ Veamos un ejemplo con una función F:
     \end{tabular}
     \label{tab:x_y}
 \end{table}
+
+Protip: El símbolo de + indica OR porque 1 + 0 = 1 mientras que el símbolo AND indica * porque 1 * 0 = 0 
+
+\subsection*{Compuertas}
+Son modelos idealizados de dispositivos electrónicos que realizan operaciones booleanas.\\
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/compuertas.png}
+    \label{fig:compuertas}
+\end{minipage}\]
+Nota: XOR = \(\oplus\)
+\subsection*{Compuertas Universales}
+Nos permiten obtener otros operadores.
+\begin{itemize}
+    \item NAND = \(\overline{A \land B}\)
+    \item NOR = \(\overline{A \lor B}\)
+    \item XNOR = \(\overline{A \oplus B}\) = Si son iguales es V
+\end{itemize} 
+
+\subsection*{Compuertas en SystemVerilog}
+\begin{itemize}
+    \item A AND B \((A \ast B)\) = (assign O = A \& B)
+    \item A OR B \((A + B)\)= \(assign \ A \ | \ B\)
+    \item A XOR B = \(assign \ A \ \land \ B\)
+    \item NOT A \((\bar{a}\)) = \((\thicksim A)\)
+\end{itemize} 
+
+\subsection*{Entradas / Salidas de un circuito}
+Se representan con flechas. En SystemVerilog se llaman input y output.\\
+\begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=\linewidth]{assets/input_output_sys_verilog.png}
+    \label{fig:input_output_sys_verilog}
+\end{minipage}
+
 
 \end{document}
