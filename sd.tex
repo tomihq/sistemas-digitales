@@ -440,5 +440,47 @@ Se representan con flechas. En SystemVerilog se llaman input y output.\\
     \label{fig:input_output_sys_verilog}
 \end{minipage}
 
+Nota: En las ALU no son funcionalmente iguales ni las entradas ni las salidas.
+
+\subsection*{Mecanismo de Traducción fórmula a circuito}
+Llamaremos \(\phi\) a una fórmula proposicional cualquiera
+\begin{itemize}
+    \item 1. Solo consideramos de la función F, las filas verdaderas.
+    \item 2. Cada fila verdadera tendrá su índice, y en ese índice estarán los valores de cada variable proposicional. Representamos a esa fila verdadera como \(t_{i}\)
+    \item 3. Realizamos la conjunción de todas las variables de ese \(t_{i}\)
+    \item 4. Realizamos la disyunción de todas las conjunciones de \(t_{i}\)
+\end{itemize} 
+
+Un ejemplo: 
+\[Sea \ F = X + \bar{Y}\]
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c | c | c|}
+    \hline
+    \textbf{X} & \textbf{Y} & \textbf{F}  \\[0.1cm]
+    \hline\hline
+    1 & 1 & 1 \\
+    1 & 0 & 1 \\
+    0 & 1 & 1 \\
+    0 & 0 & 0 \\
+    \hline
+    \end{tabular}
+    \label{tab:traduccion}
+\end{table}
+\begin{itemize}
+    \item F es solamente verdadera en la primera, segunda y tercer fila por lo tanto tenemos \(t_{1} \ t_{2} \ y \ t_{3}\)
+    \item Por cada fila, hacemos la conjunción de los valores
+    \begin{itemize}
+        \item \(x_{1} \land x_{2}\)
+        \item \(x_{1} \land \bar{x_{2}}\)
+        \item \(\bar{x_{1}} \land x_{2}\)
+    \end{itemize}
+    \item Realizamos la disyunción de todos los \(t_{i}\)
+    \begin{itemize}
+        \item \((x_{1} \land x_{2}) \lor (x_{1} \land \bar{x_{2}}) \lor (\bar{x_{1}} \land x_{2}) \)
+    \end{itemize}
+    \item El resultado nos da \(\phi'\) que es una suma de productos y nos permite traducir fácilmente a un circuito combinatorio \(\implies\) BUSCAR EJEMPLO
+\end{itemize} 
+
 
 \end{document}
