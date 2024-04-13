@@ -434,15 +434,6 @@ Nos permiten obtener otros operadores.
     \item NOT A \((\bar{a}\)) = \((\thicksim A)\)
 \end{itemize} 
 
-\subsection*{Entradas / Salidas de un circuito}
-Se representan con flechas. En SystemVerilog se llaman input y output.\\
-\begin{minipage}[b]{0.5\textwidth}
-    \includegraphics[width=\linewidth]{assets/input_output_sys_verilog.png}
-    \label{fig:input_output_sys_verilog}
-\end{minipage}
-
-Nota: En las ALU no son funcionalmente iguales ni las entradas ni las salidas.
-
 \subsection*{Caja Blanca / Caja Negra en Circuitos}
 \begin{figure}[h]
     \begin{subfigure}{0.5\textwidth}
@@ -460,6 +451,28 @@ Nota: En las ALU no son funcionalmente iguales ni las entradas ni las salidas.
     \end{subfigure}
     \end{figure}
 Nota: Ov indica Overflow
+
+\subsection*{Entradas / Salidas de un circuito}
+Se representan con flechas. En SystemVerilog se llaman input y output.\\
+\begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=\linewidth]{assets/input_output_sys_verilog.png}
+    \label{fig:input_output_sys_verilog}
+\end{minipage}
+
+Nota: En las ALU no son funcionalmente iguales ni las entradas ni las salidas.
+\subsection*{Entradas y salidas: Datos vs Control}
+\begin{itemize}
+    \item Datos: Indican lo que tratamos de transformar.
+    \begin{itemize}
+        \item Entrada: Registro Z y Registro Y.
+        \item Salida: El resultado de la operación
+    \end{itemize}
+    \item Control: Indican como transformamos los datos.
+    \begin{itemize}
+        \item Entrada: Enviar ADD, Enviar AND, Enviar XOR, ...
+        \item Salida: Ov
+    \end{itemize}
+\end{itemize} 
 
 \subsection*{Mecanismo de Traducción fórmula a circuito}
 Llamaremos \(\phi\) a una fórmula proposicional cualquiera
