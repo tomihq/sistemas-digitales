@@ -401,8 +401,8 @@ Veamos un ejemplo con una función F:
     \hline\hline
     1 & 1 & 1 \\
     1 & 0 & 1 \\
-    0 & 1 & 1 \\
-    0 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
     \hline
     \end{tabular}
     \label{tab:x_y}
@@ -461,8 +461,8 @@ Un ejemplo:
     \hline\hline
     1 & 1 & 1 \\
     1 & 0 & 1 \\
-    0 & 1 & 1 \\
-    0 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
     \hline
     \end{tabular}
     \label{tab:traduccion}
@@ -472,12 +472,12 @@ Un ejemplo:
     \item Por cada fila, hacemos la conjunción de los valores
     \begin{itemize}
         \item \(x_{1} \land x_{2}\)
-        \item \(x_{1} \land \bar{x_{2}}\)
         \item \(\bar{x_{1}} \land x_{2}\)
+        \item \(\bar{x_{1}} \land \bar{x_{2}}\)
     \end{itemize}
     \item Realizamos la disyunción de todos los \(t_{i}\)
     \begin{itemize}
-        \item \((x_{1} \land x_{2}) \lor (x_{1} \land \bar{x_{2}}) \lor (\bar{x_{1}} \land x_{2}) \)
+        \item \((x_{1} \land x_{2}) \lor (\bar{x_{1}} \land x_{2}) \lor (\bar{x_{1}} \land \bar{x_{2}}) \)
     \end{itemize}
     \item El resultado nos da \(\phi'\) que es una suma de productos y nos permite traducir fácilmente a un circuito combinatorio \(\implies\) BUSCAR EJEMPLO
 \end{itemize} 
