@@ -533,6 +533,38 @@ Si eliminamos el carry se nos pierde el caso 1 \( + \) 1, por lo tanto lo ideal 
 
 Nota: El carry es representado con un AND porque en la tabla de verdad solo da uno cuando A = 1 y B = 1. Luego, la función Sum es un XOR.
 
+\subsection*{Sumadores}
+Los sumadores nos sirven para poder realizar operaciones entre bits.
+Es importante recalcar que llamamos half-adder a un sumador de 1 bit, donde solamente tiene una entrada A de 1 bit y una entrada B de 1 bit.
+Un sumador de 1 bit requiere:
+\begin{itemize}
+    \item Dos entradas A y B de 1 bit
+    \item Una compuerta XOR (para la suma): solo el resultado es 1 o 0
+    \item Una compuerta AND (para el carry): si la suma del XOR es 1+1
+\end{itemize} 
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/sumador_1_bit.png}
+    \label{fig:sumador_1_bit}
+\end{minipage}\]
+
+Veamos un ejemplo con un sumador completo de 3 entradas: Si para dos entradas necesitabamos un sumador simple, para 3 entradas necesito 2. Porque es (A+B) y luego res+C
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/sumador_completo.png}
+    \label{fig:sumador_completo}
+\end{minipage}\]
+Nótese que para considerar si es carry al final de toda la suma o no usamos un or porque nos basta con que uno haya arrojado carry.
+
+\subsection*{Inversor}
+\begin{itemize}
+    \item Si me mandan INV=1 entonces tengo que invertir los bits.
+    \item La manera de hacer esto es utilizando un XOR.
+\end{itemize} 
+\[\begin{minipage}[b]{1\textwidth}
+    \includegraphics[width=\linewidth]{assets/inversor_4_bits.png}
+    \label{fig:inversor_4_bits}
+\end{minipage}\]
+
+
 \subsection*{Multiplexor}
 Está conformado por varias entradas de control y entradas de datos. Existe una única salida.
 \begin{itemize}
