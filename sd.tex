@@ -625,8 +625,8 @@ Para recordar el estado anterior usamos la notación de: \(Q \ast\) y \(\bar{Q} 
 \subsection*{Latch JK}
 Acepta todas las combinaciones posibles de las entradas.
 \begin{itemize}
-    \item Cuando S está prendido entonces Q = 1.
-    \item Cuando Q está prendido entonces \(\bar{Q}\) = 1.
+    \item Cuando J está prendido entonces Q = 1.
+    \item Cuando K está prendido entonces \(\bar{Q}\) = 1.
     \item Si ninguno está prendido recuerda el estado anterior. 
     \item Si ambos están prendidos, niega el estado anterior (¡necesita que haya un estado anterior!)
 \end{itemize}
@@ -645,7 +645,13 @@ Es un almacén para un bit de datos. La salida del Latch D es siempre igual al v
 
 Tiene una entrada de datos y una de control.
 
-Este circuito es estable en todos los estados pero los tiempos no se pueden predecir porque dependen de D.
+Este circuito es estable en todos los estados pero los tiempos no se pueden predecir porque dependen de D y puede causar carreras si existe un lazo en el circuito externo
+
+\begin{itemize}
+    \item Cuando D está apagado y C está prendido, se memoriza C.
+    \item Si ambos están prendidos, se memoriza D.
+    \item En cualquier otro caso, devuelve el valor memorizado.
+\end{itemize}
 
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/latch_d.png}
