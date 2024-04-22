@@ -732,5 +732,15 @@ Al estado Desconectado le decimos que es de Alta Impedancia y se simboliza \text
     \label{fig:tres_estados}
 \end{minipage}\]
 
+\subsection*{Bus}
+Nos va a servir para poder conectar varios componentes. Es una vía de n bits que van a estar conectando todos los componentes de nuestra arquitectura.
+\[\begin{minipage}[b]{0.9\textwidth}
+    \includegraphics[width=\linewidth]{assets/bus_componentes.png}
+    \label{fig:bus_componentes}
+\end{minipage}\]
+Cada dispositivo sería cualquier operación, por ejemplo cada dispositivo podría ser un Flip-Flop D. \\ \\
+Ej.: Si \(Dispositivo_{0}\) tendría el número 2 escrito en 4 bits (0010) y el \(Dispositivo_{1}\) tendría el número 4 escrito en 4 bits (0100) entonces el bus tendría el valor de 6. Esto es un problema, porque básicamente se está haciendo una especie de conjunción de todas las cosas y no siempre vamos a querer que se haga de esa forma. Aquí aparece un concepto importante llamado Recurso Compartido. \\ \\
+Llamamos \textbf{recurso compartido} cuando tenemos más de un componente/dispositivo conectado en un mismo bus y necesitamos decidir quién usa cada componente. \\ \\
+Para prender uno de los dispositivos y no los demás, bastaría con poner en 1 el dispositivo que quiero mientras que los demás en 0.
 
 \end{document}
