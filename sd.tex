@@ -592,6 +592,7 @@ TODO: Añadir imagen
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
 
 \section*{Latchs}
+Utilizan realimentación, es decir, la salida de una compuerta como entrada de otra.
 \subsection*{Latch RS}
 Tiene dos entradas: S (Set) y R (Reset), y dos salidas, Q y \(\bar{Q}\) y consiste en dos puertas NOR conectadas por realimentación
 El circuito es consistente permanece estable \(\iff\) S = R = 0.
@@ -657,5 +658,37 @@ Este circuito es estable en todos los estados pero los tiempos no se pueden pred
     \includegraphics[width=\linewidth]{assets/latch_d.png}
     \label{fig:latch_d}
 \end{minipage}\]
+
+\subsection*{Control de transición de estados: Clock}
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/clock_1.png}
+    \label{fig:clock_1}
+\end{minipage}\]
+Observamos que en esta imagen, hay 3 circuitos distintos que reciben entradas d y q pero además reciben un clock.
+La diferencia entre la primera con las demás es que el clock está siempre escuchando cambios mientras que los demás solo escucha cuando llega al pico.
+Podríamos decir que nosotros necesitamos que el clock solo suba, y cuando llega ese estado de suba aproveche para hacer cierta acción. Para hacer todo esto necesitamos un detector de pulso.
+\begin{figure}[h]
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{assets/detector_pulso_1.png}
+        \label{fig:detector_pulso_1}
+        \end{subfigure}
+    \begin{subfigure}{0.7\textwidth}
+        \centering
+    \includegraphics[width=0.6\linewidth]{assets/detector_pulso_2.png}
+    \caption{Detector de pulso implementado usando una compuerta AND. }
+    \label{fig:detector_pulso_2}
+    \end{subfigure}
+    \end{figure}
+\\ Es importante notar, que el detector de pulso dará 1 (el pico) en algunos casos porque la compuerta NOT tiene un pequeño delay para poder negar la entrada. A continuación se muestra un ejemplo de esto.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/detector_pulso_3.png}
+    \label{fig:detector_pulso_3}
+\end{minipage}\]
+La línea punteada indica el tiempo que tardó la entrada en ser negada. En ese momento es donde se nos ejecutan los picos que nosotros necesitamos. \\
+Si mandamos input = 1, el primer momento queda 1 AND 1 y el AND es verdadero, pero luego de un momento queda 1 AND 0 y ahora el pico es 0. Si fuese 1 AND 1 todo el tiempo tendríamos un clock constante y no necesitamos eso.
+TODO: Preguntar qué compuertas tienen delay
+    
+    
 
 \end{document}
