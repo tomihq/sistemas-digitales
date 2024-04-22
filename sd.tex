@@ -714,6 +714,16 @@ El Latch D funcionará igual pero solo memorizará el valor sii el clock está e
 \end{minipage}\]
 
 Nota: \(1\uparrow\) indica que solo es se evalúa cuando está en el flanco de subida.
-    
+\subsection*{Entrada de control Enable}
+La entrada de control Enable nos permitirá decirle al Flip-Flop cuando nosotros queremos permitir que nos cambie el valor / escriba la memoria. \\
+Este flag de Enable deberá ir en un AND con el Clock, entonces si Enable = 1 y el Clock está en 1, entonces se le permite al Flip Flop guardar el valor de la operación realizada.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/flip_flop_d_enable.png}
+    \label{fig:flip_flop_d_enable}
+\end{minipage}\]
+
+Recuerdo: El Flip Flop D solo almacena 1 bit. Si necesitaramos almacenar n bits necesitaríamos n Flip Flop D y UN solo Enable/Clock.
+
+
 
 \end{document}
