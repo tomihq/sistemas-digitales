@@ -689,6 +689,17 @@ Para solucionar este problema, podemos utilizar un detector de pulso.
 La línea punteada indica el tiempo que tardó la entrada en ser negada. En ese momento es donde se nos ejecutan los picos que nosotros necesitamos. \\
 Si mandamos input = 1, el primer momento queda 1 AND 1 y el AND es verdadero, pero luego de un momento queda 1 AND 0 y ahora la señal vuelve a estar baja. Si fuese 1 AND 1 todo el tiempo tendríamos un clock constante y no necesitamos eso. \\
 Todas las compuertas tienen delay porque al estar compuestas de silicio, tardan un poco en entrar en calor.
+
+\subsection*{Flip-Flop JK}
+Está armado en base a Latch JK + Clock. \\
+El Latch JK funcionará igual pero solo memorizará el valor sii el clock está en el flanco de subida.
+\begin{itemize}
+    \item Cuando J es 1 y el clock está prendido, se guarda el valor de J.
+    \item Cuando K es 1 y el clock está prendido, se guarda el valor de K.
+    \item Cuando el clock está apagado devuelve el valor de J/K guardado en el último pulso al clock. 
+    \item Cuando el clock está apagado y J, K = 1 se niega el resultado guardado en el último pulso al clock.
+    \item En cualquier otro caso, sucede el ítem anterior.
+\end{itemize}
 \subsection*{Flip-Flop D}
 Está armado en base a Latch D + Clock. \\
 El Latch D funcionará igual pero solo memorizará el valor sii el clock está en el flanco de subida.
