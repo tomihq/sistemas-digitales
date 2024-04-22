@@ -542,7 +542,7 @@ Un sumador de 1 bit requiere:
     \item Una compuerta XOR (para la suma): solo el resultado es 1 o 0
     \item Una compuerta AND (para el carry): si la suma del XOR es 1+1
 \end{itemize} 
-\[\begin{minipage}[b]{0.8\textwidth}
+\[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/sumador_1_bit.png}
     \label{fig:sumador_1_bit}
 \end{minipage}\]
@@ -559,7 +559,7 @@ Nótese que para considerar si es carry al final de toda la suma o no usamos un 
     \item Si me mandan INV=1 entonces tengo que invertir los bits.
     \item La manera de hacer esto es utilizando un XOR.
 \end{itemize} 
-\[\begin{minipage}[b]{1\textwidth}
+\[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/inversor_4_bits.png}
     \label{fig:inversor_4_bits}
 \end{minipage}\]
@@ -590,5 +590,66 @@ TODO: Añadir imagen
 
 \subsection*{Timing}
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
+
+\section*{Latchs}
+\subsection*{Latch RS}
+Tiene dos entradas: S (Set) y R (Reset), y dos salidas, Q y \(\bar{Q}\) y consiste en dos puertas NOR conectadas por realimentación
+El circuito es consistente permanece estable \(\iff\) S = R = 0.
+Tabla de verdad del Latch
+\begin{figure}[h]
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.7\linewidth]{assets/latch_circuito.png}
+        \label{fig:latch_circuito}
+        \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+    \includegraphics[width=0.5\linewidth]{assets/latch.png}
+    \label{fig:latch}
+    \end{subfigure}
+    \end{figure}
+    
+
+Funciona como un memorizador
+\begin{itemize}
+    \item Cuando S está prendido entonces Q = 1.
+    \item Cuando Q está prendido entonces \(\bar{Q}\) = 1.
+    \item Si ninguno está prendido recuerda el estado anterior. 
+    \item Si ambos están prendidos, Q = 0 y \(\bar{Q}\) = 0. Este caso no debería estar permitido porque la salida es inconsistente.
+\end{itemize}
+
+Para recordar el estado anterior usamos la notación de: \(Q \ast\) y \(\bar{Q} \ast \) \\
+
+\textbf{Importante}: El valor de las salidas depende de la implementación del latch. Por lo tanto, un Latch con NAND no sería lo mismo que un Latch con NOR.
+
+\subsection*{Latch JK}
+Acepta todas las combinaciones posibles de las entradas.
+\begin{itemize}
+    \item Cuando S está prendido entonces Q = 1.
+    \item Cuando Q está prendido entonces \(\bar{Q}\) = 1.
+    \item Si ninguno está prendido recuerda el estado anterior. 
+    \item Si ambos están prendidos, niega el estado anterior (¡necesita que haya un estado anterior!)
+\end{itemize}
+
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/latch_jk.png}
+    \label{fig:latch_jk}
+\end{minipage}\]
+
+Cuando J y K son 1, la función realizada se denomina función de conmutación, la salida se invierte. 
+
+El circuito oscila (estado inestable)
+
+\subsection*{Latch D}
+Es un almacén para un bit de datos. La salida del Latch D es siempre igual al valor más reciente aplicado a la entrada y por lo tanto la recuerda y la produce.
+
+Tiene una entrada de datos y una de control.
+
+Este circuito es estable en todos los estados pero los tiempos no se pueden predecir porque dependen de D.
+
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/latch_d.png}
+    \label{fig:latch_d}
+\end{minipage}\]
 
 \end{document}
