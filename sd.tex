@@ -708,7 +708,7 @@ El Latch D funcionará igual pero solo memorizará el valor sii el clock está e
     \item Cuando el clock está apagado, devuelve el valor de D guardado en el último pulso al clock. En criollo: Guarda el valor de D hasta que haya otro flanco de subida (ciclo) y guarde uno nuevo.
 \end{itemize}
 
-\[\begin{minipage}[b]{0.8\textwidth}
+\[\begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=\linewidth]{assets/flip_flop_d.png}
     \label{fig:flip_flop_d}
 \end{minipage}\]
@@ -717,7 +717,7 @@ Nota: \(1\uparrow\) indica que solo es se evalúa cuando está en el flanco de s
 \subsection*{Registros}
 Para poder escribir registros necesitamos una entrada de control Enable que nos permitirá decirle al Flip-Flop cuando nosotros queremos permitir que nos cambie el valor / escriba la memoria. \\
 Este flag de Enable deberá ir en un AND con el Clock, entonces si Enable = 1 y el Clock está en 1, entonces se le permite al Flip Flop guardar el valor de la operación realizada.
-\[\begin{minipage}[b]{0.6\textwidth}
+\[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/flip_flop_d_enable.png}
     \label{fig:flip_flop_d_enable}
 \end{minipage}\]
@@ -734,7 +734,7 @@ Al estado Desconectado le decimos que es de Alta Impedancia y se simboliza \text
 
 \subsection*{Bus}
 Nos va a servir para poder conectar varios componentes. Es una vía de n bits que van a estar conectando todos los componentes de nuestra arquitectura.
-\[\begin{minipage}[b]{0.9\textwidth}
+\[\begin{minipage}[b]{0.7\textwidth}
     \includegraphics[width=\linewidth]{assets/bus_componentes.png}
     \label{fig:bus_componentes}
 \end{minipage}\]
