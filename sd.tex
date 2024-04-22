@@ -694,7 +694,7 @@ Está armado en base a Latch D + Clock. \\
 El Latch D funcionará igual pero solo memorizará el valor sii el clock está en el flanco de subida.
 \begin{itemize}
     \item Cuando el clock es 1, guarda el valor de D en ese instante.
-    \item Cuando el clock está apagado, devuelve el valor de D guardado en el último pulso al clock.
+    \item Cuando el clock está apagado, devuelve el valor de D guardado en el último pulso al clock. En criollo: Guarda el valor de D hasta que haya otro flanco de subida (ciclo) y guarde uno nuevo.
 \end{itemize}
 
 \[\begin{minipage}[b]{0.8\textwidth}
