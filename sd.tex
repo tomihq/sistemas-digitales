@@ -836,7 +836,8 @@ Para esto usamos un flip-flop D, para que en vez de usar asignaciones dependa de
 \end{minipage}\]
 \subsection*{Lógica de salida}
 Consiste en hacer foco en como se deben vincular los estados porque muchas veces no nos es suficiente inferir comportamiento solo con la salida.
-Veamos un claro ejemplo donde tenemos que hacer uso de la lógica de salida porque debemos conocer el estado para poder conocer el siguiente valor. ¿Cúal sería la siguiente salida si la entrada es 01? Puede ser 11 o 00. 
+Veamos un claro ejemplo donde tenemos que hacer uso de la lógica de salida porque debemos conocer el estado para poder conocer el siguiente valor. 
+00, 01, 11, y 10 son salidas.
 \[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/logica_salida_ex.png}
     \label{fig:logica_salida_ex}
@@ -846,6 +847,7 @@ Para poder decidir esto, usamos etiquetas de estado.
     \includegraphics[width=\linewidth]{assets/logica_salida_etiquetas.png}
     \label{fig:logica_salida_etiquetas}
 \end{minipage}\]
+Nota: \(S_{n}\) n es el estado y el valor asignado es la codificacion. \\
 TODO: Preguntar como hizo para calcular la suma de productos en base a los estados.
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/logica_salida_suma_productos.png}
