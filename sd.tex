@@ -810,4 +810,28 @@ La salida depende solo del estado actual.
     \item La cantidad de estados para reproducir cierto comportamiento puede ser más grande que con otro tipo de FSM.
 \end{itemize}
 
+\subsection*{FSM - Mealy}
+La salida depende del estado actual y las entradas.
+\begin{itemize}
+    \item La salida pueda cambiar dentro del mismo clock en que se dispara la condición de transición.
+    \item Produce glitches a la salida.
+    \item La cantidad de estados para reproducir cierto comportamiento es más chica que en Moore.
+\end{itemize}
+
+\subsection*{FSM en base a registro de dos bits, estados y flip flops}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/registros_flip_flops.png}
+    \label{fig:registros_flip_flops}
+\end{minipage}\]
+Caso: 0 y 1 \(\rightarrow\) 0 y 0 \\
+Caso: 0 y 0 \(\rightarrow\) 1 y 0 \\
+Caso: 1 y 0 \(\rightarrow\) 1 y 1 \\ 
+Caso: 1 y 1 \(\rightarrow\) 0 y 0 \\
+Caso: 0 y 1 \(\rightarrow\) 0 y 0 \\
+
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/flip_flop_registros.png}
+    \label{fig:flip_flop_registros}
+\end{minipage}\]
+
 \end{document}
