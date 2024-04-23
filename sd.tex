@@ -818,20 +818,21 @@ La salida depende del estado actual y las entradas.
     \item La cantidad de estados para reproducir cierto comportamiento es más chica que en Moore.
 \end{itemize}
 
-\subsection*{FSM en base a registro de dos bits, estados y flip flops}
+\subsection*{Lógica de próximo estado}
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/registros_flip_flops.png}
     \label{fig:registros_flip_flops}
 \end{minipage}\]
-Caso: 0 y 1 \(\rightarrow\) 0 y 0 \\
-Caso: 0 y 0 \(\rightarrow\) 1 y 0 \\
-Caso: 1 y 0 \(\rightarrow\) 1 y 1 \\ 
-Caso: 1 y 1 \(\rightarrow\) 0 y 0 \\
-Caso: 0 y 1 \(\rightarrow\) 0 y 0 \\
-
-\[\begin{minipage}[b]{0.6\textwidth}
+\[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/flip_flop_registros.png}
     \label{fig:flip_flop_registros}
+\end{minipage}\]
+
+¿Qué valores deberían tener \(D_{1} \ y \ D_{0}\) para obtener los valores deseados en el tiempo t+1, es decir, \(Q_{1}(t+1) y Q_{0}(t+1)\) Para esto usamos \textbf{lógica de próximo estado} \\
+Para esto usamos un flip-flop D, para que en vez de usar asignaciones dependa del estado anterior.
+\[\begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\linewidth]{assets/suma_productos_flip_flop_d.png}
+    \label{fig:suma_productos_flip_flop_d}
 \end{minipage}\]
 
 \end{document}
