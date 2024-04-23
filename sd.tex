@@ -783,6 +783,31 @@ Ahora nos queda realizar el esquema
     \item Deshabilito WriteEnable en R0 - WriteEnable-0 \(\leftarrow\) 0
     \item Deshabilito Enable Out en R1 - EnableOut-1 \(\leftarrow\) 0
 \end{itemize}
+De esta manera podemos pasar datos entre registros.
 
+\section{Máquinas de estado}
+Los circuitos secuenciales pueden ser pensados formalmente como una Máquina de Estados Finitos o FSM.
+Una máquina de estados queda definida por: 
+\begin{itemize}
+    \item Una lista de estados.
+    \item Un estado inicial.
+    \item Una lista de funciones que disparan las transiciones en función de las entradas. 
+\end{itemize}
+\newpage
+\subsection*{Diagramas de estado}
+Nos indican el comportamiento de los circuitos secuenciales en base al estado y como van avanzando
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/diagramas_estado.png}
+    \label{fig:diagramas_estado}
+\end{minipage}\]
+Nota: \(x^{'}\) indica la variable negada.
+
+\subsection*{FSM - Moore}
+La salida depende solo del estado actual.
+\begin{itemize}
+    \item La salida siempre cambia un clock después que se dispara la condición de transición.
+    \item No produce glitches a la salida.
+    \item La cantidad de estados para reproducir cierto comportamiento puede ser más grande que con otro tipo de FSM.
+\end{itemize}
 
 \end{document}
