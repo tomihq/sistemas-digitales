@@ -742,5 +742,47 @@ Cada dispositivo sería cualquier operación, por ejemplo cada dispositivo podr�
 Ej.: Si \(Dispositivo_{0}\) tendría el número 2 escrito en 4 bits (0010) y el \(Dispositivo_{1}\) tendría el número 4 escrito en 4 bits (0100) entonces el bus tendría el valor de 6. Esto es un problema, porque básicamente se está haciendo una especie de conjunción de todas las cosas y no siempre vamos a querer que se haga de esa forma. Aquí aparece un concepto importante llamado Recurso Compartido. \\ \\
 Llamamos \textbf{recurso compartido} cuando tenemos más de un componente/dispositivo conectado en un mismo bus y necesitamos decidir quién usa cada componente. \\ \\
 Para prender uno de los dispositivos y no los demás, bastaría con poner en 1 el dispositivo que quiero mientras que los demás en 0.
+\subsection*{Reset}
+Coloca en 0 el componente. Comúnmente, el reset es asincrónico.
+\subsection*{Write Enable y Enable Out}
+Son dos instrucciones. No pueden pasar ambas a la vez. O escribimos, o leemos.
+Cada vez que hacemos el cambio de estado de Enable Out o Write Enable, en algún momento deberán volver al estado anterior.
+
+\subsection*{Esquema de interconexión de n registros}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{assets/registros_ex1.png}
+        \caption*{Paso 1: Utilizo 3 Flip-Flop D con la posibilidad de escribir cuando el clock está activo y un botón de reset}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.7\linewidth]{assets/registros_ex2.png}
+        \caption*{Paso 2: Se añade un EnableOut para que se muestre el dato almacenado con lo armado en el paso 1.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{assets/registros_ex3.png}
+        \caption*{Paso 3: TODO revisar}
+    \end{subfigure}
+\end{figure}
+
+Ahora nos queda realizar el esquema 
+\[\begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\linewidth]{assets/registro_fin.png}
+    \label{fig:registro_fin}
+\end{minipage}\]
+¿Como podríamos copiar el dato de R1 a R0?
+\begin{itemize}
+    \item Utilizo Enable Out en R1 - EnableOut-1 \(\leftarrow\) 1
+    \item Habilito WriteEnable en R0 - WriteEnable-0 \(\leftarrow\) 1
+    \item Espero que el Clock esté funcionando en R0
+    \item Deshabilito WriteEnable en R0 - WriteEnable-0 \(\leftarrow\) 0
+    \item Deshabilito Enable Out en R1 - EnableOut-1 \(\leftarrow\) 0
+\end{itemize}
+
 
 \end{document}
