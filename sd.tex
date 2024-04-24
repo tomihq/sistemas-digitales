@@ -248,7 +248,10 @@ Hagamos sumas en \(C_{2}\) (límite de bits: 4)
     \end{align*}
 
 Nota: Al tener un límite de 4 bits, en las sumas que tenemos carry terminamos teniendo overflow.
+\subsection*{Resta entre numeros binarios}
+La resta entre números binarios debe realizarse en \(C_{2}\)
 
+La idea es que A - B \(\equiv\) A + (INV(B) + 1) 
 \subsection*{Rango de valores representables en n bits}
 Sean \( n, m \in \mathbb{Z} \) decimos que el rango de representación en base \(n\) y \(m\) bits acepta el rango de valores de: 
 \(
