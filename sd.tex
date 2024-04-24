@@ -591,9 +591,11 @@ En los Multiplexores existen difurcaciones, que cuando llegamos a una de ellas s
 \\
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/alu_4_bits.png}
+    
     \label{fig:alu_4_bits}
 \end{minipage}\]
-Nótese que el multiplexor elige un camino u otro según OP; OP toma los valores de 00, 01, 10 y 11. En base a qué se envía como entrada de control el multiplexor decide qué entrada habilitar para dar la salida.
+Nótese que el multiplexor elige un camino u otro según OP; OP toma los valores de 00, 01, 10 y 11. En base a qué se envía como entrada de control el multiplexor decide qué entrada habilitar para dar la salida. \\
+En este caso, OP: 1 0 corresponde a la opción de realizar A AND B bit a bit
 
 \subsection*{Timing}
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
