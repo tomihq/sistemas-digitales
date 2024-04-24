@@ -589,7 +589,11 @@ Cada entrada de control tiene un índice que podemos decirle individuo, por ejem
 
 En los Multiplexores existen difurcaciones, que cuando llegamos a una de ellas se nos desvía el camino enviándonos a una compuerta. Si en algún momento se llega a un valor 0, entonces decimos que el camino ya finalizó.\\
 \\
-TODO: Añadir imagen
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/alu_4_bits.png}
+    \label{fig:alu_4_bits}
+\end{minipage}\]
+Nótese que el multiplexor elige un camino u otro según OP; OP toma los valores de 00, 01, 10 y 11. En base a qué se envía como entrada de control el multiplexor decide qué entrada habilitar para dar la salida.
 
 \subsection*{Timing}
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
