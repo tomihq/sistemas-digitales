@@ -872,7 +872,7 @@ Las instrucciones atómicas son aquellas que nos devuelven un valor irreducible,
 Calculemos: \(a = b + c - d\)
 \begin{itemize}
     \item \(add \ t,\ b,\ c\) \# t=b+c
-    \item \(add \ a,\ t, \ d\) \# a=t-d
+    \item \(sub \ a,\ t, \ d\) \# a=t-d
 \end{itemize}
 
 \subsection*{Comentarios en Risc V}
@@ -885,4 +885,18 @@ Los registros pueden nombrarse por su índice, desde x0 a x31 o según su uso ha
     \item Los registros s0 a s11 y los t0 a t6 se utilizan para almacenar variables.
     \item ra y de a0 a a7 tienen usos relacionados a llamadas de función.
 \end{itemize}
+\[\begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\linewidth]{assets/PC.png}
+    \label{fig:PC}
+\end{minipage}\]
+El registro PC es el Program Counter y lleva el registro de lo que se está ejecutando en un momento dado. \\
+Hagamos el cálculo que habiamos hecho antes (a = b + c - d) pero con las variables en los registros.
+\begin{itemize}
+    \item \# s0 = a, s1 = b
+    \item \# s2 = c, s3 = d, t0 = t
+    \item \(add \ t0,\ s1,\ s2\) \# t=b+c
+    \item \(sub \ s0,\ t0, \ s3\) \# a=t-d
+\end{itemize}
+Preguntar: ¿Cómo es que s0 tiene efectivamente a "a", s1 tiene a "b"?
+
 \end{document}
