@@ -843,7 +843,7 @@ TODO: Preguntar como hizo para calcular la suma de productos en base a los estad
     \includegraphics[width=\linewidth]{assets/logica_salida_suma_productos.png}
     \label{fig:logica_salida_suma_productos}
 \end{minipage}\]
-\section*{Arquitectura}
+\section{Arquitectura}
 Observación: Nosotros vamos a manejarnos con 32 registros y data de 4 bytes.\\
 
 ¿Qué constituye una arquitectura?
@@ -1075,6 +1075,10 @@ Nótese que cuando hacemos jal dif sumas, le estamos mandando la posición donde
 \subsection*{Pila (stack)}
 Es una parte de la memoria que se utiliza para almacenar información temporaria. La pila suele comenzar en las direcciones altas de la memoria y va tomando las direcciones inmediatamente más bajas. 
 RISC V recomienda el registro de su Stack Pointer (sp)
-
+\subsection*{Reglas de llamada}
+\begin{itemize}
+    \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7)
+    \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar.ar
+\end{itemize}
 
 \end{document}
