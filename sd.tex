@@ -844,5 +844,45 @@ TODO: Preguntar como hizo para calcular la suma de productos en base a los estad
     \label{fig:logica_salida_suma_productos}
 \end{minipage}\]
 \section*{Arquitectura}
-Observación: Nosotros vamos a manejarnos con 32 registros y data de 4 bytes.
+Observación: Nosotros vamos a manejarnos con 32 registros y data de 4 bytes.\\
+
+¿Qué constituye una arquitectura?
+\begin{itemize}
+    \item El conjunto de instrucciones
+    \item El conjunto de registros
+    \item La forma de acceder a la memoria
+\end{itemize}
+Observación: Utilizaremos la arquitectura Risc V como programa de Assembler en la materia. \\
+Observación 2: El lenguaje ensamblador depende de cada arquitectura. Cuando un lenguaje es compilado, traduce a la arquitectura de tu equipo.
+\subsection*{Pasaje de lenguaje de alto nivel a bajo nivel}
+Para esto se necesitan programas de compilado, ensamblado y enlazado.
+\begin{itemize}
+    \item El código de alto nivel es traducido por el compilador para pasar a código de bajo nivel.
+    \item El código de bajo nivel es traducido por el ensamblador y se convierte en un código objeto (archivos \textbf{.o}).
+    \item El código objeto es traducido por un enlazador y termina siendo binario ejecutable.
+\end{itemize}
+\subsection*{Operaciones en Risc V}
+Reciben el nombre de mnemónico e indica el tipo de operación que queremos realizar. \\
+Las operaciones reciben: \textbf{operandos de fuente} y un \textbf{operando destino}
+\[a = b + c \equiv add \ a,\ b,\ c\]
+El operando destino a sería el primer parámetro del mnemónico add, mientras que los operandos fuente serían b y c.
+\subsection*{Instrucciones atómicas y compuestas}
+Es exactamente lo mismo que en lógica. Las operaciones se separan y deben indicarse claramente como se realizan.
+Las instrucciones atómicas son aquellas que nos devuelven un valor irreducible, mientras que las instrucciones compuestas nos devuelven algo reducible. \\
+Calculemos: \(a = b + c - d\)
+\begin{itemize}
+    \item \(add \ t,\ b,\ c\) \# t=b+c
+    \item \(add \ a,\ t, \ d\) \# a=t-d
+\end{itemize}
+
+\subsection*{Comentarios en Risc V}
+Usamos \# para comenzar una línea de comentarios.
+\subsection*{Registros en Risc V - Register File}
+Cuenta con 32 registros que son implementados como un arreglo de memoria estática de 32 bits con varios puertos. \\
+Los registros pueden nombrarse por su índice, desde x0 a x31 o según su uso habitual.
+\begin{itemize}
+    \item El registro zero (x0) almacena siempre el valor 0, y no puede ser escrito.
+    \item Los registros s0 a s11 y los t0 a t6 se utilizan para almacenar variables.
+    \item ra y de a0 a a7 tienen usos relacionados a llamadas de función.
+\end{itemize}
 \end{document}
