@@ -998,8 +998,13 @@ Lo que hago yo esto para hacerlo fácil, en el caso de 17 por ejemplo es: como m
 \item 111 1111 \& 1000 1110 \(\implies\) reordené
 \item 0000 0000 \& 0000 0000 \& 0111 1111 \& 1000 1110 \(\implies\) agregué los 0's
 \end{itemize}
-
-
+\subsection*{Byte en particular con desplazamiento}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/byte_desplazamiento.png}
+    \label{fig:byte_desplazamiento}
+\end{minipage}\] 
+Preguntar, no entendi
+\newpage 
 \subsection*{Importancia del Program Counter}
 Recordatorio: Cada dirección se incrementa en múltiplos de 4 porque las instrucciones ocupan 4 bytes. \\
 El procesador ejecuta el programa almacenando la posición de memoria de la instrucción que se está ejecutando en un registro de 32 bits conocido como el Program Counter.
@@ -1008,6 +1013,54 @@ El procesador ejecuta el programa almacenando la posición de memoria de la inst
     \label{fig:importancia_pc}
 \end{minipage}\] 
 El Program Counter va cambiando la instrucción que está ejecutando gracias al aviso del procesador.
+\subsection*{Control del flujo de ejecución}
+Se va pisando el PC (Program Counter). 
 
+\subsection*{Etiquetas en RISC V}
+Nos permiten ponerle nombre a subproblemas.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/etiquetas_beq.png}
+    \label{fig:etiquetas_beq}
+\end{minipage}\] 
+
+\subsection*{Saltos condicionales}
+Instrucciones que pisan el PC: 
+\begin{itemize}
+    \item beq(branch if equal): reemplaza el PC si los dos operandos son iguales.
+    \item bne(branch if not equal): reemplaza el PC si los dos operando son distintos.
+    \item blt(branch if less than): reemplaza el PC si el primer operando es menor que el segundo.
+    \item bge(branch if greather than or equal): reemplaza el PC si el primer operando es mayor o igual al segundo.
+\end{itemize}
+\subsection*{Saltos incondicionales}
+Instrucciones que pisan el PC: 
+\begin{itemize}
+    \item j (jump): actualiza el valor del PC con el operando provisto (inmediato de 20 bits extendidos en signo a 32)
+    \item jal (jump and link): que almacena el valor actual del PC en el registro indicado en el primer operando y actualiza el valor del PC con el segundo operando (este se usa para llamar a una función, terminar y volver a ese link anterior).
+\end{itemize}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/jump.png}
+    \label{fig:jump}
+\end{minipage}\] 
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/jump_while.png}
+    \label{fig:jump_while}
+\end{minipage}\] 
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/while_j.png}
+    \label{fig:while_j}
+\end{minipage}\] 
+\begin{itemize}
+    \item se inicializa una variable permanente con el valor zero.
+    \item se inicial la variable temporal en 200.
+    \item el for se realiza mientras s1 sea menor a t2.
+    \item se inicializa una variable temporal t0 con el valor de s1 (¿que seria el 2, entiendo que un desplazamiento logico hacia la izquierda pero para que?).
+    \item a la variable temporal t0 se le suma s0 (s0?)
+    \item se inicializa una variable temporal t0 que tiene el valor de t0 en el indice 0.
+    \item a la variable temporal t1 se le suma 10 (scores[i] + 10)
+    \item se cambia el valor de t1 indicando que tiene el valor de t0 en el indice 0.
+    \item se modifica la variable de s1 (incrementadora) sumandole 1 unidad.
+\end{itemize}
+\subsection*{Funciones}
+En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado.
 
 \end{document}
