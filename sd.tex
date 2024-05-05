@@ -909,4 +909,26 @@ El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefij
     \item \(addi \ s1,\ s0, \ -12\) \# b= a - 12
 \end{itemize}
 En este caso, el 4 y el -12 son extendidos a 32 bits para poder operar. 
+\subsection*{Asignación}
+Se hace zero + lo que queremos asignar. Consideremos que s0 = i
+\begin{itemize}
+    \item \(addi \ s0,\ zero,\ 4\) \# i = 4
+\end{itemize}
+\subsection*{Valores inmediatos de 32 bits}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/valores_inmediatos_pos.png}
+    \label{fig:valores_pos}
+\end{minipage}\]
+¿La idea sería pasar de derecha a izquierda, o pasar lo de la izquierda a la derecha? \\
+¿Por qué los bits más altos son considerados ABCDE? \\
+¿Cual es la regla para decir cuales son altos o bajos? (en este contexto manual)
+Lo que no entiendo es, los bits mas altos están seleccionados a mano (ABCDE) y los más bajos también (123) pero no podrían ser los más altos ABCD y los más bajos E123?
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/valores_inmediatos_neg.png}
+    \label{fig:valores_neg}
+\end{minipage}\]
+Cuando dice que la parte baja se expresa como un número negativo ¿está tratando de decir que el valor inmediato de la suma es -1657?
+
+
+
 \end{document}
