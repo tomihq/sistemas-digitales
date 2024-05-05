@@ -1078,7 +1078,29 @@ RISC V recomienda el registro de su Stack Pointer (sp)
 \subsection*{Reglas de llamada}
 \begin{itemize}
     \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7)
-    \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar.ar
+    \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar
 \end{itemize}
+\section*{Compilación, ensamblado y ejecución}
+\subsection*{El mapa de memoria}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/memory_map.png}
+    \label{fig:memory_map}
+\end{minipage}\]
+\subsection*{Directivas de ensamblado}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/directivas_ensamblado.png}
+    \label{fig:directivas_ensamblado}
+\end{minipage}\]
+\subsection*{Inicialización de datos}
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/inicializacion_datos.png}
+    \label{fig:inicializacion_datos}
+\end{minipage}\]
+Inicialización de datos en la sección .data que va a ubicar la información en lo que el mapa se muestra como Global Data.
 
+Programa final con inicialización de los datos en RISC V
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/risc_v_ejercicio.png}
+    \label{fig:risc_v_ejercicio}
+\end{minipage}\]
 \end{document}
