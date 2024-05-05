@@ -928,7 +928,86 @@ Lo que no entiendo es, los bits mas altos están seleccionados a mano (ABCDE) y 
     \label{fig:valores_neg}
 \end{minipage}\]
 Cuando dice que la parte baja se expresa como un número negativo ¿está tratando de decir que el valor inmediato de la suma es -1657?
+\subsection*{Memoria}
+Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\ \\
+RISC V permite acceder a la memoria con índices (direcciones) de 32 bits osea 4.294.967.296 índices posibles. El índice apunta a un byte en particular. \\ \subsection*{Escritura y Lectura en Memoria}
+Lectura: Instrucción lw (load word); Escritura: Instrucción sw (store word). \\ \\
+Las direcciones se definen como: 
+\[direccion = base + desplazamiento\]
+base: valor de un registro \\
+desplazamiento: constante con signo de 12 bits
+\subsection*{Lectura en Memoria (asignación a variable)}
+\[\begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\linewidth]{assets/leyendo_memoria.png}
+    \label{fig:leyendo_memoria}
+\end{minipage}\] 
+lw, variable, desplazamiento(lugarEnMemoria) \\
+elem = cantidad de bytes por dato \(\ast\) indice al que quiero llegar. \\
+s3 tiene la posición de memoria en el registro donde está el arreglo. \\
+\subsection*{Escritura en Memoria}
+sw, variable, desplazamiento(lugarEnMemoria) \\
+Programa: \(mem[5] = 33\) 
+\begin{itemize}
+    \item \# s3 = mem
+    \item \(addi \ t3, \ zero,\ 33\)
+    \item \(sw, \ t3, \ 20(s3)\)
+\end{itemize}
+El programa anterior crea una variable en el registro temporal t3, le asigna el valor de 33 y luego en la memoria posición 5 del array le asigna t3.
+Preguntar: Como t3 es un registro temporal, cuando se borra luego de guardar el valor en el array? 
+\subsection*{Instrucciones lógicas en RISC V}
+Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. \\
+Ejemplo de XOR entre dos registros
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c | c | c | c| c|}
+    \hline
+    s1 & 0100 0110 & 1010 0001 & 1111 0001 & 1011 0111 \\ \hline
+    s2 & 1111 1111 & 1111 1111 & 0000 0000 & 0000 0000 \\ \hline
+    xor s5, s1, s2 & 1011 1001 & 0101 1110 & 1111 0001 & 1011 0111 \\
+    \hline
+    \end{tabular}
+    \label{tab:xor}
+\end{table} 
+\\
+Or: Combina dos registros que solo tienen asignada la parte alta y baja. Ej: \(0xFEED0000 \lor 0x0000F0CA \equiv 0xFEEDF0CA \)  
+and: Limpia las partes de un registro, si quisieramos preservar solamente la parte baja de \(0xBABAC0C0\) podemos hacer \(0xBABAC0C0 \land 0x0000FFFF \equiv 0x0000C0C0\) Preguntar 
+xor: Negación del valor
+\subsection*{Instrucciones de desplazamiento}
+\begin{itemize}
+    \item sll (shift left logical): desplaza a la izquierda tantas unidades como se diga, como es logico se añaden 0's a la derecha.
+    \item srl (shift right logical): desplaza a la derecha tantas unidades como se diga, como es lógico se añaden 0's a la izquierda.
+    \item sra (shift right arithmetic): desplaza a la derecha tantas unidades como se diga, como es aritmético se añade el bit más significativo a la izquierda.
+\end{itemize}
+Nota: También existen las versiones de estas operaciones con el immediate (i) para usar una constante.
 
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c | c | c | c| c|}
+    \hline
+    s5 & 1111 1111 & 0001 1100 & 0001 0000 & 1110 0111 \\ \hline
+    slli t0, s5, 7 & 1000 1110 & 0000 1000 & 0111 0011 & 1\textbf{000 0000} \\ \hline
+    srli t0, s5, 17 & \textbf{0000 0000} & \textbf{0000 0000} & \textbf{0}111 1111 & 1000 1110\\ \hline
+    srai t0, s5, 3 & \textbf{111}1 1111 & 1110 0011 & 1000 0010 & 0001 1100\\ \hline
+    \end{tabular}
+    \label{tab:desplazamiento_riscv}
+\end{table} 
+Lo que hago yo esto para hacerlo fácil, en el caso de 17 por ejemplo es: como me piden mover 17 a la derecha, borro los 17 últimos (xq no tengo espacio donde guardarlos), reordeno de a pares de 4 y despues donde faltan agrego de la izq.
+\begin{itemize}
+\item 1111 1111 \& 0001 1100 \& 0001 0000 \& 1110 0111
+\item 1111 1111 \& 0001 110 \(\implies\) acá tengo que reordenar xq de la der no me pueden quedar 3 bits solos
+\item 111 1111 \& 1000 1110 \(\implies\) reordené
+\item 0000 0000 \& 0000 0000 \& 0111 1111 \& 1000 1110 \(\implies\) agregué los 0's
+\end{itemize}
+
+
+\subsection*{Importancia del Program Counter}
+Recordatorio: Cada dirección se incrementa en múltiplos de 4 porque las instrucciones ocupan 4 bytes. \\
+El procesador ejecuta el programa almacenando la posición de memoria de la instrucción que se está ejecutando en un registro de 32 bits conocido como el Program Counter.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/importancia_pc.png}
+    \label{fig:importancia_pc}
+\end{minipage}\] 
+El Program Counter va cambiando la instrucción que está ejecutando gracias al aviso del procesador.
 
 
 \end{document}
