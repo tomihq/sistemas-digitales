@@ -758,33 +758,14 @@ Son dos instrucciones. No pueden pasar ambas a la vez. O escribimos, o leemos.
 Cada vez que hacemos el cambio de estado de Enable Out o Write Enable, en algún momento deberán volver al estado anterior.
 
 \subsection*{Esquema de interconexión de n registros}
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-        \includegraphics[width=0.8\linewidth]{assets/registros_ex1.png}
-        \caption*{Paso 1: Utilizo 3 Flip-Flop D con la posibilidad de escribir cuando el clock está activo y un botón de reset}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-        \includegraphics[width=0.7\linewidth]{assets/registros_ex2.png}
-        \caption*{Paso 2: Se añade un EnableOut para que se muestre el dato almacenado con lo armado en el paso 1.}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-        \includegraphics[width=0.6\linewidth]{assets/registros_ex3.png}
-        \caption*{Paso 3: TODO revisar}
-    \end{subfigure}
-\end{figure}
-
 Ahora nos queda realizar el esquema 
 \[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/registro_fin.png}
     \label{fig:registro_fin}
 \end{minipage}\]
-¿Como podríamos copiar el dato de R1 a R0?
+Utilizo 3 Flip-Flop D con la posibilidad de escribir cuando el clock está activo y un botón de reset \\
+Se añade un EnableOut para que se muestre el dato almacenado con lo armado en el paso 1 \\ \\
+¿Como podríamos copiar el dato de R1 a R0? 
 \begin{itemize}
     \item Utilizo Enable Out en R1 - EnableOut-1 \(\leftarrow\) 1
     \item Habilito WriteEnable en R0 - WriteEnable-0 \(\leftarrow\) 1
@@ -862,4 +843,6 @@ TODO: Preguntar como hizo para calcular la suma de productos en base a los estad
     \includegraphics[width=\linewidth]{assets/logica_salida_suma_productos.png}
     \label{fig:logica_salida_suma_productos}
 \end{minipage}\]
+\section*{Arquitectura}
+Observación: Nosotros vamos a manejarnos con 32 registros y data de 4 bytes.
 \end{document}
