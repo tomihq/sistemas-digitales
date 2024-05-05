@@ -897,6 +897,16 @@ Hagamos el cálculo que habiamos hecho antes (a = b + c - d) pero con las variab
     \item \(add \ t0,\ s1,\ s2\) \# t=b+c
     \item \(sub \ s0,\ t0, \ s3\) \# a=t-d
 \end{itemize}
-Preguntar: ¿Cómo es que s0 tiene efectivamente a "a", s1 tiene a "b"?
-
+Nota: los valores que toman las operaciones no pueden ser de 32 bits porque la operación en sí ya ocupa 5 bits. \\
+Preguntar: ¿Cómo es que s0 tiene efectivamente a \textbf{a}, s1 tiene a \textbf{b}?
+\subsection*{Valores inmediatos}
+Son valores constantes que se utilizan como operandos. Se encuentran disponibles en la misma instrucción y no hace falta recuperar su valor a partir de un registro o desde la memoria. \\
+El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefijo 0b). \\
+\textbf{Los valores inmediatos son de 12 bits y se extiende con el bit de signo a 32 bits antes de operar.}
+\begin{itemize}
+    \item \# s0 = a, s1 = b
+    \item \(addi \ s0,\ s0,\ 4\) \# a = a + 4
+    \item \(addi \ s1,\ s0, \ -12\) \# b= a - 12
+\end{itemize}
+En este caso, el 4 y el -12 son extendidos a 32 bits para poder operar. 
 \end{document}
