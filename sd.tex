@@ -1061,6 +1061,20 @@ Instrucciones que pisan el PC:
     \item se modifica la variable de s1 (incrementadora) sumandole 1 unidad.
 \end{itemize}
 \subsection*{Funciones}
-En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado.
+En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado. \\
+La función llamada no debe interferir con el estado de la función llamadora, es decir, debe respetar los valores de los registros (s0 a s11) y el registro ra (dirección de retorno). \\
+El stack de la función llamadora debe mantenerse invariante al ingresar a la función llamada.
+\subsection*{Llamando funciones \& enviando parámetros}
+Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/funciones_risc_2.jpg}
+    \label{fig:funciones_risc_2}
+\end{minipage}\]
+
+Nótese que cuando hacemos jal dif sumas, le estamos mandando la posición donde quedó antes de llamar a la función, entonces luego en la llamada podemos usar ra y volver a ese punto.
+\subsection*{Pila (stack)}
+Es una parte de la memoria que se utiliza para almacenar información temporaria. La pila suele comenzar en las direcciones altas de la memoria y va tomando las direcciones inmediatamente más bajas. 
+RISC V recomienda el registro de su Stack Pointer (sp)
+
 
 \end{document}
