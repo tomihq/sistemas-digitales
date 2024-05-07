@@ -697,7 +697,27 @@ Para solucionar este problema, podemos utilizar un detector de pulso.
 \end{minipage}\]
 La línea punteada indica el tiempo que tardó la entrada en ser negada. En ese momento es donde se nos ejecutan los picos que nosotros necesitamos. \\
 Si mandamos input = 1, el primer momento queda 1 AND 1 y el AND es verdadero, pero luego de un momento queda 1 AND 0 y ahora la señal vuelve a estar baja. Si fuese 1 AND 1 todo el tiempo tendríamos un clock constante y no necesitamos eso. \\
-Todas las compuertas tienen delay porque al estar compuestas de silicio, tardan un poco en entrar en calor.
+Todas las compuertas tienen delay porque al estar compuestas de silicio, tardan un poco en entrar en calor.\\
+
+Veamos un ejemplo en Logisim usando registros y una ALU con el tema este de la secuencialidad a la hora de escribir en el pico del clock. \\
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/pico_1_escritura.png}
+    \label{fig:pico_1_escritura}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/pico_2_clock_apagado.png}
+    \label{fig:pico_2_clock_apagado}
+\end{minipage}\]
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/pico_3_escritura.png}
+    \label{fig:pico_3_escritura}
+\end{minipage}\]
+\begin{itemize}
+    \item Se activan las instrucciones de \texttt{Reg0\_Write}, \texttt{Reg0\_enableOut} (que permite exponer su valor a los demás) y se activa \texttt{ALU\_A\_WRITE} para que la ALU reciba el valor que expone \texttt{Reg0\_enableOut}.
+    \item La primera operación que toma el clock en el flanco de subida es la escritura del número en \texttt{Registro\_00}.
+    \item Al apagar el clock, todo sigue igual.
+    \item Al encender el clock en el primer flanco de subida la ALU recibió el valor en \texttt{ALU\_A\_WRITE} del \texttt{Registro\_00} que expuso previamente en \texttt{Reg0\_enableOut}.
+\end{itemize}
 
 \subsection*{Flip-Flop JK}
 Está armado en base a Latch JK + Clock. \\
