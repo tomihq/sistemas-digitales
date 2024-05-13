@@ -265,6 +265,34 @@ Nota: Al tener un límite de 4 bits, en las sumas que tenemos carry terminamos t
 La resta entre números binarios debe realizarse en \(C_{2}\)
 
 La idea es que A - B \(\equiv\) A + (INV(B) + 1) 
+\subsection*{¿Cuando hay overflow, carry o borrow?}
+\begin{itemize}
+    \item POS + POS = NEG
+    \item NEG + NEG = POS
+    \item POS - NEG = NEG
+    \item NEG - POS = POS 
+\end{itemize}
+\begin{lstlisting}
+      0101
+    + 0110
+      ====
+      1011  - OV: si - C: no
+
+      1000
+    + 1100
+      ====
+      10100 - OV: si - Carry si
+
+      1010
+    - 0100
+      ====
+      1000 - OV: si - Borrow no
+
+      0100
+    - 1000
+      ====
+      1000 - OV: si - Borrow si
+\end{lstlisting}
 \subsection*{Rango de valores representables en n bits}
 Sean \( n, m \in \mathbb{Z} \) decimos que el rango de representación en base \(n\) y \(m\) bits acepta el rango de valores de: 
 \(
