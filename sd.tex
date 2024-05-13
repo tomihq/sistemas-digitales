@@ -162,6 +162,19 @@ Hablamos de overflow/desbordamiento cuando
 \subsection*{Acarreo / Carry}
 Ocurre cuando realizamos una suma de números binarios y el resultado tiene más bits que los números originales que estamos sumando
 
+\subsection*{Borrow}
+Borrow \(\equiv\) Préstamo. \\
+Se produce cuando el sustraendo (denominador) es mayor que el minuendo (numerador) por lo tanto se debe pedir.
+
+\begin{lstlisting}
+      0111
+    - 1000
+      ====
+      1011
+
+      El primer cero le pide al uno de su derecha.
+\end{lstlisting}
+
 \subsection*{Suma entre números binarios}
 Se hace exactamente igual que una suma común y corriente. \\
 Es importante prestar atención a la cantidad de dígitos que nos piden para representarlo, y en caso de estar en \(C_{2}\) que el signo no cambie.\\ 
