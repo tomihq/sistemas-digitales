@@ -614,6 +614,7 @@ Está conformado por varias entradas de control y entradas de datos. Existe una 
 \begin{itemize}
     \item Entradas de control: se indican de la manera \(c_{n}\)
     \item Entradas de datos: se indican de la manera \(e_{n}\)
+    \item Ojo: Antes de prender cualquier entrada de control, hay que asegurarse que entrada de datos esté puesta en el que valor que queremos
 \end{itemize} 
 Te ayuda a ahorrar recursos, pero todas las acciones tardan mucho más tiempo porque solo se ejecuta una a la vez. \\
 Nos garantiza que la información solo se envía por un único canal. \\
@@ -759,6 +760,7 @@ Veamos un ejemplo en Logisim usando registros y una ALU con el tema este de la s
     \item Al apagar el clock, todo sigue igual.
     \item Al encender el clock en el primer flanco de subida la ALU recibió el valor en \texttt{ALU\_A\_WRITE} del \texttt{Registro\_00} que expuso previamente en \texttt{Reg0\_enableOut}.
 \end{itemize}
+En circuitos secuenciales se niega el clock para que cada operación pueda tomarse el tiempo que necesita, caso contrario pasa basura.
 
 \subsection*{Flip-Flop JK}
 Está armado en base a Latch JK + Clock. \\
@@ -824,7 +826,6 @@ En la materia, una combinación basura de un componente de tres estados es que h
     \end{subfigure}
 
     \end{figure}
-
 
 
 \subsection*{Bus}
