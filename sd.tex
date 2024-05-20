@@ -801,6 +801,31 @@ Al estado Desconectado le decimos que es de Alta Impedancia y se simboliza \text
     \includegraphics[width=\linewidth]{assets/tres_estados.png}
     \label{fig:tres_estados}
 \end{minipage}\]
+En la materia, una combinación basura de un componente de tres estados es que haya más de una entrada de control prendida con una misma entrada de dato. Esto es porque si bien en Logisim se acepta, no tendría sentido abrir dos conductos y mandar dos datos (iguales), la corriente siempre varía en algún momento y lo haría estallar. \\
+
+\begin{figure}[h]
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{assets/comb_basura_tres_estados.png}
+        \caption{Caso basura (erróneo)}
+        \label{fig:comb_basura_tres_estados}
+        \end{subfigure}
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+    \includegraphics[width=0.7\linewidth]{assets/comb_basura_tres_estados_explota.png}
+    \caption{Caso erróneo (explota)}
+    \label{fig:comb_basura_tres_estados_explota}
+    \end{subfigure}
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+    \includegraphics[width=0.6\linewidth]{assets/comb_ok_tres_estados.png}
+    \caption{Caso ok}
+    \label{fig:comb_ok_tres_estados}
+    \end{subfigure}
+
+    \end{figure}
+
+
 
 \subsection*{Bus}
 Nos va a servir para poder conectar varios componentes. Es una vía de n bits que van a estar conectando todos los componentes de nuestra arquitectura.
