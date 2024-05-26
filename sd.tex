@@ -1291,10 +1291,10 @@ Pasemos esto a TypeScript: A modo ilustrativo, si la función recursiva termina 
 
     const resta = (a0: number, a1: number): number | boolean => {
         if(a0 == 0){
-            return true;
+            return true; //epilogo
         }
         else{
-            return resta(a0-a1, a1);  
+            return resta(a0-a1, a1);  //sigo
         }
     }
 
