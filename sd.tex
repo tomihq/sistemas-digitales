@@ -1297,9 +1297,26 @@ Nota: Utilizando el enfoque estructural, la implementación de un mismo comporta
 Se describen con componentes de memoria y se emplean bloques always.
 \subsection*{Bloques Always}
 Utilizados para indicar frente a qué evento se debe actualizar el estado de cada componente. \\ 
-Cada bloque always viene con una lista de eventos (sensitivity list) que les hace efecto. 
+Cada bloque always viene con una lista de eventos (sensitivity list) que les hace efecto.  \\
+Nota: Si el bloque always tiene más de una asignación se las debe agrupar en un par begin end \\
 Véase \hyperref[subsec:SVL_bloques_clk]{anexo} para un ejemplo. \\
 \[bloque \ @(evento \ var)\]
+\subsection*{Reset asincrónico - sincrónico}
+Reset asincrónico: Cobra efecto en cuanto cambia de valor la señal.
+Reset sincrónico: Cobra efecto frente al evento del flanco ascendente del reloj.
+\subsection*{Always Comb - Circuitos Combinatorios}
+No entendí
+\subsection*{Case - Circuitos Combinatorios}
+Se usa igual que en los lenguajes de programación pero acá es simplemente case.
+\begin{lstlisting}
+    case(data):
+     0: segments = algo;
+     1: segments = algo; 
+     ...
+     default: segments = algo; 
+    endcase
+\end{lstlisting}
+Nota: segments es una variable de salida de 7 bits.
 \section*{Anexo - Ejercicios}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
