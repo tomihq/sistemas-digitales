@@ -1104,11 +1104,34 @@ El Program Counter va cambiando la instrucción que está ejecutando gracias al 
 Se va pisando el PC (Program Counter). 
 
 \subsection*{Etiquetas en RISC V}
-Nos permiten ponerle nombre a subproblemas.
+Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/etiquetas_beq.png}
     \label{fig:etiquetas_beq}
 \end{minipage}\] 
+
+\subsection*{Orden que toman las operaciones en memoria}
+Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
+\begin{lstlisting}
+    li a0, 4228 <- 0x0000
+    li a1, 2114 <- 0x0004
+    jal ra, resta <- 0x0008
+    fin: 
+        beq zero, zero, fin <- 0x000c 
+    resta: 
+    prologo:
+        addi sp, sp, -4 <- 0x0010
+        sw ra, 0(sp) <- 0x0014
+        sub a0, a0, a1 <- 0x0018
+        beq a0, zero, epilogo <- 0x001c
+    sigo: 
+        jal ra, resta <- 0x0020
+    epilogo:
+        lw ra, 0(sp) <- 0x0024
+        addi sp, sp, 4 <- 0x0028
+        ret <- 0x002c
+\end{lstlisting}
+Revisar
 
 \subsection*{Saltos condicionales}
 Instrucciones que pisan el PC: 
