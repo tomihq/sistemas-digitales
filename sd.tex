@@ -1190,4 +1190,57 @@ Programa final con inicialización de los datos en RISC V
     \includegraphics[width=\linewidth]{assets/risc_v_ejercicio.png}
     \label{fig:risc_v_ejercicio}
 \end{minipage}\]
+
+\section*{Cosas a utilizar en Risc V (machete)}
+
+Página 21 Guia Práctica de Risc V
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/registros_riscv.png}
+    \label{fig:registros_riscv}
+\end{minipage}\]
+
+Página 18 de Guia Práctica de Risc V
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/ins_risc_v.png}
+    \label{fig:ins_risc_v}
+\end{minipage}\]
+Risc V cheatsheet
+\[\begin{minipage}[b]{0.8\textwidth}
+    \includegraphics[width=\linewidth]{assets/32_bit_instruction_rirsc_v.png}
+    \label{fig:32_bit_instruction_rirsc_v}
+\end{minipage}\]
+
+\section*{Anexo - Ejercicios}
+\textbf{Decodifique a instrucciones de Risc-V} \\
+1. $0x00700293$ \\ 
+
+\textbf{Pasamos cada numero hexadecimal a binario, cada hexa son 4 bits de binario} \\ 
+$0000 \ 0000 \ 0111 \ 0000 \ 0000 \ 0010 \ 1001 \ 0011$ \\
+
+\textbf{Ahora sabemos que el opcode son los últimos 7 bits, reagrupamos} \\ 
+$0000 \ 0000 \ 0111 \ 0000 \ 0000 \ 0010 \ 1 \ 0010011$ \\
+
+\textbf{Vemos que familia de operación corresponde a 0010011 en la tabla de la Figura 2.3. La familia es $ \implies $ I} \\
+\textbf{Ahora vemos que lo que le sigue es el rd, por lo tanto reagrupo} \\
+$0000 \ 0000 \ 0111 \ 0000 \ 0000 \ 00101 \ 0010011$ \\
+
+\textbf{Lo que sigue ahora es la func, que son 3 bits, por lo tanto reagrupo} \\
+$0000 \ 0000 \ 0111 \ 0000 \ 0 \ 000 \ 00101 \ 0010011$ \\
+
+\textbf{Lo que sigue ahora es el rs1 que toma 5 bits, por lo tanto reagrupo} \\ 
+$0000 \ 0000 \ 0111 \ 00000 \ 000 \ 00101 \ 0010011$ \\ 
+
+\textbf{Lo que sigue ahora es el immediate (20 a 31) porque estamos en la familia del I, por lo tanto reagrupo} \\ 
+$0000 0000 0111 \ 00000 \ 000 \ 00101 \ 0010011$ \\
+
+\textbf{Por último, traducimos a operaciones de Risc-V} \\ 
+0010011 000: ADDI  \\ 
+00101 rd: pasado a decimal es 5, por lo tanto en la tabla de registros x5 es t0. \\
+00000 rs1: pasado a decimal es 0, por lo tanto en la tabla de registros x0 es zero. \\
+0x007: es donde se guarda en memoria, eso en decimal es 7 por lo tanto en la tabla de registros x7 es t2. \\ 
+
+\textbf{Luego, juntamos todos los operandos en Risc-V} \\ 
+ADDI t0, zero, t2
+
+
 \end{document}
