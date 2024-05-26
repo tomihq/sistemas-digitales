@@ -1457,7 +1457,7 @@ Circuito sintetizado:
 \end{lstlisting}
 Nótese que lowmux, highmux y finalmux son instancias de mux2.
 \newpage
-\subsection*{System Verilog - Bloques no bloqueantes}
+\subsection*{System Verilog - Asignación no bloqueantes}
 \label{subsec:SVL_bloques_clk}
 \begin{lstlisting}
     module flop(input logic clk, input logic [3:0] d, output logic[3:0] q);
@@ -1465,4 +1465,5 @@ Nótese que lowmux, highmux y finalmux son instancias de mux2.
         q < = d;
     endmodule
 \end{lstlisting}
+La asignación no bloqueante de d en q se hace cuando ocurre el evento posedge clk, lo que significa que se actualiza el estado en el flanco ascendente de la señal del clock.
 \end{document}
