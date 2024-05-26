@@ -1297,8 +1297,15 @@ Preguntas:
     \item b) Hecho arriba 
     \item c) TODO
     \item d) TODO 
-    \item e) El valor final de a1 sería 0, pues dejaría de hacer el paso recursivo y llegaría a 0.
-    \item f) El último valor del PC es la última instrucción que ejecutó, sería 0x0014 (fin).
+    \item e) ¿Cual es el valor final de a1? El valor final de a1 sería 0, pues dejaría de hacer el paso recursivo y llegaría a 0.
+    \item f) ¿Cuál es el valor final del PC? El último valor del PC es la última instrucción que ejecutó, sería 0x0014 (fin).
+    \item g) Listar la secuencia descripta por el PC. 0x0000 0x0004 0x0008 0x0010 0x0018 0x001c 0x0020 0x0024 0x0028 (vuelve a entrar a prologo) 0x0018 0x001c 0x0020 0x0024 (evalua guarda, true va directo a epilogo) 0x002c 0x0030 0x0034 (el return nos manda de vuelta al jal) 0x0010 0x0014 (fin)
+    \item h) Indique qué valores toman los registros ra y sp: al inicio, durante y al finalzar la ejecución
+    \begin{itemize}
+        \item ra: 0x0010 antes de saltar a resta, dentro del prologo, ra se guarda en la primera posicion del sp ocupando los primeros 4 bytes, finalmente en epilogo, a ra se le coloca la posición del elemento 0 del stack pointer. De igual manera, ra siempre tiene el mismo valor, nunca cambia.
+        \item sp: Se desconoce que tiene inicialmente pero tiene cosas de memoria dinámica, variables globales, otras instrucciones, etc. Pero viendo solo el programa, el sp se mueve hacia abajo 4 bytes. Luego, en el espacio que reservamos se guarda el valor de ra. Por ultimo, los primeros 4 bytes del stack pointer se almacenan en ra y se liberan los 4 bytes que habíamos reservado.
+    \end{itemize}
+    \item i) Reemplazar la segunda instrucción li a1, 1023 de modo que a1 sea a0 dividido 2 con una única instrucción (acá hay algo raro porque la segunda instrucción no es a1, 1023 es a1 2114)
 \end{itemize}
 Pasemos esto a TypeScript: A modo ilustrativo, si la función recursiva termina retornará true, caso contrario se quedaría colgada. En estos casos siempre termina xq los números dan.
 \begin{lstlisting}
