@@ -976,7 +976,7 @@ Los registros pueden nombrarse por su índice, desde x0 a x31 o según su uso ha
     \includegraphics[width=\linewidth]{assets/PC.png}
     \label{fig:PC}
 \end{minipage}\]
-El registro PC es el Program Counter y lleva el registro de lo que se está ejecutando en un momento dado. \\
+El registro PC es el Program Counter y lleva el registro de lo que se está ejecutando en un momento dado. Cuando un programa ya termina, el PC sigue apuntando a la posición de memoria de lo último que ejecutó. \\
 Hagamos el cálculo que habiamos hecho antes (a = b + c - d) pero con las variables en los registros.
 \begin{itemize}
     \item \# s0 = a, s1 = b
@@ -1254,7 +1254,7 @@ ADDI t0, zero, t2
     li a1, 2114 <- 0x0008 a 0x0010 (8 a 16) sin incluir
     jal ra, resta <- 0x0010
     fin: 
-        beq zero, zero, fin <- 0x0014 
+        beq zero, zero, fin <- 0x0014
     resta: 
     prologo:
         addi sp, sp, -4 <- 0x0018
@@ -1269,6 +1269,7 @@ ADDI t0, zero, t2
         ret <- 0x0034
 \end{lstlisting}
 \textbf{Nota}: Recordar que las etiquetas no son funciones, son simplemente instrucciones que se leen. Es decir, por ejemplo, cuando va por prologo y llega a beq si es falso ejecuta sigo, pero no es necesario llamarla sino que lo de jal ra, resta es parte del prologo solo que se le dio un subnombre. Todo se lee de arriba hacia abajo, por lo tanto a epilogo tambien estaría dentro de prologo por así decirlo pero nunca llega porque el beq si es falso hace llamada recursiva. Solo llega a epilogo y cambia el PC si el beq es true. \\ 
+Nota: fin ¿no termina nunca cierto? es re contra recursivo
 ¿Qué hace este código? línea por línea
 \begin{itemize}
     \item li a0, 4228: carga el valor de 4228 en el registro a0. Internamente son dos operaciones, lui y addi por lo tanto ocupan desde 0x0000 a 0x0008 (sin incluir).
@@ -1283,6 +1284,21 @@ ADDI t0, zero, t2
     \item addi: vuelve a subir el stack a su posicion inicial porque ya no necesitamos hacer nada (nótese que es importante que subimos dejando todo como estaba pero nuestro ra que habiamos guardado antes en la primera pos lo recuperamos con el lw)
     \item ret: vuelve a jal ra, resta y ejecuta fin.
     \item el programa termina si zero es igual a zero pero luego ejecuta fin recursivamente. (no termina nunca)
+\end{itemize}
+Preguntas: 
+\begin{itemize}
+    \item a) Indicar en qué posiciones de memoria se encuentra cada etiqueta
+    \begin{itemize}
+        \item fin: 0x0014
+        \item resta: 0x0010
+        \item sigo: 0x0028
+        \item epilogo: 0x002c
+    \end{itemize}
+    \item b) Hecho arriba 
+    \item c) TODO
+    \item d) TODO 
+    \item e) El valor final de a1 sería 0, pues dejaría de hacer el paso recursivo y llegaría a 0.
+    \item f) El último valor del PC es la última instrucción que ejecutó, sería 0x0014 (fin).
 \end{itemize}
 Pasemos esto a TypeScript: A modo ilustrativo, si la función recursiva termina retornará true, caso contrario se quedaría colgada. En estos casos siempre termina xq los números dan.
 \begin{lstlisting}
