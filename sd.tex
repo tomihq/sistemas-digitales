@@ -1268,16 +1268,42 @@ ADDI t0, zero, t2
         addi sp, sp, 4 <- 0x0030
         ret <- 0x0034
 \end{lstlisting}
-Nota: Recordar que las etiquetas no son funciones, son simplemente instrucciones que se leen. Es decir, por ejemplo, cuando va por prologo y llega a beq si es falso ejecuta sigo, pero no es necesario llamarla sino que lo de jal ra, resta es parte del prologo solo que se le dio un subnombre. Todo se lee de arriba hacia abajo, por lo tanto a epilogo tambien estaría dentro de prologo por así decirlo pero nunca llega porque el beq si es falso hace llamada recursiva. Solo llega a epilogo y cambia el PC si el beq es true. 
+\textbf{Nota}: Recordar que las etiquetas no son funciones, son simplemente instrucciones que se leen. Es decir, por ejemplo, cuando va por prologo y llega a beq si es falso ejecuta sigo, pero no es necesario llamarla sino que lo de jal ra, resta es parte del prologo solo que se le dio un subnombre. Todo se lee de arriba hacia abajo, por lo tanto a epilogo tambien estaría dentro de prologo por así decirlo pero nunca llega porque el beq si es falso hace llamada recursiva. Solo llega a epilogo y cambia el PC si el beq es true. \\ 
 ¿Qué hace este código? línea por línea
 \begin{itemize}
     \item li a0, 4228: carga el valor de 4228 en el registro a0. Internamente son dos operaciones, lui y addi por lo tanto ocupan desde 0x0000 a 0x0008 (sin incluir).
     \item li a1, 2114: carga el valor de 2114 en el registro a1. Internamente son dos operaciones, lui y addi por lo tanto ocupan desde 0x0000 a 0x0010 (sin incluir)
     \item jal ra, resta: salta a la etiqueta de resta y guarda la dirección de retorno en ra (para que el return de resta vuelva acá)
     \item addi sp, sp, -4: reserva 4 bytes en el stack pointer bajándolo. Esto es un caso específico, podría bajar 8 bytes si se quisiera pero como solo quiere escribir un solo valor, basta con 4 bytes. Importante que luego de hacer todo el stack debe volver a su posición original.
-    \item sw: guarda ra en la primera posición del stack pointer. esto es porque luego cuando salta a epilogo tiene que saber bien.
-    \item  
+    \item sw: guarda ra en la primera posición del stack pointer. esto es porque luego cuando salta a epilogo tiene que saber bien a donde volver.
+    \item sub: guarda en a0 la resta entre a0 y a1.
+    \item beq: verifica si a0 es igual a zero, si es igual a cero salta a epilogo, caso contrario hace una llamada recursiva nuevamente a resta.
+    \item sigo: si beq es falso llega acá, hace la llamada recursivamente como en la inicial mandando un nuevo estado.
+    \item lw: se guarda en ra el valor que estaba en 0(sp) cuando lo guardamos antes.
+    \item addi: vuelve a subir el stack a su posicion inicial porque ya no necesitamos hacer nada (nótese que es importante que subimos dejando todo como estaba pero nuestro ra que habiamos guardado antes en la primera pos lo recuperamos con el lw)
+    \item ret: vuelve a jal ra, resta y ejecuta fin.
+    \item el programa termina si zero es igual a zero pero luego ejecuta fin recursivamente. (no termina nunca)
 \end{itemize}
+Pasemos esto a TypeScript: A modo ilustrativo, si la función recursiva termina retornará true, caso contrario se quedaría colgada. En estos casos siempre termina xq los números dan.
+\begin{lstlisting}
+    const a0:number = 4228;
+    const a1:number = 2114;
+
+    const resta = (a0: number, a1: number): number | boolean => {
+        if(a0 - a1 == 0){
+            return true;
+        }
+        else{
+            return resta(a0-a1, a1);  
+        }
+    }
+
+    const res = resta(a0, a1);
+    console.log(res); //true
+\end{lstlisting}
+
+
+
 
 
 \end{document}
