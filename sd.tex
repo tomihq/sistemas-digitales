@@ -1232,10 +1232,12 @@ Es la fuente de dos procesos.
 \end{itemize}
 Véase \hyperref[subsec:SVL_S_S]{anexo} para un ejemplo. \\ 
 Nota: en System Verilog, cuando vemos algo de tipo logic[7:0] significa que es un vector de 8 bits donde el 7 es el MSB y el 0 el LSB.
+\section*{Modelado comportamental}
 \subsection*{Operadores de reducción}
 Colapsan los bits de una señal de tamaño variable aplicando una operación lógica. \\
 $assign \ y = \&a$ \\
 Ejecuta una especie de and entre todos los valores que tiene a sin necesidad de hacer uno por uno (ej: a[7] \& a[6]...) \\
+Nota: La asignación (=) es bloqueante mientras que la asignación ($ < = $) es no bloqueante.
 \subsection*{Asignación condicional}
 Infiere un multiplexor de dos entradas, es idéntico al ternario de C.
 $ assign \ y \ = \ s \ ? \ d1 \ : \ d0; $
@@ -1286,6 +1288,18 @@ Si sucede esto, indica un error en el diseño.
 \begin{lstlisting}
     assign y = {c[2:1], {3{d[0]}}, c[0], 3'b101};
 \end{lstlisting}
+\section*{Modelado Estructural}
+Para poder componer módulos, tenemos que hacer instancias de ellos. 
+\[componente \ nombreInstancia(parametros)\] \\ 
+Véase \hyperref[subsec:SVL_comp]{anexo} para un ejemplo. \\
+Nota: Utilizando el enfoque estructural, la implementación de un mismo comportamiento se puede conseguir como composición de distinto tipo de componentes. 
+\subsection*{Circuitos Secuenciales}
+Se describen con componentes de memoria y se emplean bloques always.
+\subsection*{Bloques Always}
+Utilizados para indicar frente a qué evento se debe actualizar el estado de cada componente. \\ 
+Cada bloque always viene con una lista de eventos (sensitivity list) que les hace efecto. 
+Véase \hyperref[subsec:SVL_bloques_clk]{anexo} para un ejemplo. \\
+\[bloque \ @(evento \ var)\]
 \section*{Anexo - Ejercicios}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
@@ -1432,4 +1446,23 @@ Circuito sintetizado:
 \includegraphics[width=\linewidth]{assets/sintesis_full_adder.png}
 \label{fig:sintesis_full_adder}
 \end{minipage}\] 
+\subsection*{Composición de multiplexores - Comportamiento Estructural}
+\label{subsec:SVL_comp}
+\begin{lstlisting}
+    module mux4(input logic [3:0] d0, d1, d2, d3, input logic[1, 0] s, output logic [3:0] y);
+    logic [3:0] low, high;
+    mux2 lowmux(d0, d1, s[0], low);
+    mux2 highmux(d2, d3, s[0], high);
+    mux2 finalmux(low, high, s[1], y);
+\end{lstlisting}
+Nótese que lowmux, highmux y finalmux son instancias de mux2.
+\newpage
+\subsection*{System Verilog - Bloques no bloqueantes}
+\label{subsec:SVL_bloques_clk}
+\begin{lstlisting}
+    module flop(input logic clk, input logic [3:0] d, output logic[3:0] q);
+        always_ff @(posedge clk)
+        q < = d;
+    endmodule
+\end{lstlisting}
 \end{document}
