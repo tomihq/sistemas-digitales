@@ -996,6 +996,7 @@ El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefij
     \item \(addi \ s1,\ s0, \ -12\) \# b= a - 12
 \end{itemize}
 En este caso, el 4 y el -12 son extendidos a 32 bits para poder operar. 
+\textbf{Ojo: Las operaciones que son inmediatas son fórmulas compuestas. Es decir, no toman una sola posición de memoria sino que toman varias porque son alias para operaciones compuestas. Ej: li a0, 4228 hace un lui y un addi.}
 \subsection*{Asignación}
 Se hace zero + lo que queremos asignar. Consideremos que s0 = i
 \begin{itemize}
@@ -1113,25 +1114,31 @@ Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
 \subsection*{Orden que toman las operaciones en memoria}
 Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
 \begin{lstlisting}
-    li a0, 4228 <- 0x0000
-    li a1, 2114 <- 0x0004
-    jal ra, resta <- 0x0008
+    li a0, 4228 <- 0x0000 a 0x0008 (0 a 8) sin incluir
+    li a1, 2114 <- 0x0008 a 0x0010 (8 a 16) sin incluir
+    jal ra, resta <- 0x0010
     fin: 
-        beq zero, zero, fin <- 0x000c 
+        beq zero, zero, fin <- 0x0014 
     resta: 
     prologo:
-        addi sp, sp, -4 <- 0x0010
-        sw ra, 0(sp) <- 0x0014
-        sub a0, a0, a1 <- 0x0018
-        beq a0, zero, epilogo <- 0x001c
+        addi sp, sp, -4 <- 0x0018
+        sw ra, 0(sp) <- 0x001c
+        sub a0, a0, a1 <- 0x0020
+        beq a0, zero, epilogo <- 0x0024
     sigo: 
-        jal ra, resta <- 0x0020
+        jal ra, resta <- 0x0028
     epilogo:
-        lw ra, 0(sp) <- 0x0024
-        addi sp, sp, 4 <- 0x0028
-        ret <- 0x002c
+        lw ra, 0(sp) <- 0x002c
+        addi sp, sp, 4 <- 0x0030
+        ret <- 0x0034
 \end{lstlisting}
 Revisar
+¿Qué hace este código? línea por línea
+\begin{itemize}
+    \item li a0, 4228: carga el valor de 4228 en el registro a0
+    \item li a1, 2114: carga el valor de 2114 en el registro a1
+    \item 
+\end{itemize}
 
 \subsection*{Saltos condicionales}
 Instrucciones que pisan el PC: 
