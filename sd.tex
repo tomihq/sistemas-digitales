@@ -1259,11 +1259,18 @@ También conocido como "prioridad" de operaciones.
 \end{minipage}\]
 \subsection*{Valores numéricos}
 \[bits' + base + valor\]
-ej: 8b10 $ \ rightarrow \ $ 8 bits, binario número 2 (0000 0010) \\ 
+ej: 8b10 $ \rightarrow \ $ 8 bits, binario número 2 (0000 0010) \\ 
 La base se indica con una sola letra: d (decimal), b (binario), o (octal), h (hexadecimal). \\
 Nota: siempre se termina almacenando en binario. 
 \subsection*{Alta Impedancia (Resistencia)}
-En System Verilog se representa con el valor de z. 
+En System Verilog se representa con el valor de z. \\
+\begin{lstlisting}
+    module buffer3(input logic[3:0] a, input logic enable, output tri[3:0] y);
+        assign y = en ? a : 4'bz;
+    endmodule
+\end{lstlisting}
+enable es una señal de control que dice si deja pasar la energía o no. Si está apagada entonces estaría en Hi-Z caso contrario, deja pasar el valor que tenga a. \\ 
+Nota: Cuando enable es false, se le asigna 4'bz porque y es de 4 bits según la entrada al módulo ([3:0])
 \subsection*{Valores desconocidos}
 En SystemVerilog, cuando los valores de una señal no puede definirse y se considera como desconocida o como de valor x se puede valer a dos razones 
 \begin{itemize}
@@ -1271,6 +1278,14 @@ En SystemVerilog, cuando los valores de una señal no puede definirse y se consi
     \item Contención: Cuando dos buffers de tres estados están conectados al mismo bus pero envían señales distintas.
 \end{itemize}
 Si sucede esto, indica un error en el diseño. 
+\subsection*{Manipulación de bits}
+\begin{itemize}
+    \item \{\}: concatena bits. El número de afuera indica la cantidad de repeticiones. Ej: $ \{3\{d[0]\}\} \equiv d[0]d[0]d[0] $  
+    \item \texttt{[]} accede a una lista específica de bits. Tienen que ser números descendentes. Es decir a $>$ b. Ej: c[a:b]
+\end{itemize}
+\begin{lstlisting}
+    assign y = {c[2:1], {3{d[0]}}, c[0], 3'b101};
+\end{lstlisting}
 \section*{Anexo - Ejercicios}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
