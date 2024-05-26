@@ -1113,33 +1113,7 @@ Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
 
 \subsection*{Orden que toman las operaciones en memoria}
 Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
-\begin{lstlisting}
-    li a0, 4228 <- 0x0000 a 0x0008 (0 a 8) sin incluir
-    li a1, 2114 <- 0x0008 a 0x0010 (8 a 16) sin incluir
-    jal ra, resta <- 0x0010
-    fin: 
-        beq zero, zero, fin <- 0x0014 
-    resta: 
-    prologo:
-        addi sp, sp, -4 <- 0x0018
-        sw ra, 0(sp) <- 0x001c
-        sub a0, a0, a1 <- 0x0020
-        beq a0, zero, epilogo <- 0x0024
-    sigo: 
-        jal ra, resta <- 0x0028
-    epilogo:
-        lw ra, 0(sp) <- 0x002c
-        addi sp, sp, 4 <- 0x0030
-        ret <- 0x0034
-\end{lstlisting}
-Revisar
-¿Qué hace este código? línea por línea
-\begin{itemize}
-    \item li a0, 4228: carga el valor de 4228 en el registro a0
-    \item li a1, 2114: carga el valor de 2114 en el registro a1
-    \item 
-\end{itemize}
-
+Ver ejercicio en \hyperref[subsec:TPRVC]{anexo} 
 \subsection*{Saltos condicionales}
 Instrucciones que pisan el PC: 
 \begin{itemize}
@@ -1241,6 +1215,7 @@ Risc V cheatsheet
 \end{minipage}\]
 
 \section*{Anexo - Ejercicios}
+\subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
 1. $0x00700293$ \\ 
 
@@ -1271,6 +1246,38 @@ $0000 0000 0111 \ 00000 \ 000 \ 00101 \ 0010011$ \\
 
 \textbf{Luego, juntamos todos los operandos en Risc-V} \\ 
 ADDI t0, zero, t2
+
+\subsection*{Traducción de programa de Risc V a castellano y observando las posiciones de memoria de instrucciones}
+\label{subsec:TPRVC}
+\begin{lstlisting}
+    li a0, 4228 <- 0x0000 a 0x0008 (0 a 8) sin incluir
+    li a1, 2114 <- 0x0008 a 0x0010 (8 a 16) sin incluir
+    jal ra, resta <- 0x0010
+    fin: 
+        beq zero, zero, fin <- 0x0014 
+    resta: 
+    prologo:
+        addi sp, sp, -4 <- 0x0018
+        sw ra, 0(sp) <- 0x001c
+        sub a0, a0, a1 <- 0x0020
+        beq a0, zero, epilogo <- 0x0024
+    sigo: 
+        jal ra, resta <- 0x0028
+    epilogo:
+        lw ra, 0(sp) <- 0x002c
+        addi sp, sp, 4 <- 0x0030
+        ret <- 0x0034
+\end{lstlisting}
+Nota: Recordar que las etiquetas no son funciones, son simplemente instrucciones que se leen. Es decir, por ejemplo, cuando va por prologo y llega a beq si es falso ejecuta sigo, pero no es necesario llamarla sino que lo de jal ra, resta es parte del prologo solo que se le dio un subnombre. Todo se lee de arriba hacia abajo, por lo tanto a epilogo tambien estaría dentro de prologo por así decirlo pero nunca llega porque el beq si es falso hace llamada recursiva. Solo llega a epilogo y cambia el PC si el beq es true. 
+¿Qué hace este código? línea por línea
+\begin{itemize}
+    \item li a0, 4228: carga el valor de 4228 en el registro a0. Internamente son dos operaciones, lui y addi por lo tanto ocupan desde 0x0000 a 0x0008 (sin incluir).
+    \item li a1, 2114: carga el valor de 2114 en el registro a1. Internamente son dos operaciones, lui y addi por lo tanto ocupan desde 0x0000 a 0x0010 (sin incluir)
+    \item jal ra, resta: salta a la etiqueta de resta y guarda la dirección de retorno en ra (para que el return de resta vuelva acá)
+    \item addi sp, sp, -4: reserva 4 bytes en el stack pointer bajándolo. Esto es un caso específico, podría bajar 8 bytes si se quisiera pero como solo quiere escribir un solo valor, basta con 4 bytes. Importante que luego de hacer todo el stack debe volver a su posición original.
+    \item sw: guarda ra en la primera posición del stack pointer. esto es porque luego cuando salta a epilogo tiene que saber bien.
+    \item  
+\end{itemize}
 
 
 \end{document}
