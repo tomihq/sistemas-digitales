@@ -1262,7 +1262,15 @@ También conocido como "prioridad" de operaciones.
 ej: 8b10 $ \ rightarrow \ $ 8 bits, binario número 2 (0000 0010) \\ 
 La base se indica con una sola letra: d (decimal), b (binario), o (octal), h (hexadecimal). \\
 Nota: siempre se termina almacenando en binario. 
-
+\subsection*{Alta Impedancia (Resistencia)}
+En System Verilog se representa con el valor de z. 
+\subsection*{Valores desconocidos}
+En SystemVerilog, cuando los valores de una señal no puede definirse y se considera como desconocida o como de valor x se puede valer a dos razones 
+\begin{itemize}
+    \item Valor no inicializado: La señal no se ha inicializado
+    \item Contención: Cuando dos buffers de tres estados están conectados al mismo bus pero envían señales distintas.
+\end{itemize}
+Si sucede esto, indica un error en el diseño. 
 \section*{Anexo - Ejercicios}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
