@@ -1005,14 +1005,29 @@ Se hace zero + lo que queremos asignar. Consideremos que s0 = i
     \item \(addi \ s0,\ zero,\ 4\) \# i = 4
 \end{itemize}
 \subsection*{Valores inmediatos de 32 bits}
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/valores_inmediatos_pos.png}
-    \label{fig:valores_pos}
-\end{minipage}\]
-¿La idea sería pasar de derecha a izquierda, o pasar lo de la izquierda a la derecha? \\
-¿Por qué los bits más altos son considerados ABCDE? \\
-¿Cual es la regla para decir cuales son altos o bajos? (en este contexto manual)
-Lo que no entiendo es, los bits mas altos están seleccionados a mano (ABCDE) y los más bajos también (123) pero no podrían ser los más altos ABCD y los más bajos E123?
+Como en Risc-V podemos cargar valores inmediatos de 12 bits, cuando ya agregamos un bit adicional tenemos que hacer dos operaciones: un lui y un addi. \\
+Acá se va a mostrar un ejemplo de como cargar un valor inmediato de 32 bits (excede los 12 bits). \\ 
+\textbf{1}. Agarra los primeros 20 bits en binario. Hace un lui, es decir, de esos 20 extiende a la cantidad de bits total que es el número. En este caso, toma 20 extiende hasta 32 bits (agrega 12 bits). \\
+\textbf{2}. Luego, hace un addi con la variable anterior, pero agregandole los 12 bits menos significativos. \\ \\ 
+Nótese que agarramos la parte alta y la extendemos, para despues pisar esos ceros través del addi poniendole los últimos 12 bits. 
+\begin{itemize}
+    \item 0xABCDE123 ¿excede los 12 bits para ser un inmediato? Pasemos a binario
+    \begin{itemize}
+        \item 0001 0010 0011 0100 0101 0110 0111 1000
+        \item Sí, excede los 12 bits; Por lo tanto tenemos que usar un lui y un addi para cargarlo.
+    \end{itemize}
+    \item De ese binario gigante, hago un lui de los 20 más significativos \& addi de los 12 menos significativos.
+    \item Entonces, si seguimos en binario nos queda algo así:
+    \begin{itemize}
+        \item lui s2, 0001 \ 0010 \ 0011 \ 0100 \ 0101 como acá tengo 20 bits pero estoy en 32 bits, extiendo con 0's. \\ Rta: 0001 \ 0010 \ 0011 \ 0100 \ 0101 \ 0000 \ 0000 \ 0000
+        \item addi s2, s2, 0110 0111 1000. \\ Rta: 0001 0010 0011 0100 0101 0110 0111 1000
+    \end{itemize} 
+    \item En Hexa:
+    \begin{itemize}
+        \item lui s2, 0xABCDE (nótese que cada letra son 4 bits, 4 * 5 = 20 bits). \\ Rta: 0xABCDE000 (nótese que se agregaron tres ceros, porque son lo que falta para llegar a 32 bits).
+        \item Luego que nuestro s2 ya tiene los ceros para pisar, cargo la parte baja con addi: addi s2, s2, 0x123. \\ Rta: 0xABCDE123 
+    \end{itemize}
+\end{itemize}
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/valores_inmediatos_neg.png}
     \label{fig:valores_neg}
