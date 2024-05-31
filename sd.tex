@@ -1041,14 +1041,14 @@ Cuando dice que la parte baja se expresa como un número negativo ¿está tratan
 \subsection*{Memoria}
 Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\ \\
 RISC V permite acceder a la memoria con índices (direcciones) de 32 bits osea 4.294.967.296 índices posibles. El índice apunta a un byte en particular. \\ \subsection*{Escritura y Lectura en Memoria}
-\textbf{Lectura}: Instrucción lw (load word); Es importante que lw carga \textbf{un registro que tiene un puntero hacia la RAM.} \\ 
-\[lw \ registroDestino, \ registroPunteroARam\] 
-Nota: se guarda en registroDestino, el registro que tiene un puntero a la RAM. \\ \\
-\textbf{Escritura}: Instrucción sw (store word); Es importante que sw guarda el contenido en \textbf{un registro que tiene un puntero hacia la RAM.}
-\[sw \ contenido, \ registroPunteroARam\] 
-Nota: se guarda en contenido, el registro que tiene un puntero a la RAM. \\
-\textbf{Importante: registroPunteroARam, en todos los casos debe ser un puntero a la RAM y debe haber sido inicializada.}
-Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} 
+\textbf{Lectura}: Instrucción lw (load word) \\ 
+lw carga en destino, el valor que tiene un registro que tiene un puntero hacia la ram. \\ 
+\[lw \ destino, \ registroALeer\] 
+\textbf{Escritura}: Instrucción sw (store word) \\
+sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
+\[sw \ registroAGuardar, \ destino\] \\ 
+\textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
+Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
 \subsection*{Lectura en Memoria (asignación a variable)}
 \[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/leyendo_memoria.png}
