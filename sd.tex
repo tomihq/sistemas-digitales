@@ -1390,14 +1390,14 @@ Véase \hyperref[subsec:datapath_example]{\underline{anexo para un ejemplo de un
 \subsection*{Registros en lw y sw}
 \label{subsec:punteros_ram_registros}
 \begin{lstlisting}
-    addi x1, x2, 3
-    sw x1, x3
+    addi x1, x2, 3 -> 5
+    sw x3, 0(x1) -> se coloca el valor de x3 en x1
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene el valor de 5. \\
 No, la implementación no es correcta, porque se intenta escribir en x3, un supuesto puntero a la RAM x1, pero x1 es un valor. Esto sería un error grave. \\ 
 \begin{lstlisting}
-    lw x1, 8(x2)
-    sw x1, 0(x3)
+    lw x1, 8(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras.
+    sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
