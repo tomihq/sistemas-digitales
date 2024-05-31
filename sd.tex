@@ -1354,8 +1354,26 @@ La microarquitectura se va a encargar de actualizar los registros y el program c
 
 \subsection*{Datapath}
 Un camino de datos o datapath es un conjunto de componentes funcionales, que realizan operaciones de procesamiento de datos, registros y buses. Junto con la unidad de control forman una CPU. \\
-La forma de poder agrandar un Datapath es agregando multiplexores. \\  
-\textbf{Pero, ¿quién es el encargado de controlar el orden de las operaciones en el DataPath?} la unidad de control. \\ 
+\textbf{Pero, ¿quién es el encargado de controlar el orden de las operaciones en el DataPath?} la unidad de control. \\  
+\subsection*{Componentes del DataPath y responsabilidades}
+Glosario antes de empezar: 
+\begin{itemize}
+    \item A: Address
+    \item RD: Read Destination
+    \item WD: Write Destination
+    \item WE: Write Enable 
+\end{itemize}
+El DataPath está formado por
+\begin{itemize}
+    \item Program Counter (CPU): Contiene la instrucción actual. PC Next: Si hay un salto condicional, entonces contiene la posición de memoria donde se encuentra el salto; en otro caso, se incrementan 4 bytes (una palabra).
+    \item Instruction Memory (CPU): Recibe el address de la instrucción para poder hacerle el fetch. Es decir, obtener la representación binaria de la operación.
+    \item Control Unit (CPU): Es el director de orquesta. Es quién le dice a cada componente qué es lo que tiene que hacer, y qué es lo que sigue luego de haber terminado su responsabilidad.
+    \item Register File (CPU): Posee dos puertos de lectura (RD1 y RD2) que vuelcan el valor de las entradas de escritura (A1 y A2) respectivamente. WD3 también es un puerto de entrada de escritura que escribe el dato en A3 durante el flanco ascendente del reoj si la señal de control WE3 se encuentra alta.
+    \item Multiplexores (CPU)
+    \item ALU (CPU)
+    \item Buses de Datos (CPU)
+    \item Data Memory (RAM)
+\end{itemize}
 Véase \hyperref[subsec:datapath_example]{\underline{anexo para un ejemplo de un datapath}} 
 \subsection*{Colores en un Data Path}
 \begin{itemize}
@@ -1532,29 +1550,11 @@ Nótese que lowmux, highmux y finalmux son instancias de mux2.
 La asignación no bloqueante de d en q se hace cuando ocurre el evento posedge clk, lo que significa que se actualiza el estado en el flanco ascendente de la señal del clock.
 \subsection*{DataPath, ejemplo con instrucción Risc V}
 \label{subsec:datapath_example}
-Glosario antes de empezar: 
-\begin{itemize}
-    \item A: Address
-    \item RD: Read Destination
-    \item WD: Write Destination
-    \item WE: Write Enable 
-\end{itemize}
-El DataPath está formado por
-\begin{itemize}
-    \item Program Counter (CPU): Contiene la instrucción actual, PCNext es una entrada que indica la próxima instrucción.
-    \item Instruction Memory (CPU): Recibe el address de la instrucción para poder hacerle el fetch. Es decir, obtener la representación binaria de la operación.
-    \item Control Unit (CPU): Es el director de orquesta. Es quién le dice a cada componente qué es lo que tiene que hacer, y qué es lo que sigue luego de haber terminado su responsabilidad.
-    \item Register File (CPU): Posee dos puertos de lectura (RD1 y RD2) que vuelcan el valor de las entradas de escritura (A1 y A2) respectivamente. WD3 también es un puerto de entrada de escritura que escribe el dato en A3 durante el flanco ascendente del reoj si la señal de control WE3 se encuentra alta.
-    \item Multiplexores (CPU)
-    \item ALU (CPU)
-    \item Buses de Datos (CPU)
-    \item Data Memory (RAM)
-\end{itemize}
-
 ¿Cómo se conecta Risc V con el DataPath? 
 \begin{lstlisting}
     ADD x1, x2, x3 <- suma x2 y x3 y lo guarda en x1
 \end{lstlisting}
+\textbf{El paso a paso}: 
 \begin{itemize}
     \item El PC se coloca sobre la instrucción
     \item Fetch: La instruction memory recibe el address de donde se encuentra la operación (ADD x1, x2, x3), y la respuesta es la operación en binario.
