@@ -1044,9 +1044,11 @@ RISC V permite acceder a la memoria con índices (direcciones) de 32 bits osea 4
 \textbf{Lectura}: Instrucción lw (load word) \\ 
 lw carga en destino, el valor que tiene un registro que tiene un puntero hacia la ram. \\ 
 \[lw \ destino, \ registroALeer\] 
+Mapa mental: a \( \leftarrow \) b \\
 \textbf{Escritura}: Instrucción sw (store word) \\
 sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
 \[sw \ registroAGuardar, \ destino\] \\ 
+Mapa mental: a \( \rightarrow \) b \\
 \textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
 Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
 \subsection*{Lectura en Memoria (asignación a variable)}
