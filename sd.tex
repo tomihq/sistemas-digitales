@@ -412,7 +412,7 @@ Sea \(p\) una variable proposicional, el opuesto de \(p\) lo escribimos como \(\
     \label{fig:propiedades_operaciones_logicas}
 \end{minipage}
 \subsection*{Operaciones booleanas}
-Se resuelven utilizando las \hyperref[subsec:PPOL]{propiedades para operaciones lógicas}
+Se resuelven utilizando las \hyperref[subsec:PPOL]{\underline{propiedades para operaciones lógicas}}
 \[Verifique \ si \ son \ equivalentes \ (X + \bar{Y} = \overline{(\bar{X} \ast Y)} \ast Z + X \ast \bar{Z} + \overline{(Y+Z)})\]
 \begin{itemize}
     \item  \(\overline{\bar{X} \ast Y} \ast Z + X \ast \bar{Z} + \textcolor{blue}{(\bar{Y} \ast \bar{Z})} \implies De \ Morgan\) 
@@ -422,7 +422,7 @@ Se resuelven utilizando las \hyperref[subsec:PPOL]{propiedades para operaciones 
     \item  \((X + \bar{Y}) \ast \textcolor{cyan}{1} \implies Identidad \) 
     \item  \((X + \bar{Y})\)
 \end{itemize}
-Nota: También se pueden probar equivalencias utilizando \hyperref[subsec:TDV]{tablas de verdad}
+Nota: También se pueden probar equivalencias utilizando \hyperref[subsec:TDV]{\underline{tablas de verdad}}
 \subsection*{Funciones booleanas}
 \begin{itemize}
     \item AND = A \(\ast \) B
@@ -997,7 +997,7 @@ El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefij
 \end{itemize}
 En este caso, el 4 y el -12 son extendidos a 32 bits para poder operar. \\ 
 \textbf{Ojo: cuando el número inmediato a representar no está en el rango de [-2048, 2047] ($2^{11} \ o \ 12 \ bits$) las operaciones deben realizar un addi y un lui (load upper immediate).} \\
-Véase ejercicio en \hyperref[subsec:TPRVC]{anexo}
+Véase ejercicio en \hyperref[subsec:TPRVC]{\underline{anexo}}
 
 \subsection*{Asignación}
 Se hace zero + lo que queremos asignar. Consideremos que s0 = i
@@ -1130,7 +1130,7 @@ Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
 
 \subsection*{Orden que toman las operaciones en memoria}
 Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
-Ver ejercicio en \hyperref[subsec:TPRVC]{anexo} 
+Ver ejercicio en \hyperref[subsec:TPRVC]{\underline{anexo}} 
 \subsection*{Saltos condicionales}
 Instrucciones que pisan el PC: 
 \begin{itemize}
@@ -1247,28 +1247,36 @@ Es la fuente de dos procesos.
     \item Simulación: Simula, a través de ondas como se comporta el programa dada una serie de entradas y verifica que la salida sea la esperada.
     \item Síntesis: Traduce el HDL a un conjunto de compuertas lógicas.
 \end{itemize}
-Véase \hyperref[subsec:SVL_S_S]{anexo} para un ejemplo. \\ 
+Véase \hyperref[subsec:SVL_S_S]{\underline{anexo}} para un ejemplo. \\ 
 Nota: en System Verilog, cuando vemos algo de tipo logic[7:0] significa que es un vector de 8 bits donde el 7 es el MSB y el 0 el LSB.
 \section*{Modelado comportamental}
+\subsection*{Tipos de asignaciones}
+\begin{itemize}
+    \item =: asignación bloqueante (aka: síncrona). En microarquitectura es un circuito combinatorio. 
+    \item < =: asignación no bloqueante (aka: asincrónica). En microarquitectura es un circuito secuencial que funciona con bloques always. 
+\end{itemize}
+Véase \hyperref[subsec:bloques_always]{\underline{bloques always}} para más información
 \subsection*{Operadores de reducción}
 Colapsan los bits de una señal de tamaño variable aplicando una operación lógica. \\
 $assign \ y = \&a$ \\
 Ejecuta una especie de and entre todos los valores que tiene a sin necesidad de hacer uno por uno (ej: a[7] \& a[6]...) \\
-Nota: La asignación (=) es bloqueante mientras que la asignación ($ < = $) es no bloqueante.
 \subsection*{Asignación condicional}
-Infiere un multiplexor de dos entradas, es idéntico al ternario de C \\ 
-$ assign \ y \ = \ s \ ? \ d1 \ : \ d0; $ \\ 
-s: entrada de control 
-y: salida
-d0: op 00
-d1: op 01
+Infiere un multiplexor de dos entradas, es idéntico al ternario de C 
+\[assign \ y \ = \ s \ ? \ d1 \ : \ d0\] 
+donde:
+\begin{itemize}
+    \item s: entrada de control
+    \item y: salida 
+    \item d0: op 00 
+    \item d1: op 01
+\end{itemize}
 \subsection*{Asignación condicional compuesto}
 Es un ternario anidado. Infiere un multiplexor de cuatro entradas, por lo tanto son dos ternarios hijos y uno padre.
 $ assign \ y = s[1] \ ? \ (s[0] \ ? \ d3 : d2) : (s[0] \ ? \ d1 : d0)$
 \subsection*{Variables internas}
 Se realizan con logic dentro del módulo. \\
 $logic p, g;$ $ \leftarrow  $ crea dos variables p y g. \\
-Véase \hyperref[subsec:SVL_FullAdder]{anexo} para un ejemplo con un full adder
+Véase \hyperref[subsec:SVL_FullAdder]{\underline{anexo}} para un ejemplo con un full adder
 
 \subsection*{Precedencia de operaciones}
 También conocido como "prioridad" de operaciones.
@@ -1308,16 +1316,17 @@ Si sucede esto, indica un error en el diseño.
 \section*{Modelado Estructural}
 Para poder componer módulos, tenemos que hacer instancias de ellos. 
 \[componente \ nombreInstancia(parametros)\] \\ 
-Véase \hyperref[subsec:SVL_comp]{anexo} para un ejemplo. \\
+Véase \hyperref[subsec:SVL_comp]{\underline{anexo}} para un ejemplo. \\
 Nota: Utilizando el enfoque estructural, la implementación de un mismo comportamiento se puede conseguir como composición de distinto tipo de componentes. 
 \subsection*{Circuitos Secuenciales}
 Se describen con componentes de memoria y se emplean bloques always.
 \subsection*{Bloques Always}
+\label{subsec:bloques_always}
 Utilizados para indicar frente a qué evento se debe actualizar el estado de cada componente. \\ 
 Cada bloque always viene con una lista de eventos (sensitivity list) que les hace efecto.  \\
 Nota: Si el bloque always tiene más de una asignación se las debe agrupar en un par begin end \\
 \[bloque \ @(evento \ var)\] \\ 
-Véase \hyperref[subsec:SVL_bloques_clk]{anexo} para un ejemplo. 
+Véase \hyperref[subsec:SVL_bloques_clk]{\underline{anexo}} para un ejemplo. 
 \subsection*{Reset asincrónico - sincrónico}
 Reset asincrónico: Cobra efecto en cuanto cambia de valor la señal. \\ 
 Reset sincrónico: Cobra efecto frente al evento del flanco ascendente del reloj.
