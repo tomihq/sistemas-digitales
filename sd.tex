@@ -974,7 +974,7 @@ Cuenta con 32 registros que son implementados como un arreglo de memoria estáti
 Los registros pueden nombrarse por su índice, desde x0 a x31 o según su uso habitual.
 \begin{itemize}
     \item El registro zero (x0) almacena siempre el valor 0, y no puede ser escrito.
-    \item Los registros s0 a s11 y los t0 a t6 se utilizan para almacenar variables.
+    \item Los registros s0 a s11 y los t0 a t6 se utilizan para almacenar variables: los registros pueden almacenar valores numéricos, direcciones de memoria a la RAM (punteros), punteros a funciones, etc.
     \item ra y de a0 a a7 tienen usos relacionados a llamadas de función.
 \end{itemize}
 \[\begin{minipage}[b]{0.4\textwidth}
@@ -1041,11 +1041,14 @@ Cuando dice que la parte baja se expresa como un número negativo ¿está tratan
 \subsection*{Memoria}
 Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\ \\
 RISC V permite acceder a la memoria con índices (direcciones) de 32 bits osea 4.294.967.296 índices posibles. El índice apunta a un byte en particular. \\ \subsection*{Escritura y Lectura en Memoria}
-Lectura: Instrucción lw (load word); Escritura: Instrucción sw (store word). \\ \\
-Las direcciones se definen como: 
-\[direccion = base + desplazamiento\]
-base: valor de un registro \\
-desplazamiento: constante con signo de 12 bits
+\textbf{Lectura}: Instrucción lw (load word); Es importante que lw carga \textbf{un registro que tiene un puntero hacia la RAM.} \\ 
+\[lw \ registroDestino, \ registroPunteroARam\] 
+Nota: se guarda en registroDestino, el registro que tiene un puntero a la RAM. \\ \\
+\textbf{Escritura}: Instrucción sw (store word); Es importante que sw guarda el contenido en \textbf{un registro que tiene un puntero hacia la RAM.}
+\[sw \ contenido, \ registroPunteroARam\] 
+Nota: se guarda en contenido, el registro que tiene un puntero a la RAM. \\
+\textbf{Importante: registroPunteroARam, en todos los casos debe ser un puntero a la RAM y debe haber sido inicializada.}
+Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} 
 \subsection*{Lectura en Memoria (asignación a variable)}
 \[\begin{minipage}[b]{0.4\textwidth}
     \includegraphics[width=\linewidth]{assets/leyendo_memoria.png}
@@ -1368,7 +1371,7 @@ El DataPath está formado por
     \item Program Counter (CPU): Contiene la instrucción actual. PC Next: Si hay un salto condicional, entonces contiene la posición de memoria donde se encuentra el salto; en otro caso, se incrementan 4 bytes (una palabra).
     \item Instruction Memory (CPU): Recibe el address de la instrucción para poder hacerle el fetch. Es decir, obtener la representación binaria de la operación.
     \item Control Unit (CPU): Es el director de orquesta. Es quién le dice a cada componente qué es lo que tiene que hacer, y qué es lo que sigue luego de haber terminado su responsabilidad.
-    \item Register File (CPU): Posee dos puertos de lectura (RD1 y RD2) que vuelcan el valor de las entradas de escritura (A1 y A2) respectivamente. WD3 también es un puerto de entrada de escritura que escribe el dato en A3 durante el flanco ascendente del reoj si la señal de control WE3 se encuentra alta.
+    \item Register File (CPU): Contiene los 32 registros x0-x31. Posee dos puertos de lectura (RD1 y RD2) que vuelcan el valor de las entradas de escritura (A1 y A2) respectivamente. WD3 también es un puerto de entrada de escritura que escribe el dato en A3 durante el flanco ascendente del reoj si la señal de control WE3 se encuentra alta.
     \item Multiplexores (CPU)
     \item ALU (CPU)
     \item Buses de Datos (CPU)
@@ -1384,6 +1387,20 @@ Véase \hyperref[subsec:datapath_example]{\underline{anexo para un ejemplo de un
 \end{itemize}
 
 \section*{Anexo - Ejercicios}
+\subsection*{Registros en lw y sw}
+\label{subsec:punteros_ram_registros}
+\begin{lstlisting}
+    addi x1, x2, 3
+    sw x1, x3
+\end{lstlisting}
+¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene el valor de 5. \\
+No, la implementación no es correcta, porque se intenta escribir en x3, un supuesto puntero a la RAM x1, pero x1 es un valor. Esto sería un error grave. \\ 
+\begin{lstlisting}
+    lw x1, 8(x2)
+    sw x1, 0(x3)
+\end{lstlisting}
+¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
+Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
 1. $0x00700293$ \\ 
@@ -1564,7 +1581,7 @@ La asignación no bloqueante de d en q se hace cuando ocurre el evento posedge c
         \item Toma las posiciones de memoria de x2 y x3; las solicita en el registro para obtener el valor; se envían los valores de x2 y x3 en binario, y una flag que le indica qué operación realizar a la ALU (ordenado por la unidad de control)
         \item El clock cambia de estado. 
         \item La ALU devuelve el resultado directamente al Register File (ordenado por la unidad de control), enviando el resultado a WD3 (Write Destination).
-        \item El clock cambia de estado, escribiendo en WD3 el resultado de la ALU.
+        \item WE3 se enciende (por aviso de la unidad de control); el clock cambia de estado, escribiendo en WD3 el resultado de la ALU.
     \end{itemize}
     \item El clock cambia de estado. 
     \item Al no haber un salto condicional, PCNext está vacío e incrementa el PC actual 4 bytes (1 palabra) (ordenado por la unidad de control) para leer la instrucción. En este caso, termina el programa. 
