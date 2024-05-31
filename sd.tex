@@ -948,6 +948,10 @@ Para esto se necesitan programas de compilado, ensamblado y enlazado.
     \item El código de bajo nivel es traducido por el ensamblador y se convierte en un código objeto (archivos \textbf{.o}).
     \item El código objeto es traducido por un enlazador y termina siendo binario ejecutable.
 \end{itemize}
+\subsection*{Aclaraciones sobre Risc V}
+Las operaciones que contiene son las justas y necesarias, son pocas y la idea es que los problemas se resuelvan formando expresiones atómicas. \\
+Las operaciones de Risc-V se llevan a cabo en el procesador. \\
+Todos los datos que se usan en Risc-V son de 32 bits.
 \subsection*{Operaciones en Risc V}
 Reciben el nombre de mnemónico e indica el tipo de operación que queremos realizar. \\
 Las operaciones reciben: \textbf{operandos de fuente} y un \textbf{operando destino}
@@ -985,7 +989,7 @@ Hagamos el cálculo que habiamos hecho antes (a = b + c - d) pero con las variab
     \item \(sub \ s0,\ t0, \ s3\) \# a=t-d
 \end{itemize}
 Nota: los valores que toman las operaciones no pueden ser de 32 bits porque la operación en sí ya ocupa 5 bits. \\
-Preguntar: ¿Cómo es que s0 tiene efectivamente a \textbf{a}, s1 tiene a \textbf{b}?
+
 \subsection*{Valores inmediatos}
 Son valores constantes que se utilizan como operandos. Se encuentran disponibles en la misma instrucción y no hace falta recuperar su valor a partir de un registro o desde la memoria. \\
 El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefijo 0b). \\
