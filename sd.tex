@@ -993,7 +993,8 @@ Para esto se necesitan programas de compilado, ensamblado y enlazado.
 \subsection*{Aclaraciones sobre Risc V}
 Las operaciones que contiene son las justas y necesarias, son pocas y la idea es que los problemas se resuelvan formando expresiones atómicas. \\
 Las operaciones de Risc-V se llevan a cabo en el procesador. \\
-Todos los datos que se usan en Risc-V son de 32 bits.
+Todos los datos que se usan en Risc-V son de 32 bits. \\
+Todas las operaciones como desplazamientos se hacen en bits: por ejemplo, acceder a un elemento en un array, movernos n bits en el stack o en la memoria.\\
 \subsection*{Operaciones en Risc V}
 Reciben el nombre de mnemónico e indica el tipo de operación que queremos realizar. \\
 Las operaciones reciben: \textbf{operandos de fuente} y un \textbf{operando destino}
@@ -1002,6 +1003,7 @@ El operando destino a sería el primer parámetro del mnemónico add, mientras q
 \subsection*{Instrucciones atómicas y compuestas}
 Es exactamente lo mismo que en lógica. Las operaciones se separan y deben indicarse claramente como se realizan.
 Las instrucciones atómicas son aquellas que nos devuelven un valor irreducible, mientras que las instrucciones compuestas nos devuelven algo reducible. \\
+
 Calculemos: \(a = b + c - d\)
 \begin{itemize}
     \item \(add \ t,\ b,\ c\) \# t=b+c
@@ -1051,6 +1053,9 @@ Se hace zero + lo que queremos asignar. Consideremos que s0 = i
 \begin{itemize}
     \item \(addi \ s0,\ zero,\ 4\) \# i = 4
 \end{itemize}
+\subsection*{Load Upper Immediate}
+Mejor conocida como lui en Risc-V. Toma los primeros 20 bits. \\ 
+Es útil para cuando queremos agregar un dato que excede el rango de 12 bits, para luego combinarlo con un addi y cargar los últimos 11 bits y poder representar el número deseado.
 \subsection*{Valores inmediatos de 32 bits}
 Como en Risc-V podemos cargar valores inmediatos de 12 bits, cuando ya agregamos un bit adicional tenemos que hacer dos operaciones: un lui y un addi. \\
 Acá se va a mostrar un ejemplo de como cargar un valor inmediato de 32 bits (excede los 12 bits). \\ 
@@ -1081,8 +1086,9 @@ Nótese que agarramos la parte alta y la extendemos, para despues pisar esos cer
 \end{minipage}\]
 Cuando dice que la parte baja se expresa como un número negativo ¿está tratando de decir que el valor inmediato de la suma es -1657?
 \subsection*{Memoria}
-Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\ \\
-RISC V permite acceder a la memoria con índices (direcciones) de 32 bits osea 4.294.967.296 índices posibles. El índice apunta a un byte en particular. \\ \subsection*{Escritura y Lectura en Memoria}
+Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\
+\subsection*{Escritura y Lectura en Memoria} 
+
 \textbf{Lectura}: Instrucción lw (load word) \\ 
 lw carga en destino, el valor que tiene un registro que tiene un puntero hacia la ram. \\ 
 \[lw \ destino, \ registroALeer\] 
@@ -1118,7 +1124,7 @@ Un ejemplo, utilizando la máscara \#0x00 $\rightarrow$ \#0x001010 AND \#0x00 = 
 
 Si bien este es un ejemplo que deja mucho que desear, véase la sección de \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB para obtener un color en particular.}}
 \subsection*{Instrucciones lógicas en RISC V}
-Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Sirven para utilizar máscaras \\
+Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Su uso viene combinado con máscaras. \\
 Ejemplo de XOR entre dos registros
 \begin{table}[h!]
     \centering
@@ -1132,9 +1138,7 @@ Ejemplo de XOR entre dos registros
     \label{tab:xor}
 \end{table} 
 \\
-Or: Combina dos registros que solo tienen asignada la parte alta y baja. Ej: \(0xFEED0000 \lor 0x0000F0CA \equiv 0xFEEDF0CA \)  
-and: Limpia las partes de un registro, si quisieramos preservar solamente la parte baja de \(0xBABAC0C0\) podemos hacer \(0xBABAC0C0 \land 0x0000FFFF \equiv 0x0000C0C0\) Preguntar 
-xor: Negación del valor
+Véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB para obtener un color en particular.}} donde se usa una máscara y la operación bit a bit and.
 \subsection*{Instrucciones de desplazamiento}
 \begin{itemize}
     \item sll (shift left logical): desplaza a la izquierda tantas unidades como se diga, como es logico se añaden 0's a la derecha.
@@ -1224,10 +1228,6 @@ Instrucciones que pisan el PC:
     \label{fig:jump}
 \end{minipage}\] 
 \[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/jump_while.png}
-    \label{fig:jump_while}
-\end{minipage}\] 
-\[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/while_j.png}
     \label{fig:while_j}
 \end{minipage}\] 
@@ -1244,7 +1244,9 @@ Instrucciones que pisan el PC:
 \end{itemize}
 \subsection*{Funciones}
 En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado. \\
+
 La función llamada no debe interferir con el estado de la función llamadora, es decir, debe respetar los valores de los registros (s0 a s11) y el registro ra (dirección de retorno). \\
+
 El stack de la función llamadora debe mantenerse invariante al ingresar a la función llamada.
 \subsection*{Llamando funciones \& enviando parámetros}
 Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos.
