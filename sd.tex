@@ -1114,11 +1114,23 @@ Lo que hago yo esto para hacerlo fácil, en el caso de 17 por ejemplo es: como m
 \item 0000 0000 \& 0000 0000 \& 0111 1111 \& 1000 1110 \(\implies\) agregué los 0's
 \end{itemize}
 \subsection*{Byte en particular con desplazamiento}
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/byte_desplazamiento.png}
-    \label{fig:byte_desplazamiento}
-\end{minipage}\] 
-Preguntar, no entendi
+Esto es súper útil en el ámbito de procesamiento de gráficos donde se debe cambiar la intensidad de un color, aplicar filtros o analizar la composición de colores en una imagen. \\
+Un ejemplo para ponernos en contexto sería la forma de expresar los RGB colors con hexadecimal es decir, \#RRGGBB. \\
+¿Cómo es que hacemos este proceso de "extraer un byte"? Consideremos que tenemos el color RGB \#0xFF0044 donde como anteriormente mencionamos, solo nos interesa \#FF0044 y en este caso en particular: 00. \\
+Datos: 
+var = \#FF0044 
+\begin{itemize}
+    \item Desplazamos la cantidad de bits necesarias para que el valor que queramos esté en los menos significativos.
+    \begin{itemize}
+        \item En este caso particular, tenemos que hacer un desplazamiento desde el 00 unos 8 bytes (4 bytes cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
+        \item El resultado es t0 = 0x00FF00
+    \end{itemize}
+    \item Aplicamos la máscara de 0xFF y guardamos el resultado
+    \begin{itemize}
+        \item En este caso particular, tenemos andi s2, t0, 0xFF.
+        \item Luego, s2 tiene el valor de 00 (la intensidad del verde)
+    \end{itemize}
+\end{itemize}
 \newpage 
 \subsection*{Importancia del Program Counter}
 Recordatorio: Cada dirección se incrementa en múltiplos de 4 porque las instrucciones ocupan 4 bytes. \\
