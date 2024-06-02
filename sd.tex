@@ -1114,7 +1114,7 @@ Preguntar: Como t3 es un registro temporal, cuando se borra luego de guardar el 
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
 Un ejemplo podría ser \#0x001010 AND \#0x00 = \#0x000000 \\
-Si bien este es un ejemplo que deja mucho que desear, véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{la sección de colores RGB mediante desplazamiento}}
+Si bien este es un ejemplo que deja mucho que desear, véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{la sección de colores RGB para obtener un color en particular (2 bytes) desplazando bits.}}
 \subsection*{Instrucciones lógicas en RISC V}
 Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Sirven para utilizar máscaras \\
 Ejemplo de XOR entre dos registros
@@ -1159,7 +1159,7 @@ Lo que hago yo esto para hacerlo fácil, en el caso de 17 por ejemplo es: como m
 \item 111 1111 \& 1000 1110 \(\implies\) reordené
 \item 0000 0000 \& 0000 0000 \& 0111 1111 \& 1000 1110 \(\implies\) agregué los 0's
 \end{itemize}
-\subsection*{Byte en particular con desplazamiento}
+\subsection*{Byte en particular con desplazamiento de bits}
 \label{subsec:byte_particular_desplazamiento}
 Como hablamos de desplazamiento y byte en particular, sabemos que tendremos que hacer un desplazamiento de bits, y además de eso utilizar una máscara para tomar el bit que nos interesa. \\ 
 
@@ -1172,7 +1172,7 @@ var = \#FF0044
 \begin{itemize}
     \item Desplazamos la cantidad de bits necesarias para que el valor que queramos esté en los menos significativos.
     \begin{itemize}
-        \item En este caso particular, tenemos que hacer un desplazamiento desde el 00 unos 8 bytes (4 bytes cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
+        \item En este caso particular, tenemos que hacer un desplazamiento desde el 00 unos 8 bits (4 bits cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
         \item El resultado es t0 = 0x00FF00
     \end{itemize}
     \item Aplicamos la máscara de 0xFF y guardamos el resultado
@@ -1181,7 +1181,7 @@ var = \#FF0044
         \item Luego, s2 tiene el valor de 00 (la intensidad del verde)
     \end{itemize}
 \end{itemize} 
-Véase \hyperref[subsec:desplazamiento_bytes]{\underline{anexo}} para más ejemplos de desplazamiento con bytes.
+Véase \hyperref[subsec:desplazamiento_bits]{\underline{anexo}} para más ejemplos de desplazamiento con bits.
 \subsection*{Importancia del Program Counter}
 Recordatorio: Cada dirección se incrementa en múltiplos de 4 porque las instrucciones ocupan 4 bytes. \\
 El procesador ejecuta el programa almacenando la posición de memoria de la instrucción que se está ejecutando en un registro de 32 bits conocido como el Program Counter.
@@ -1476,8 +1476,8 @@ No, la implementación no es correcta, porque se intenta escribir en x3, un supu
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
-\subsection*{Desplazamiento de Bytes}
-\label{subsec:desplazamiento_bytes}
+\subsection*{Desplazamiento de Bits para obtener un Byte particular}
+\label{subsec:desplazamiento_bits}
 Almacene, en un registro cualesquiera el segundo byte del siguiente hexadecimal: \#0x89ABCDEF sabiendo que el valor está en la memoria RAM; indique qué datos son relevantes, y qué mascara utilizará. \\
 Datos: \#89ABCDEF \\
 Sé que cada dígito hexadecimal son 4 bits, por lo tanto, si tengo que sacar el segundo byte: 4 + 4 = 8 bits (1 byte) por lo tanto tengo que sacar CD pues (4 + 4 + 4 + 4 = 16 $ \equiv $ 2 bytes) \\
