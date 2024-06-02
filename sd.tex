@@ -1107,7 +1107,7 @@ Mapa mental: a \( \leftarrow \) b \\
 \subsection*{Escritura en Memoria} 
 Instrucción sw (store word) \\
 sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
-\[sw \ registroAGuardar, \ desplazamiento(destino)\] \\ 
+\[sw \ registroAGuardar, \ desplazamiento(destino)\] 
 Ejercicio TypeScript: 
 \begin{lstlisting}
     const numbersArr: number[] = [1, 2, 3, 4, 5];
@@ -1122,15 +1122,6 @@ Equivale en Risc-V a:
 Mapa mental: a \( \rightarrow \) b \\
 \textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
 Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
-\subsection*{Escritura en Memoria}
-sw, variable, desplazamiento(lugarEnMemoria) \\
-Programa: \(mem[5] = 33\) 
-\begin{itemize}
-    \item \# s3 = mem
-    \item \(addi \ t3, \ zero,\ 33\)
-    \item \(sw, \ t3, \ 20(s3) (se desplaza desde s3 20 bytes)\)
-\end{itemize}
-El programa anterior crea una variable en el registro temporal t3, le asigna el valor de 33 y luego en la memoria posición 5 del array le asigna t3.
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
 
