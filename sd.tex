@@ -1099,7 +1099,7 @@ Ejercicio TypeScript:
 \end{lstlisting}
 Equivale en Risc-V a:
 \begin{lstlisting}
-    # s1: numbersArr, s7: five
+    # s1: numbersArr -> cargado a traves de .data, s7: five
     lw s7, 20(s1)   
 \end{lstlisting}
 Donde el 20 sería el offset para movernos desde s1, es decir, 20 bytes (5ta palabra) 
@@ -1115,7 +1115,7 @@ Ejercicio TypeScript:
 \end{lstlisting}
 Equivale en Risc-V a:
 \begin{lstlisting}
-    # s1: numbersArr
+    # s1: numbersArr -> cargado a traves de .data
     addi t1, 8, zero
     sw t1, 12(s1)   
 \end{lstlisting}
