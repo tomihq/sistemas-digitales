@@ -1113,8 +1113,10 @@ El programa anterior crea una variable en el registro temporal t3, le asigna el 
 Preguntar: Como t3 es un registro temporal, cuando se borra luego de guardar el valor en el array? 
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
-Un ejemplo podría ser \#0x001010 AND \#0x00 = \#0x000000 \\
-Si bien este es un ejemplo que deja mucho que desear, véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{la sección de colores RGB para obtener un color en particular (2 bytes) desplazando bits.}}
+
+Un ejemplo, utilizando la máscara \#0x00 $\rightarrow$ \#0x001010 AND \#0x00 = \#0x000000 \\
+
+Si bien este es un ejemplo que deja mucho que desear, véase la sección de \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB para obtener un color en particular.}}
 \subsection*{Instrucciones lógicas en RISC V}
 Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Sirven para utilizar máscaras \\
 Ejemplo de XOR entre dos registros
