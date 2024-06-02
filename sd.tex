@@ -1088,29 +1088,40 @@ Nótese que agarramos la parte alta y la extendemos, para despues pisar esos cer
 Cuando dice que la parte baja se expresa como un número negativo ¿está tratando de decir que el valor inmediato de la suma es -1657?
 \subsection*{Memoria}
 Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\
-\subsection*{Escritura y Lectura en Memoria} 
-
-\textbf{Lectura}: Instrucción lw (load word) \\ 
+\subsection*{Lectura en Memoria} 
+Instrucción lw (load word) \\ 
 lw carga en destino, el valor que tiene un registro que tiene un puntero hacia la ram. \\ 
-\[lw \ destino, \ registroALeer\] 
-Mapa mental: a \( \leftarrow \) b \\
-\textbf{Escritura}: Instrucción sw (store word) \\
-sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
-\[sw \ registroAGuardar, \ destino\] \\ 
-Mapa mental: a \( \rightarrow \) b \\
-\textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
-Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
-\subsection*{Lectura en Memoria (asignación a variable)}
+\[lw \ destino, \ desplazamiento(registroALeer)\]
+Ejercicio TypeScript: 
 \begin{lstlisting}
     const numbersArr: number[] = [1, 2, 3, 4, 5];
     const five: number = numbersArr[4];
 \end{lstlisting}
-Equivale a 
+Equivale en Risc-V a:
 \begin{lstlisting}
     # s1: numbersArr, s7: five
     lw s7, 20(s1)   
 \end{lstlisting}
-Donde 20(s1) es el número 5 y ocupa desde el bit 20 hasta el 24 (1 byte).
+Donde el 20 sería el offset para movernos desde s1, es decir, 20 bytes (5ta palabra) 
+Mapa mental: a \( \leftarrow \) b \\
+\subsection*{Escritura en Memoria} 
+Instrucción sw (store word) \\
+sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
+\[sw \ registroAGuardar, \ desplazamiento(destino)\] \\ 
+Ejercicio TypeScript: 
+\begin{lstlisting}
+    const numbersArr: number[] = [1, 2, 3, 4, 5];
+    numbersArr[2] = 8; 
+\end{lstlisting}
+Equivale en Risc-V a:
+\begin{lstlisting}
+    # s1: numbersArr
+    addi t1, 8, zero
+    sw t1, 12(s1)   
+\end{lstlisting}
+Mapa mental: a \( \rightarrow \) b \\
+\textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
+Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
 \subsection*{Escritura en Memoria}
 sw, variable, desplazamiento(lugarEnMemoria) \\
 Programa: \(mem[5] = 33\) 
