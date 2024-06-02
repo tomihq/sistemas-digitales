@@ -27,7 +27,7 @@
     frame=single,                      % Cuadro alrededor del código
     captionpos=b,                      % Poner la leyenda debajo del código
     morekeywords={add, addi, sub, lui, auipc, 
-    and, andi, or, ori, xor, xori, 
+    and, andi, or, ori, xor, xori, li, ret
     sll, slli, srl, srli, sra, srai, 
     slt, slti, sltu, sltiu, 
     beq, bne, blt, bge, bltu, bgeu, 
@@ -1111,8 +1111,12 @@ Programa: \(mem[5] = 33\)
 \end{itemize}
 El programa anterior crea una variable en el registro temporal t3, le asigna el valor de 33 y luego en la memoria posición 5 del array le asigna t3.
 Preguntar: Como t3 es un registro temporal, cuando se borra luego de guardar el valor en el array? 
+\subsection*{Máscaras}
+Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
+Un ejemplo podría ser \#0x001010 AND \#0x00 = \#0x000000 \\
+Si bien este es un ejemplo que deja mucho que desear, véase \hyperref[subsec:desplazamiento_bytes]{\underline{anexo}}
 \subsection*{Instrucciones lógicas en RISC V}
-Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. \\
+Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Sirven para utilizar máscaras \\
 Ejemplo de XOR entre dos registros
 \begin{table}[h!]
     \centering
@@ -1443,6 +1447,17 @@ Véase \hyperref[subsec:datapath_example]{\underline{anexo para un ejemplo de un
 \end{itemize}
 
 \section*{Anexo - Ejercicios}
+\subsection*{Hexadecimal en Risc-V}
+Recuerde que en Risc-V operamos siempre con 32 bits. \\
+
+¿Qué realiza la operación andi t0, 0xABCDE, 0xFFF? \\
+Sé que cada dígito hexadecimal son 4 bits, por lo tanto, pasemos todo a binario para que tengamos un mejor panorama, pero lo que va a terminar sucediendo es que nos quedará 0x00CDE, osea 0xCDE. 
+\begin{itemize}
+    \item 0xABCDE $\equiv$ 0000  0000  0000 1010  1011  1100  1101  1110 
+    \item 0xFFF $\equiv$ 0000  0000  0000  0000 0000  1111  1111  1111  
+\end{itemize} 
+Luego, \\
+andi realiza la operación de AND y a ojo podemos ver, que en binario nos queda: t0 = 1100 1101 1110 que equivale a 0xCDE
 \subsection*{Registros en lw y sw}
 \label{subsec:punteros_ram_registros}
 \begin{lstlisting}
@@ -1464,12 +1479,13 @@ Datos: \#89ABCDEF \\
 Sé que cada dígito hexadecimal son 4 bits, por lo tanto, si tengo que sacar el segundo byte: 4 + 4 = 8 bits (1 byte) por lo tanto tengo que sacar CD pues (4 + 4 + 4 + 4 = 16 $ \equiv $ 2 bytes) \\
 Sé que como CD debo llevarlo a los más significativos, aplico un srli 8 bits a la derecha.
 Sé tambien que si el valor es una posición de memoria en la RAM, voy a tener que usar li pues necesito cargarlo desde la memoria principal (RAM). \\
-Tengo que utilizar la máscara 0xFF (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
+Tengo que utilizar la máscara 0xFF (Rdo que al ser 32 bits, los últimos 8 son 1) con (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
+¿Por qué una máscara? porque una máscara se utiliza para seleccionar ciertos bits, descartando los que no necesitamos. Las máscaras las aplicamos haciendo operaciones lógicas bit a bit como AND, OR, XOR, NOT, entre otras.
 Código en Risc-V
 \begin{lstlisting}
     li t0, 0x89ABCDEF
-    srli t1, t0, 8
-    andi x0, t1, 0xFF
+    srli t1, t0, 8 <- 0x0089ABCD
+    andi t1, t1, 0xFF <- 0x0000CD <- 0xCD
 \end{lstlisting}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
