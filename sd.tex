@@ -1145,6 +1145,7 @@ Ejemplo de XOR entre dos registros
 \\
 Véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB para obtener un color en particular.}} donde se usa una máscara y la operación bit a bit and.
 \subsection*{Instrucciones de desplazamiento}
+Como son operaciones aritmético/lógicas, la unidad de desplazamiento es en bits.
 \begin{itemize}
     \item sll (shift left logical): desplaza a la izquierda tantas unidades como se diga, como es logico se añaden 0's a la derecha.
     \item srl (shift right logical): desplaza a la derecha tantas unidades como se diga, como es lógico se añaden 0's a la izquierda.
@@ -1163,13 +1164,6 @@ Nota: También existen las versiones de estas operaciones con el immediate (i) p
     \end{tabular}
     \label{tab:desplazamiento_riscv}
 \end{table} 
-Lo que hago yo esto para hacerlo fácil, en el caso de 17 por ejemplo es: como me piden mover 17 a la derecha, borro los 17 últimos (xq no tengo espacio donde guardarlos), reordeno de a pares de 4 y despues donde faltan agrego de la izq.
-\begin{itemize}
-\item 1111 1111 \& 0001 1100 \& 0001 0000 \& 1110 0111
-\item 1111 1111 \& 0001 110 \(\implies\) acá tengo que reordenar xq de la der no me pueden quedar 3 bits solos
-\item 111 1111 \& 1000 1110 \(\implies\) reordené
-\item 0000 0000 \& 0000 0000 \& 0111 1111 \& 1000 1110 \(\implies\) agregué los 0's
-\end{itemize}
 \subsection*{Byte en particular con desplazamiento de bits}
 \label{subsec:byte_particular_desplazamiento}
 Como hablamos de desplazamiento y byte en particular, sabemos que tendremos que hacer un desplazamiento de bits, y además de eso utilizar una máscara para tomar el bit que nos interesa. \\ 
