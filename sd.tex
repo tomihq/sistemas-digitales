@@ -1117,10 +1117,9 @@ Programa: \(mem[5] = 33\)
 \begin{itemize}
     \item \# s3 = mem
     \item \(addi \ t3, \ zero,\ 33\)
-    \item \(sw, \ t3, \ 20(s3)\)
+    \item \(sw, \ t3, \ 20(s3) (se desplaza desde s3 20 bytes)\)
 \end{itemize}
 El programa anterior crea una variable en el registro temporal t3, le asigna el valor de 33 y luego en la memoria posición 5 del array le asigna t3.
-Preguntar: Como t3 es un registro temporal, cuando se borra luego de guardar el valor en el array? 
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
 
@@ -1474,13 +1473,13 @@ andi realiza la operación de AND y a ojo podemos ver, que en binario nos queda:
 \label{subsec:punteros_ram_registros}
 \begin{lstlisting}
     addi x1, x2, 3 -> 5
-    sw x3, 0(x1) -> se coloca el valor de x3 en x1
+    sw x3, 0(x1) (se desplaza 0 bytes desde x1) -> se coloca el valor de x3 en x1
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene el valor de 5. \\
 No, la implementación no es correcta, porque se intenta escribir en x3, un supuesto puntero a la RAM x1, pero x1 es un valor. Esto sería un error grave. \\ 
 \begin{lstlisting}
-    lw x1, 8(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras.
-    sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1
+    lw x1, 8(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras (desplaza 8 bytes).
+    sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1 (desplaza 0 bytes)
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
@@ -1496,7 +1495,7 @@ Tengo que utilizar la máscara 0xFF (Rdo que al ser 32 bits, los últimos 8 son 
 Código en Risc-V
 \begin{lstlisting}
     li t0, 0x89ABCDEF
-    srli t1, t0, 8 <- 0x0089ABCD
+    srli t1, t0, 8 (desplazamiento logico de 8 bits a la derecha) <- 0x0089ABCD
     andi t1, t1, 0xFF <- 0x0000CD <- 0xCD
 \end{lstlisting}
 \subsection*{Hexa - Binario - Risc V}
