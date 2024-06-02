@@ -11,6 +11,45 @@
 \usepackage{amssymb}
 \input{AEDmacros}
 
+\lstset{
+    basicstyle=\ttfamily\footnotesize, % Tamaño y tipo de fuente
+    keywordstyle=\color{blue},         % Color de las palabras clave
+    commentstyle=\color{gray},         % Color de los comentarios
+    stringstyle=\color{red},           % Color de las cadenas
+    numbers=left,                      % Números de línea a la izquierda
+    numberstyle=\tiny\color{gray},     % Estilo de los números de línea
+    stepnumber=1,                      % Numerar cada línea
+    numbersep=5pt,                     % Separación de los números de línea del código
+    tabsize=4,                         % Tamaño de las tabulaciones
+    showspaces=false,                  % No mostrar espacios
+    showstringspaces=false,            % No mostrar espacios en las cadenas
+    breaklines=true,                   % Partir líneas largas automáticamente
+    frame=single,                      % Cuadro alrededor del código
+    captionpos=b,                      % Poner la leyenda debajo del código
+    morekeywords={add, addi, sub, lui, auipc, 
+    and, andi, or, ori, xor, xori, 
+    sll, slli, srl, srli, sra, srai, 
+    slt, slti, sltu, sltiu, 
+    beq, bne, blt, bge, bltu, bgeu, 
+    jal, jalr, 
+    lb, lh, lw, lbu, lhu, 
+    sb, sh, sw, 
+    fence, fence.i, 
+    ecall, ebreak, 
+    csrrw, csrrs, csrrc, csrrwi, csrrsi, csrrci, 
+    mul, mulh, mulhsu, mulhu, 
+    div, divu, rem, remu, 
+    flw, fsw, 
+    fadd.s, fsub.s, fmul.s, fdiv.s, fsqrt.s, 
+    fsgnj.s, fsgnjn.s, fsgnjx.s, 
+    fmin.s, fmax.s, 
+    fcvt.w.s, fcvt.wu.s, 
+    fcvt.s.w, fcvt.s.wu, 
+    fmv.x.w, fmv.w.x, 
+    feq.s, flt.s, fle.s, 
+    fclass.s}      
+}
+
 \title{Sistemas Digitales}
 \author{Tomás Agustín Hernández}
 \date{}
@@ -1130,8 +1169,8 @@ var = \#FF0044
         \item En este caso particular, tenemos andi s2, t0, 0xFF.
         \item Luego, s2 tiene el valor de 00 (la intensidad del verde)
     \end{itemize}
-\end{itemize}
-\newpage 
+\end{itemize} 
+Véase \hyperref[subsec:desplazamiento_bytes]{\underline{anexo}} para más ejemplos de desplazamiento con bytes.
 \subsection*{Importancia del Program Counter}
 Recordatorio: Cada dirección se incrementa en múltiplos de 4 porque las instrucciones ocupan 4 bytes. \\
 El procesador ejecuta el programa almacenando la posición de memoria de la instrucción que se está ejecutando en un registro de 32 bits conocido como el Program Counter.
@@ -1415,6 +1454,20 @@ No, la implementación no es correcta, porque se intenta escribir en x3, un supu
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
+\subsection*{Desplazamiento de Bytes}
+\label{subsec:desplazamiento_bytes}
+Almacene, en un registro cualesquiera el segundo byte del siguiente hexadecimal: \#0x89ABCDEF sabiendo que el valor está en la memoria RAM; indique qué datos son relevantes, y qué mascara utilizará. \\
+Datos: \#89ABCDEF \\
+Sé que cada dígito hexadecimal son 4 bits, por lo tanto, si tengo que sacar el segundo byte: 4 + 4 = 8 bits (1 byte) por lo tanto tengo que sacar CD pues (4 + 4 + 4 + 4 = 16 $ \equiv $ 2 bytes) \\
+Sé que como CD debo llevarlo a los más significativos, aplico un srli 8 bits a la derecha.
+Sé tambien que si el valor es una posición de memoria en la RAM, voy a tener que usar li pues necesito cargarlo desde la memoria principal (RAM). \\
+Tengo que utilizar la máscara 0xFF (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
+Código en Risc-V
+\begin{lstlisting}
+    li t0, 0x89ABCDEF
+    srli t1, t0, 8
+    andi x0, t1, 0xFF
+\end{lstlisting}
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
 1. $0x00700293$ \\ 
