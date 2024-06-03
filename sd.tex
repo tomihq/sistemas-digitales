@@ -1018,8 +1018,8 @@ Como en RISC-V podemos cargar valores inmediatos de 12 bits, cuando ya agregamos
 Explicación genérica de como cargar un valor inmediato de 32 bits:
 \begin{itemize}
     \item Agarra los primeros 20 bits en binario.
-    \item Aplica un lui: carga los primeros 20 bits, pero antes extiende el número con 0's. Luego, guarda el resultado del lui.
-    \item Hace un addi utilizando el resultado del proceso anterior y los 12 bits menos significativos del número inicial. 
+    \item Aplica un lui: carga los primeros 20 bits, pero antes extiende el número con 0's desde la izquierda. Luego, guarda el resultado del lui.
+    \item Hace un addi utilizando el resultado del proceso anterior y los 12 bits menos significativos del número inicial (habiendo sido esta parte extendida a 32 bits).
 \end{itemize}
 \textbf{1}.  
 Véase \hyperref[subsec:valores_inmediatos_32_bits]{anexo} para un ejemplo de esta aplicación de lui y addi con valores inmediatos mayores a 12 bits.
