@@ -1188,10 +1188,23 @@ Véase \hyperref[subsec:desplazamiento_bits]{\underline{anexo}} para más ejempl
 Se va pisando el PC (Program Counter). 
 \subsection*{Etiquetas en RISC V}
 Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/etiquetas_beq.png}
-    \label{fig:etiquetas_beq}
-\end{minipage}\] 
+\begin{lstlisting}
+    addi t0, t0, 5
+    addi a0, t0, zero
+    beq a0, zero, finTotal
+    loop: <- etiqueta
+        addi sp, sp, -4
+        sw ra, 0(sp)
+        beq a0, zero, fin 
+        addi a0, a0, -1 
+        jal ra, loop
+    fin: <- etiqueta
+        lw ra, 0(sp)
+        sw sp, 4(sp)
+        jr ra
+    finTotal: <- etiqueta
+
+\end{lstlisting}
 
 \subsection*{Orden que toman las operaciones en memoria}
 Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
