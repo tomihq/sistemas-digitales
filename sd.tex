@@ -876,7 +876,6 @@ Una máquina de estados queda definida por:
     \item Un estado inicial.
     \item Una lista de funciones que disparan las transiciones en función de las entradas. 
 \end{itemize}
-\newpage
 \subsection*{Diagramas de estado}
 Nos indican el comportamiento de los circuitos secuenciales en base al estado y como van avanzando
 \[\begin{minipage}[b]{0.6\textwidth}
@@ -1163,8 +1162,10 @@ El stack de la función llamadora debe mantenerse invariante al ingresar a la fu
 Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos. \\ 
 Véase ejercicio en \hyperref[ejercicio:saltos_condicionales_argumentos]{\underline{anexo}}
 \subsection*{Pila (stack)}
-Es una parte de la memoria que se utiliza para almacenar información temporaria. La pila suele comenzar en las direcciones altas de la memoria y va tomando las direcciones inmediatamente más bajas. 
-RISC V recomienda el registro de su Stack Pointer (sp)
+Es una parte de la memoria RAM que se utiliza para almacenar información temporaria. \\ 
+
+RISC-V tiene su propio registro de stack pointer (sp), donde sp contiene una lista de elementos, donde cada elemento es un puntero a la RAM.  \\
+
 \subsection*{Reglas de llamada}
 \begin{itemize}
     \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7)
@@ -1235,7 +1236,7 @@ Nota: en System Verilog, cuando vemos algo de tipo logic[7:0] significa que es u
 \subsection*{Tipos de asignaciones}
 \begin{itemize}
     \item =: asignación bloqueante (aka: síncrona). En microarquitectura es un circuito combinatorio. 
-    \item < =: asignación no bloqueante (aka: asincrónica). En microarquitectura es un circuito secuencial que funciona con bloques always. 
+    \item $<$=: asignación no bloqueante (aka: asincrónica). En microarquitectura es un circuito secuencial que funciona con bloques always. 
 \end{itemize}
 Véase \hyperref[subsec:bloques_always]{\underline{bloques always}} para más información
 \subsection*{Operadores de reducción}
