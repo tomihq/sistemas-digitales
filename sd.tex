@@ -1253,29 +1253,28 @@ TypeScript: Salto sin retorno, y modificación de variable global.
         return hacerCero(destinatarios-1);
     }
 
-const respuesta: number = hacerCero(destinatarios);
+    const respuesta: number = hacerCero(destinatarios);
 \end{lstlisting}
 Equivale en Risc-V a:
 \begin{lstlisting}
     #s2 = destinatarios
-    lw a0, s2 
-    jal ra, hacerCero
-    sw v0, x3
-    ecall  
+    lw a0, s2                               #0x0000 0000
+    jal ra, hacerCero                       #0x0000 0004
+    sw v0, x3                               #0x0000 0008
+    ecall                                   #0x0000 000C
     hacerCero: 
-        addi sp, sp, -4
-        sw ra, 0(sp)
-        beq a0, zero, finHacerCero
-        addi a0, a0, -1
-        jal ra, hacerCero
+        addi sp, sp, -4                     #0x0000 0010
+        sw ra, 0(sp)                        #0x0000 0014 
+        beq a0, zero, finHacerCero          #0x0000 0018
+        addi a0, a0, -1                     #0x0000 001C
+        jal ra, hacerCero                   #0x0000 0020
     finHacerCero: 
-        li v0, 0
-        lw ra, 0(sp)
-        sw sp, 4(sp)
-        jr ra
-
-
+        li v0, 0                            #0x0000 0024
+        lw ra, 0(sp)                        #0x0000 0028
+        sw sp, 4(sp)                        #0x0000 002C
+        jr ra                               #0x0000 0030
 \end{lstlisting}
+Nótese: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq.
 \subsection*{Funciones}
 En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado. \\
 
