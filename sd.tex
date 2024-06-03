@@ -1222,59 +1222,7 @@ Instrucciones que pisan el PC:
     \item j (jump): actualiza el valor del PC con el operando provisto (inmediato de 20 bits extendidos en signo a 32).
     \item jal (jump and link): que almacena el valor actual del PC en el registro indicado en el primer operando y actualiza el valor del PC con el segundo operando (este se usa para llamar a una función, terminar y volver a ese link anterior).
 \end{itemize}
-\subsection*{Ejercicios con Saltos Condicionales / Incondicionales}
-Ejercicio llamado a procedimiento sin retorno,
-TypeScript: Salto sin retorno, y modificación de variable global. 
-\begin{lstlisting}
-    let destinatarios = 2;
-
-    while(destinatarios>0){
-       destinatarios -= 1;
-    }
-\end{lstlisting}
-Equivale en Risc-V a:
-\begin{lstlisting}
-    #s2 = destinatarios
-    lw a0, s2 
-    j loop
-    loop: 
-        addi a0, a0, -1
-        beq a0, zero, fin 
-        j loop
-    fin:  
-\end{lstlisting}
-Ejercicio con recursión, 
-TypeScript: Salto sin retorno, y modificación de variable global. 
-\begin{lstlisting}
-    let destinatarios = 2;
-
-    const hacerCero = (destinatarios: number): number => {
-        if(destinatarios == 0) return 0; 
-        return hacerCero(destinatarios-1);
-    }
-
-    const respuesta: number = hacerCero(destinatarios);
-\end{lstlisting}
-Equivale en Risc-V a:
-\begin{lstlisting}
-    #s2 = destinatarios
-    lw a0, s2                               #0x0000 0000
-    jal ra, hacerCero                       #0x0000 0004
-    sw v0, x3                               #0x0000 0008
-    ecall                                   #0x0000 000C
-    hacerCero: 
-        addi sp, sp, -4                     #0x0000 0010
-        sw ra, 0(sp)                        #0x0000 0014 
-        beq a0, zero, finHacerCero          #0x0000 0018
-        addi a0, a0, -1                     #0x0000 001C
-        jal ra, hacerCero                   #0x0000 0020
-    finHacerCero: 
-        li v0, 0                            #0x0000 0024
-        lw ra, 0(sp)                        #0x0000 0028
-        sw sp, 4(sp)                        #0x0000 002C
-        jr ra                               #0x0000 0030
-\end{lstlisting}
-Nótese: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq.
+Véase \hyperref[subsec:ejercicios_con_saltos_condicionales_incondicionales]{\underline{anexo}}
 \subsection*{Funciones}
 En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado. \\
 
@@ -1528,6 +1476,60 @@ Código en Risc-V
     srli t1, t0, 8 (desplazamiento logico de 8 bits a la derecha) <- 0x0089ABCD
     andi t1, t1, 0xFF <- 0x0000CD <- 0xCD
 \end{lstlisting}
+\subsection*{Ejercicios con Saltos Condicionales / Incondicionales}
+\label{subsec:ejercicios_con_saltos_condicionales_incondicionales}
+Ejercicio llamado a procedimiento sin retorno,
+TypeScript: Salto sin retorno, y modificación de variable global. 
+\begin{lstlisting}
+    let destinatarios = 2;
+
+    while(destinatarios>0){
+       destinatarios -= 1;
+    }
+\end{lstlisting}
+Equivale en Risc-V a:
+\begin{lstlisting}
+    #s2 = destinatarios
+    lw a0, s2 
+    j loop
+    loop: 
+        addi a0, a0, -1
+        beq a0, zero, fin 
+        j loop
+    fin:  
+\end{lstlisting}
+Ejercicio con recursión, 
+TypeScript: Salto sin retorno, y modificación de variable global. 
+\begin{lstlisting}
+    let destinatarios = 2;
+
+    const hacerCero = (destinatarios: number): number => {
+        if(destinatarios == 0) return 0; 
+        return hacerCero(destinatarios-1);
+    }
+
+    const respuesta: number = hacerCero(destinatarios);
+\end{lstlisting}
+Equivale en Risc-V a:
+\begin{lstlisting}
+    #s2 = destinatarios
+    lw a0, s2                               #0x0000 0000
+    jal ra, hacerCero                       #0x0000 0004
+    sw v0, x3                               #0x0000 0008
+    ecall                                   #0x0000 000C
+    hacerCero: 
+        addi sp, sp, -4                     #0x0000 0010
+        sw ra, 0(sp)                        #0x0000 0014 
+        beq a0, zero, finHacerCero          #0x0000 0018
+        addi a0, a0, -1                     #0x0000 001C
+        jal ra, hacerCero                   #0x0000 0020
+    finHacerCero: 
+        li v0, 0                            #0x0000 0024
+        lw ra, 0(sp)                        #0x0000 0028
+        sw sp, 4(sp)                        #0x0000 002C
+        jr ra                               #0x0000 0030
+\end{lstlisting}
+Nótese: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq.
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
 1. $0x00700293$ \\ 
