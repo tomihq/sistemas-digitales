@@ -652,15 +652,11 @@ Nótese que para considerar si es carry al final de toda la suma o no usamos un 
 
 
 \subsection*{Multiplexor}
-Está conformado por varias entradas de control y entradas de datos. Existe una única salida.
+Está conformado por varias entradas de control y entradas de datos. Existe una única salida. Es una especie de switch/case en programación donde la condición del switch acá se llama entrada de control.
 \begin{itemize}
     \item Entradas de control: se indican de la manera \(c_{n}\)
     \item Entradas de datos: se indican de la manera \(e_{n}\)
-    \item Ojo: Antes de prender cualquier entrada de control, hay que asegurarse que entrada de datos esté puesta en el que valor que queremos
 \end{itemize} 
-Te ayuda a ahorrar recursos, pero todas las acciones tardan mucho más tiempo porque solo se ejecuta una a la vez. \\
-Nos garantiza que la información solo se envía por un único canal. \\
-\\
 Para poder calcular la cantidad de entradas de control \(c_{n}\) que necesito para una cantidad m de entradas de datos \(e_{m}\) hago el siguiente cálculo: m \(<\) \(2^{l}\) hasta que me pase por primera vez.
 \begin{itemize}
     \item Entradas de datos: 30.
@@ -672,18 +668,8 @@ Cada entrada de control tiene un índice que podemos decirle individuo, por ejem
 \end{itemize}
 
 En los Multiplexores existen difurcaciones, que cuando llegamos a una de ellas se nos desvía el camino enviándonos a una compuerta. Si en algún momento se llega a un valor 0, entonces decimos que el camino ya finalizó.\\
-\\
-\[\begin{minipage}[b]{0.8\textwidth}
-    \includegraphics[width=\linewidth]{assets/alu_4_bits.png}
-    
-    \label{fig:alu_4_bits}
-\end{minipage}\]
-Nótese que el multiplexor elige un camino u otro según OP; OP toma los valores de 00, 01, 10 y 11. En base a qué se envía como entrada de control el multiplexor decide qué entrada habilitar para dar la salida. \\
-En este caso, OP: 1 0 (marcado en rojo) corresponde a la opción de realizar A AND B bit a bit
-
 \subsection*{Timing}
 En un circuito combinatorio el tiempo que tarda la salida en estabilizarse depende de la cantidad de capas de compuertas (latencia). Para enfrentar el problema usamos secuenciales.
-
 \section*{Latchs}
 Utilizan realimentación, es decir, la salida de una compuerta como entrada de otra.
 \subsection*{Latch RS}
@@ -846,30 +832,7 @@ Al estado Desconectado le decimos que es de Alta Impedancia y se simboliza \text
     \label{fig:tres_estados}
 \end{minipage}\]
 En la materia, una combinación basura de un componente de tres estados es que haya más de una entrada de control prendida con una misma entrada de dato. Esto es porque si bien en Logisim se acepta, no tendría sentido abrir dos conductos y mandar dos datos (iguales), la corriente siempre varía en algún momento y lo haría estallar. \\
-
-\begin{figure}[h]
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-        \includegraphics[width=0.6\linewidth]{assets/comb_basura_tres_estados.png}
-        \caption{Caso basura (erróneo)}
-        \label{fig:comb_basura_tres_estados}
-        \end{subfigure}
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-    \includegraphics[width=0.7\linewidth]{assets/comb_basura_tres_estados_explota.png}
-    \caption{Caso erróneo (explota)}
-    \label{fig:comb_basura_tres_estados_explota}
-    \end{subfigure}
-    \begin{subfigure}{0.6\textwidth}
-        \centering
-    \includegraphics[width=0.6\linewidth]{assets/comb_ok_tres_estados.png}
-    \caption{Caso ok}
-    \label{fig:comb_ok_tres_estados}
-    \end{subfigure}
-
-    \end{figure}
-
-
+\textbf{Nota}: Antes de prender cualquier entrada de control, hay que asegurarse que entrada de dato tenga el valor que deseamos cargar. 
 \subsection*{Bus}
 Nos va a servir para poder conectar varios componentes. Es una vía de n bits que van a estar conectando todos los componentes de nuestra arquitectura.
 \[\begin{minipage}[b]{0.7\textwidth}
@@ -879,7 +842,7 @@ Nos va a servir para poder conectar varios componentes. Es una vía de n bits qu
 Cada dispositivo sería cualquier operación, por ejemplo cada dispositivo podría ser un Flip-Flop D. \\ \\
 Ej.: Si \(Dispositivo_{0}\) tendría el número 2 escrito en 4 bits (0010) y el \(Dispositivo_{1}\) tendría el número 4 escrito en 4 bits (0100) entonces el bus tendría el valor de 6. Esto es un problema, porque básicamente se está haciendo una especie de conjunción de todas las cosas y no siempre vamos a querer que se haga de esa forma. Aquí aparece un concepto importante llamado Recurso Compartido. \\ \\
 Llamamos \textbf{recurso compartido} cuando tenemos más de un componente/dispositivo conectado en un mismo bus y necesitamos decidir quién usa cada componente. \\ \\
-Para prender uno de los dispositivos y no los demás, bastaría con poner en 1 el dispositivo que quiero mientras que los demás en 0.
+Para prender uno de los dispositivos y no los demás, bastaría con poner en 1 el dispositivo que quiero mientras que los demás en 0. 
 \subsection*{Reset}
 Coloca en 0 el componente. Comúnmente, el reset es asincrónico.
 \subsection*{Write Enable y Enable Out}
