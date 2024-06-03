@@ -1219,28 +1219,63 @@ Instrucciones que pisan el PC:
 \subsection*{Saltos incondicionales}
 Instrucciones que pisan el PC: 
 \begin{itemize}
-    \item j (jump): actualiza el valor del PC con el operando provisto (inmediato de 20 bits extendidos en signo a 32)
+    \item j (jump): actualiza el valor del PC con el operando provisto (inmediato de 20 bits extendidos en signo a 32).
     \item jal (jump and link): que almacena el valor actual del PC en el registro indicado en el primer operando y actualiza el valor del PC con el segundo operando (este se usa para llamar a una función, terminar y volver a ese link anterior).
 \end{itemize}
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/jump.png}
-    \label{fig:jump}
-\end{minipage}\] 
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/while_j.png}
-    \label{fig:while_j}
-\end{minipage}\] 
-\begin{itemize}
-    \item se inicializa una variable permanente con el valor zero.
-    \item se inicial la variable temporal en 200.
-    \item el for se realiza mientras s1 sea menor a t2.
-    \item se inicializa una variable temporal t0 con el valor de s1 (¿que seria el 2, entiendo que un desplazamiento logico hacia la izquierda pero para que?).
-    \item a la variable temporal t0 se le suma s0 (s0?)
-    \item se inicializa una variable temporal t0 que tiene el valor de t0 en el indice 0.
-    \item a la variable temporal t1 se le suma 10 (scores[i] + 10)
-    \item se cambia el valor de t1 indicando que tiene el valor de t0 en el indice 0.
-    \item se modifica la variable de s1 (incrementadora) sumandole 1 unidad.
-\end{itemize}
+\subsection*{Ejercicios con Saltos Condicionales / Incondicionales}
+Ejercicio llamado a procedimiento sin retorno,
+TypeScript: Salto sin retorno, y modificación de variable global. 
+\begin{lstlisting}
+    let destinatarios = 2;
+
+    while(destinatarios>0){
+       destinatarios -= 1;
+    }
+\end{lstlisting}
+Equivale en Risc-V a:
+\begin{lstlisting}
+    #s2 = destinatarios
+    lw a0, s2 
+    j loop
+    loop: 
+        addi a0, a0, -1
+        beq a0, zero, fin 
+        j loop
+    fin:  
+\end{lstlisting}
+Ejercicio con recursión, 
+TypeScript: Salto sin retorno, y modificación de variable global. 
+\begin{lstlisting}
+    let destinatarios = 2;
+
+    const hacerCero = (destinatarios: number): number => {
+        if(destinatarios == 0) return 0; 
+        return hacerCero(destinatarios-1);
+    }
+
+const respuesta: number = hacerCero(destinatarios);
+\end{lstlisting}
+Equivale en Risc-V a:
+\begin{lstlisting}
+    #s2 = destinatarios
+    lw a0, s2 
+    jal ra, hacerCero
+    sw v0, x3
+    ecall  
+    hacerCero: 
+        addi sp, sp, -4
+        sw ra, 0(sp)
+        beq a0, zero, finHacerCero
+        addi a0, a0, -1
+        jal ra, hacerCero
+    finHacerCero: 
+        li v0, 0
+        lw ra, 0(sp)
+        sw sp, 4(sp)
+        jr ra
+
+
+\end{lstlisting}
 \subsection*{Funciones}
 En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 para enviar argumentos. La función llamada usa a0 para devolver el resultado. \\
 
