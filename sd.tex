@@ -1215,13 +1215,8 @@ La función llamada no debe interferir con el estado de la función llamadora, e
 
 El stack de la función llamadora debe mantenerse invariante al ingresar a la función llamada.
 \subsection*{Llamando funciones \& enviando parámetros}
-Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos.
-\[\begin{minipage}[b]{0.6\textwidth}
-    \includegraphics[width=\linewidth]{assets/funciones_risc_2.jpg}
-    \label{fig:funciones_risc_2}
-\end{minipage}\]
-
-Nótese que cuando hacemos jal dif sumas, le estamos mandando la posición donde quedó antes de llamar a la función, entonces luego en la llamada podemos usar ra y volver a ese punto.
+Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos. \\ 
+Véase ejercicio en \hyperref[ejercicio:saltos_condicionales_argumentos]{\underline{anexo}}
 \subsection*{Pila (stack)}
 Es una parte de la memoria que se utiliza para almacenar información temporaria. La pila suele comenzar en las direcciones altas de la memoria y va tomando las direcciones inmediatamente más bajas. 
 RISC V recomienda el registro de su Stack Pointer (sp)
@@ -1485,6 +1480,7 @@ Equivale en Risc-V a:
         j loop
     fin:  
 \end{lstlisting}
+\label{ejercicio:saltos_condicionales_argumentos}
 Ejercicio con recursión, 
 TypeScript: Salto con retorno, y modificación de variable global. 
 \begin{lstlisting}
@@ -1516,7 +1512,8 @@ Equivale en Risc-V a:
         sw sp, 4(sp)                        #0x0000 002C
         jr ra                               #0x0000 0030
 \end{lstlisting}
-Nótese: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq.
+\textbf{Nótese}: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq. \\
+\textbf{Nótese}: a0 se puede utilizar en hacerCero pues, a0 previo a una llamada a una función sería un argumento.
 \subsection*{Hexa - Binario - Risc V}
 \textbf{Decodifique a instrucciones de Risc-V} \\
 1. $0x00700293$ \\ 
