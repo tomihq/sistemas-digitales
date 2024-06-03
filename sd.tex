@@ -844,7 +844,8 @@ Ej.: Si \(Dispositivo_{0}\) tendría el número 2 escrito en 4 bits (0010) y el 
 Llamamos \textbf{recurso compartido} cuando tenemos más de un componente/dispositivo conectado en un mismo bus y necesitamos decidir quién usa cada componente. \\ \\
 Para prender uno de los dispositivos y no los demás, bastaría con poner en 1 el dispositivo que quiero mientras que los demás en 0. 
 \subsection*{Reset}
-Coloca en 0 el componente. Comúnmente, el reset es asincrónico.
+Coloca en 0 el componente. Comúnmente, el reset es asincrónico. \\
+Para entender el concepto de asincrónico, véase \hyperref[subsec:reset_sincronico_asincronico]{reset asincrónico - sincrónico}
 \subsection*{Write Enable y Enable Out}
 Son dos instrucciones. No pueden pasar ambas a la vez. O escribimos, o leemos.
 Cada vez que hacemos el cambio de estado de Enable Out o Write Enable, en algún momento deberán volver al estado anterior.
@@ -937,7 +938,6 @@ TODO: Preguntar como hizo para calcular la suma de productos en base a los estad
 \end{minipage}\]
 \section{Arquitectura}
 Observación: Nosotros vamos a manejarnos con 32 registros y data de 4 bytes.\\
-
 ¿Qué constituye una arquitectura?
 \begin{itemize}
     \item El conjunto de instrucciones
@@ -1011,32 +1011,19 @@ Se hace zero + lo que queremos asignar. Consideremos que s0 = i
     \item \(addi \ s0,\ zero,\ 4\) \# i = 4
 \end{itemize}
 \subsection*{Load Upper Immediate}
-Mejor conocida como lui en Risc-V. Toma los primeros 20 bits. \\ 
+Mejor conocida como lui en RISC-V. Toma los primeros 20 bits. \\ 
 Es útil para cuando queremos agregar un dato que excede el rango de 12 bits, para luego combinarlo con un addi y cargar los últimos 11 bits y poder representar el número deseado.
-\subsection*{Valores inmediatos de 32 bits}
-Como en Risc-V podemos cargar valores inmediatos de 12 bits, cuando ya agregamos un bit adicional tenemos que hacer dos operaciones: un lui y un addi. \\
-Acá se va a mostrar un ejemplo de como cargar un valor inmediato de 32 bits (excede los 12 bits). \\ 
-\textbf{1}. Agarra los primeros 20 bits en binario. Hace un lui, es decir, de esos 20 extiende a la cantidad de bits total que es el número. En este caso, toma 20 extiende hasta 32 bits (agrega 12 bits). \\
-\textbf{2}. Luego, hace un addi con la variable anterior, pero agregandole los 12 bits menos significativos. \\ \\ 
-Nótese que agarramos la parte alta y la extendemos, para despues pisar esos ceros través del addi poniendole los últimos 12 bits. 
+\subsection*{Control de valores inmediatos mayores a 12 bits (positivos)}
+Como en RISC-V podemos cargar valores inmediatos de 12 bits, cuando ya agregamos un bit adicional tenemos que hacer dos operaciones: un lui y un addi. \\
+Explicación genérica de como cargar un valor inmediato de 32 bits: \\
 \begin{itemize}
-    \item 0xABCDE123 ¿excede los 12 bits para ser un inmediato? Pasemos a binario
-    \begin{itemize}
-        \item 0001 0010 0011 0100 0101 0110 0111 1000
-        \item Sí, excede los 12 bits; Por lo tanto tenemos que usar un lui y un addi para cargarlo.
-    \end{itemize}
-    \item De ese binario gigante, hago un lui de los 20 más significativos \& addi de los 12 menos significativos.
-    \item Entonces, si seguimos en binario nos queda algo así:
-    \begin{itemize}
-        \item lui s2, 0001 \ 0010 \ 0011 \ 0100 \ 0101 como acá tengo 20 bits pero estoy en 32 bits, extiendo con 0's. \\ Rta: 0001 \ 0010 \ 0011 \ 0100 \ 0101 \ 0000 \ 0000 \ 0000
-        \item addi s2, s2, 0110 0111 1000. \\ Rta: 0001 0010 0011 0100 0101 0110 0111 1000
-    \end{itemize} 
-    \item En Hexa:
-    \begin{itemize}
-        \item lui s2, 0xABCDE (nótese que cada letra son 4 bits, 4 * 5 = 20 bits). \\ Rta: 0xABCDE000 (nótese que se agregaron tres ceros, porque son lo que falta para llegar a 32 bits).
-        \item Luego que nuestro s2 ya tiene los ceros para pisar, cargo la parte baja con addi: addi s2, s2, 0x123. \\ Rta: 0xABCDE123 
-    \end{itemize}
+    \item Agarra los primeros 20 bits en binario.
+    \item Aplica un lui: carga los primeros 20 bits, pero antes extiende el número con 0's. Luego, guarda el resultado del lui.
+    \item Hace un addi utilizando el resultado del proceso anterior y los 12 bits menos significativos del número inicial. 
 \end{itemize}
+\textbf{1}.  
+Véase \hyperref[subsec:valores_inmediatos_32_bits]{anexo} para un ejemplo de esta aplicación de lui y addi con valores inmediatos mayores a 12 bits.
+\subsection*{Control de valores inmediatos mayores a 12 bits (negativos)}
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/valores_inmediatos_neg.png}
     \label{fig:valores_neg}
@@ -1053,7 +1040,7 @@ Ejercicio TypeScript:
     const numbersArr: number[] = [1, 2, 3, 4, 5];
     const five: number = numbersArr[4];
 \end{lstlisting}
-Equivale en Risc-V a:
+Equivale en RISC-V a:
 \begin{lstlisting}
     # s1: numbersArr -> cargado a traves de .data, s7: five
     lw s7, 20(s1)   
@@ -1069,7 +1056,7 @@ Ejercicio TypeScript:
     const numbersArr: number[] = [1, 2, 3, 4, 5];
     numbersArr[2] = 8; 
 \end{lstlisting}
-Equivale en Risc-V a:
+Equivale en RISC-V a:
 \begin{lstlisting}
     # s1: numbersArr -> cargado a traves de .data
     addi t1, 8, zero
@@ -1323,6 +1310,7 @@ Nota: Si el bloque always tiene más de una asignación se las debe agrupar en u
 \[bloque \ @(evento \ var)\] \\ 
 Véase \hyperref[subsec:SVL_bloques_clk]{\underline{anexo}} para un ejemplo. 
 \subsection*{Reset asincrónico - sincrónico}
+\label{subsec:reset_sincronico_asincronico}
 Reset asincrónico: Cobra efecto en cuanto cambia de valor la señal. \\ 
 Reset sincrónico: Cobra efecto frente al evento del flanco ascendente del reloj.
 \subsection*{Always Comb - Circuitos Combinatorios}
@@ -1374,8 +1362,8 @@ Véase \hyperref[subsec:datapath_example]{\underline{anexo para un ejemplo de un
 \end{itemize}
 
 \section*{Anexo - Ejercicios}
-\subsection*{Hexadecimal en Risc-V}
-Recuerde que en Risc-V operamos siempre con 32 bits. \\
+\subsection*{Hexadecimal en RISC-V}
+Recuerde que en RISC-V operamos siempre con 32 bits. \\
 
 ¿Qué realiza la operación andi t0, 0xABCDE, 0xFFF? \\
 Sé que cada dígito hexadecimal son 4 bits, por lo tanto, pasemos todo a binario para que tengamos un mejor panorama, pero lo que va a terminar sucediendo es que nos quedará 0x00CDE, osea 0xCDE. 
@@ -1408,12 +1396,33 @@ Sé que como CD debo llevarlo a los más significativos, aplico un srli 8 bits a
 Sé tambien que si el valor es una posición de memoria en la RAM, voy a tener que usar li pues necesito cargarlo desde la memoria principal (RAM). \\
 Tengo que utilizar la máscara 0xFF (Rdo que al ser 32 bits, los últimos 8 son 1) con (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
 ¿Por qué una máscara? porque una máscara se utiliza para seleccionar ciertos bits, descartando los que no necesitamos. Las máscaras las aplicamos haciendo operaciones lógicas bit a bit como AND, OR, XOR, NOT, entre otras.
-Código en Risc-V
+Código en RISC-V
 \begin{lstlisting}
     li t0, 0x89ABCDEF
     srli t1, t0, 8 (desplazamiento logico de 8 bits a la derecha) <- 0x0089ABCD
     andi t1, t1, 0xFF <- 0x0000CD <- 0xCD
 \end{lstlisting}
+\subsection*{Control de valores inmediatos mayores a 12 bits $2^{11} (12 \ bits)$}
+\label{subsec:valores_inmediatos_32_bits}
+\begin{itemize}
+    \item 0xABCDE123 ¿excede los 12 bits para ser un inmediato? Pasemos a binario
+    \begin{itemize}
+        \item 0001 0010 0011 0100 0101 0110 0111 1000
+        \item Sí, excede los 12 bits; Por lo tanto tenemos que usar un lui y un addi para cargarlo.
+    \end{itemize}
+    \item De ese binario gigante, hago un lui de los 20 más significativos \& addi de los 12 menos significativos.
+    \item Entonces, si seguimos en binario nos queda algo así:
+    \begin{itemize}
+        \item lui s2, 0001 \ 0010 \ 0011 \ 0100 \ 0101 como acá tengo 20 bits pero estoy en 32 bits, extiendo con 0's. \\ Rta: 0001 \ 0010 \ 0011 \ 0100 \ 0101 \ 0000 \ 0000 \ 0000
+        \item addi s2, s2, 0110 0111 1000. \\ Rta: 0001 0010 0011 0100 0101 0110 0111 1000
+    \end{itemize} 
+    \item En Hexa:
+    \begin{itemize}
+        \item lui s2, 0xABCDE (nótese que cada letra son 4 bits, 4 * 5 = 20 bits). \\ Rta: 0xABCDE000 (nótese que se agregaron tres ceros, porque son lo que falta para llegar a 32 bits).
+        \item Luego que nuestro s2 ya tiene los ceros para pisar, cargo la parte baja con addi: addi s2, s2, 0x123. \\ Rta: 0xABCDE123 
+    \end{itemize}
+\end{itemize}
+\label{subsec:}
 \subsection*{Ejercicios con Saltos Condicionales / Incondicionales}
 \label{subsec:ejercicios_con_saltos_condicionales_incondicionales}
 Ejercicio llamado a procedimiento sin retorno,
@@ -1425,7 +1434,7 @@ TypeScript: Salto sin retorno, y modificación de variable global.
        destinatarios -= 1;
     }
 \end{lstlisting}
-Equivale en Risc-V a:
+Equivale en RISC-V a:
 \begin{lstlisting}
     #s2 = destinatarios
     lw a0, s2 
@@ -1449,7 +1458,7 @@ TypeScript: Salto con retorno, y modificación de variable global.
 
     const respuesta: number = hacerCero(destinatarios);
 \end{lstlisting}
-Equivale en Risc-V a:
+Equivale en RISC-V a:
 \begin{lstlisting}
     #s2 = destinatarios
     lw a0, s2                               #0x0000 0000
@@ -1471,7 +1480,7 @@ Equivale en Risc-V a:
 \textbf{Nótese}: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq. \\
 \textbf{Nótese}: a0 se puede utilizar en hacerCero pues, a0 previo a una llamada a una función sería un argumento.
 \subsection*{Hexa - Binario - Risc V}
-\textbf{Decodifique a instrucciones de Risc-V} \\
+\textbf{Decodifique a instrucciones de RISC-V} \\
 1. $0x00700293$ \\ 
 
 \textbf{Pasamos cada numero hexadecimal a binario, cada hexa son 4 bits de binario} \\ 
@@ -1493,13 +1502,13 @@ $0000 \ 0000 \ 0111 \ 00000 \ 000 \ 00101 \ 0010011$ \\
 \textbf{Lo que sigue ahora es el immediate (20 a 31) porque estamos en la familia del I, por lo tanto reagrupo} \\ 
 $0000 0000 0111 \ 00000 \ 000 \ 00101 \ 0010011$ \\
 
-\textbf{Por último, traducimos a operaciones de Risc-V} \\ 
+\textbf{Por último, traducimos a operaciones de RISC-V} \\ 
 0010011 000: ADDI  \\ 
 00101 rd: pasado a decimal es 5, por lo tanto en la tabla de registros x5 es t0. \\
 00000 rs1: pasado a decimal es 0, por lo tanto en la tabla de registros x0 es zero. \\
 0x007: es donde se guarda en memoria, eso en decimal es 7 por lo tanto en la tabla de registros x7 es t2. \\ 
 
-\textbf{Luego, juntamos todos los operandos en Risc-V} \\ 
+\textbf{Luego, juntamos todos los operandos en RISC-V} \\ 
 ADDI t0, zero, t2
 
 \subsection*{Traducción de programa de Risc V a castellano y observando las posiciones de memoria de instrucciones}
