@@ -1187,25 +1187,9 @@ Véase \hyperref[subsec:desplazamiento_bits]{\underline{anexo}} para más ejempl
 \subsection*{Control del flujo de ejecución}
 Se va pisando el PC (Program Counter). 
 \subsection*{Etiquetas en RISC V}
-Nos permiten ponerle nombre a subproblemas; No ocupan memoria.
-\begin{lstlisting}
-    addi t0, t0, 5
-    addi a0, t0, zero
-    beq a0, zero, finTotal
-    loop: <- etiqueta
-        addi sp, sp, -4
-        sw ra, 0(sp)
-        beq a0, zero, fin 
-        addi a0, a0, -1 
-        jal ra, loop
-    fin: <- etiqueta
-        lw ra, 0(sp)
-        sw sp, 4(sp)
-        jr ra
-    finTotal: <- etiqueta
+Nos permiten ponerle nombre a subproblemas; No ocupan memoria. \\
 
-\end{lstlisting}
-
+Véase ejercicio en \hyperref[subsec:ejercicios_etiquetas]{\underline{anexo}}
 \subsection*{Orden que toman las operaciones en memoria}
 Las posiciones de memoria que ocupa cada instrucción se leen de arriba hacia abajo sin importar si hay un salto o no.
 Ver ejercicio en \hyperref[subsec:TPRVC]{\underline{anexo}} 
@@ -1462,6 +1446,8 @@ No, la implementación no es correcta, porque se intenta escribir en x3, un supu
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
+\subsection*{Etiquetas}
+\label{subsec:ejercicios_etiquetas}
 \subsection*{Desplazamiento de Bits para obtener un Byte particular}
 \label{subsec:desplazamiento_bits}
 Almacene, en un registro cualesquiera el segundo byte del siguiente hexadecimal: \#0x89ABCDEF sabiendo que el valor está en la memoria RAM; indique qué datos son relevantes, y qué mascara utilizará. \\
@@ -1523,7 +1509,7 @@ Equivale en Risc-V a:
         sw ra, 0(sp)                        #0x0000 0014 
         beq a0, zero, finHacerCero          #0x0000 0018
         addi a0, a0, -1                     #0x0000 001C
-        jal ra, hacerCero                   #0x0000 0020
+        jr hacerCero                        #0x0000 0020
     finHacerCero: 
         li v0, 0                            #0x0000 0024
         lw ra, 0(sp)                        #0x0000 0028
