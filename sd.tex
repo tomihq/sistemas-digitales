@@ -1212,24 +1212,33 @@ Programa final con inicialización de los datos en RISC V
 \end{minipage}\]
 
 \section*{Cosas a utilizar en Risc V (machete)}
-
-Página 21 Guia Práctica de Risc V
-\[\begin{minipage}[b]{0.6\textwidth}
+\subsection*{Registros RISC-V}
+\label{subsec:registros_riscv}
+Viven en el procesador. \\
+Nota: utilizar la escritura del registro de la izquierda es lo mismo que los de la derecha. Pero queda más claro usar los de la derecha. 
+\[\begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=\linewidth]{assets/registros_riscv.png}
     \label{fig:registros_riscv}
-\end{minipage}\]
-
+\end{minipage}\] 
+Para más información, véase Página 21 Guia Práctica de Risc V
+\subsection*{Mapa de opcodes RISC-V}
+\label{subsec:ins_risc_v}
 Página 18 de Guia Práctica de Risc V
-\[\begin{minipage}[b]{0.8\textwidth}
+\[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/ins_risc_v.png}
     \label{fig:ins_risc_v}
 \end{minipage}\]
 \subsection*{Formato de instrucciones en RISC-V}
+La siguiente imagen puede ser abrumadora sin ningún tipo de contexto, pero no es nada complicado. \\
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/32_bit_instruction_rirsc_v.png}
     \label{fig:32_bit_instruction_rirsc_v}
 \end{minipage}\]
-
+Esta imagen es la que utiliza el procesador para hacer el proceso de \textbf{decode}, para poder entender qué es lo que realiza la instrucción almacenada en la RAM. Veamos como interpretar cada cosa. Iremos desde los campos que tienen en común. \\
+\begin{itemize}
+    \item opcode: Es el código de operación. Nos dice qué familia (I, R, S, B, U, etc) de operaciones tiene la operación. Puede encontrar las distintas familias en la \textbf{la última columna} de la imagen de \hyperref[subsec:ins_risc_v]{\underline{la sección anterior}}
+    \item rd (Read Destination): Es donde se debe almacenar el resultado, usualmente es un registro. Imaginemos que esos bits, en nuestra instrucción es 00101, pasamos el valor a decimal (5) y esto equivale al registro x5. Puede más información en \hyperref[subsec:registros_riscv]{\underline{la sección de Registros}}
+\end{itemize}
 \section*{HDL}
 Los lenguajes de descripción de hardware (HDL) son herramientas que nos permiten describir la estructura y comportamiento de nuestros diseños de forma sencilla, sintética y escalable a la hora de diseñar e implementar hardware industrial a gran escala.
 Existen dos lenguajes dominantes actualmente: VHDL y System Verilog. 
