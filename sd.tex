@@ -1511,20 +1511,19 @@ Equivale en RISC-V a:
 \begin{lstlisting}
     #s2 = destinatarios
     lw a0, s2                               #0x0000 0000
-    jal ra, hacerCero                       #0x0000 0004
-    sw v0, x3                               #0x0000 0008
-    ecall                                   #0x0000 000C
-    hacerCero: 
-        addi sp, sp, -4                     #0x0000 0010
-        sw ra, 0(sp)                        #0x0000 0014 
-        beq a0, zero, finHacerCero          #0x0000 0018
-        addi a0, a0, -1                     #0x0000 001C
-        j hacerCero                        #0x0000 0020
+    addi sp, sp, -4                         #0x0000 0004
+    jal ra, hacerCero                       #0x0000 0008
+    sw v0, x3                               #0x0000 000C                                   
+    hacerCero:              
+        sw ra, 0(sp)                        #0x0000 0010 
+        beq a0, zero, finHacerCero          #0x0000 0014
+        addi a0, a0, -1                     #0x0000 0018
+        j hacerCero                         #0x0000 001C
     finHacerCero: 
-        li v0, 0                            #0x0000 0024
-        lw ra, 0(sp)                        #0x0000 0028
-        sw sp, 4(sp)                        #0x0000 002C
-        jr ra                               #0x0000 0030
+        li v0, 0                            #0x0000 0020
+        lw ra, 0(sp)                        #0x0000 0024
+        addi sp, sp, 4                      #0x0000 0028
+        jr ra                               #0x0000 002C
 \end{lstlisting}
 \textbf{Nótese}: que al usar recursión, reservamos siempre 4 bytes para guardar el ra por si llegamos a saltar a otra función en el beq. \\
 \textbf{Nótese}: a0 se puede utilizar en hacerCero pues, a0 previo a una llamada a una función sería un argumento.
