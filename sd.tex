@@ -1519,7 +1519,7 @@ Equivale en RISC-V a:
         sw ra, 0(sp)                        #0x0000 0014 
         beq a0, zero, finHacerCero          #0x0000 0018
         addi a0, a0, -1                     #0x0000 001C
-        jr hacerCero                        #0x0000 0020
+        j hacerCero                        #0x0000 0020
     finHacerCero: 
         li v0, 0                            #0x0000 0024
         lw ra, 0(sp)                        #0x0000 0028
