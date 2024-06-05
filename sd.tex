@@ -1237,8 +1237,15 @@ La siguiente imagen puede ser abrumadora sin ningún tipo de contexto, pero no e
 Esta imagen es la que utiliza el procesador para hacer el proceso de \textbf{decode}, para poder entender qué es lo que realiza la instrucción almacenada en la RAM. Veamos como interpretar cada cosa. Iremos desde los campos que tienen en común. \\
 \begin{itemize}
     \item opcode: Es el código de operación. Nos dice qué familia (I, R, S, B, U, etc) de operaciones tiene la operación. Puede encontrar las distintas familias en la \textbf{la última columna} de la imagen de \hyperref[subsec:ins_risc_v]{\underline{la sección anterior}}
-    \item rd (Read Destination): Es donde se debe almacenar el resultado, usualmente es un registro. Imaginemos que esos bits, en nuestra instrucción es 00101, pasamos el valor a decimal (5) y esto equivale al registro x5. Puede más información en \hyperref[subsec:registros_riscv]{\underline{la sección de Registros}}
+    \item rd (Read Destination): Es donde se debe almacenar el resultado, usualmente es un registro. Imaginemos que esos bits, en nuestra instrucción es 00101, pasamos el valor a decimal (5) y esto equivale al registro x5/t0. Puede más información en \hyperref[subsec:registros_riscv]{\underline{la sección de Registros}}
+    \item func: Es el código de la función. Es importante que el código de la función también depende de la familia. Por lo tanto hay que ver familia + código de función. Puede encontrar las distintas funciones de familia en la \textbf{la 3ra columna} de la imagen de \hyperref[subsec:ins_risc_v]{\underline{la sección anterior}}. \\
+    Por fuera de la tabla dice Familia + Operación. \\
+    Ej: 101 rd 0110011 es: I srai
+    \item rs1 (Source Register 1): Es el primer operando que se utiliza en una operación dada. Imaginemos que esos bits, en nuestra instrucción es 01001, pasemos el valor a decimal (9) y esto equivale al registro x9/s1 (luego que sabe el registro, debe buscar el valor).
+    \item rs2: Misma idea que rs1, es el segundo operando fuente.
+    \item immediate: Se utiliza para operaciones que tienen inmediatos. Como por ejemplo: addi, srli, srai. Imaginemos que esos bits, en nuestra instrucción es 0000 0000 0111, pasemos el valor a decimal (7). Luego, el valor inmediato que se quiere sumar es 7.
 \end{itemize}
+Nota: no hay más que dos operandos fuente porque las operaciones de RISC-V se hacen entre operaciones atómicas, es decir, en las cuales ya con una única operación podemos deducir el valor de verdad.
 \section*{HDL}
 Los lenguajes de descripción de hardware (HDL) son herramientas que nos permiten describir la estructura y comportamiento de nuestros diseños de forma sencilla, sintética y escalable a la hora de diseñar e implementar hardware industrial a gran escala.
 Existen dos lenguajes dominantes actualmente: VHDL y System Verilog. 
