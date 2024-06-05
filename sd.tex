@@ -966,6 +966,9 @@ Es exactamente lo mismo que en lógica. Las operaciones se separan y deben indic
 Las instrucciones atómicas son aquellas que nos devuelven un valor irreducible, mientras que las instrucciones compuestas nos devuelven algo reducible. 
 \subsection*{Operaciones en RISC V}
 En RISC-V todas las instrucciones compuestas, se reducen a instrucciones atómicas antes de devolver el resultado. \\
+
+\textbf{Importante}: Las instrucciones se guardan en la memoria RAM durante la ejecución del programa. Es decir, al ejecutar el programa carga todas las instrucciones de una en la RAM, luego, por cada línea que va pasando, agarra ese puntero a la RAM y hace el fetch \& decode \& execute.  \\
+
 Reciben el nombre de mnemónico e indica el tipo de operación que queremos realizar. \\
 Las operaciones reciben: \textbf{operandos de fuente} y un \textbf{operando destino}
 \[a = b + c \equiv add \ a,\ b,\ c\]
@@ -1171,6 +1174,19 @@ RISC-V tiene su propio registro de stack pointer (sp), donde sp contiene una lis
     \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7)
     \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar
 \end{itemize}
+\subsection*{Fetch \& Decode \& Execute}
+Es el núcleo del ciclo de instrucciones de un CPU, asegurando que las instrucciones se recuperen de memoria, se interpreten y se ejecuten. \\
+\begin{itemize}
+    \item Fetch: El CPU recupera la siguiente instrucción (sabe cuál es gracias al Program Counter) a ejecutar desde la memoria. 
+    \item Decode: El CPU interpreta la instrucción recuperada, detectando el opcode, operandos, operación a realizar, etc. Además, se generan las señales de control correspondientes para que la ejecución tenga la configuración necesaria.
+    \item Execute: El CPU ejecuta la instrucción. Luego, se actualiza el PC.
+\end{itemize}
+\textbf{Nota}: Las instrucciones que se deben ejecutar a medida que el Program Counter avanza están almacenadas en la memoria RAM desde que el programa se ejecuta. \\
+\textbf{Referencias}: 
+\begin{itemize}
+    \item ¿Cómo se interpretan las instrucciones de RISC-V?: TODO
+    \item Proceso de Fetch, Decode y Execute \hyperref[subsec:datapath_example]{desde un punto de vista de microarquitectura}
+\end{itemize}
 \section*{Compilación, ensamblado y ejecución}
 \subsection*{El mapa de memoria}
 \[\begin{minipage}[b]{0.6\textwidth}
@@ -1208,7 +1224,7 @@ Página 18 de Guia Práctica de Risc V
     \includegraphics[width=\linewidth]{assets/ins_risc_v.png}
     \label{fig:ins_risc_v}
 \end{minipage}\]
-Risc V cheatsheet
+\subsection*{Formato de instrucciones en RISC-V}
 \[\begin{minipage}[b]{0.8\textwidth}
     \includegraphics[width=\linewidth]{assets/32_bit_instruction_rirsc_v.png}
     \label{fig:32_bit_instruction_rirsc_v}
@@ -1345,7 +1361,7 @@ Glosario antes de empezar:
 El DataPath está formado por
 \begin{itemize}
     \item Program Counter (CPU): Contiene la instrucción actual. PC Next: Si hay un salto condicional, entonces contiene la posición de memoria donde se encuentra el salto; en otro caso, se incrementan 4 bytes (una palabra).
-    \item Instruction Memory (CPU): Recibe el address de la instrucción para poder hacerle el fetch. Es decir, obtener la representación binaria de la operación.
+    \item Instruction Memory (CPU): Recibe el address de la instrucción para poder hacerle el fetch (hacia la memoria RAM). Es decir, obtener la representación binaria de la operación.
     \item Control Unit (CPU): Es el director de orquesta. Es quién le dice a cada componente qué es lo que tiene que hacer, y qué es lo que sigue luego de haber terminado su responsabilidad.
     \item Register File (CPU): Contiene los 32 registros x0-x31. Posee dos puertos de lectura (RD1 y RD2) que vuelcan el valor de las entradas de escritura (A1 y A2) respectivamente. WD3 también es un puerto de entrada de escritura que escribe el dato en A3 durante el flanco ascendente del reoj si la señal de control WE3 se encuentra alta.
     \item Multiplexores (CPU)
