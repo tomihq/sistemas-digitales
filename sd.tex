@@ -958,6 +958,7 @@ Para esto se necesitan programas de compilado, ensamblado y enlazado.
     \item Los valores se extienden por el bit más significativo
     \item Las operaciones se llevan a cabo en el procesador.
     \item Todos los datos que se usan son de 32 bits.
+    \item Los valores inmediatos toman como máximo, valores de 12 bits.
     \item Todas las operaciones que implican accesos a memoria, los valores inmediatos (se extienden a 12 bits) se indican en bytes. Ej: lw, sw. \\
     lw s7, 8(s3): el 8 RISC-V lo lee como 0000 0000 0100
     \item Todas las operaciones que implican operaciones aritméticas o lógicas, los valores inmediatos (se extienden a 12 bits) se indican en bits. Ej: srli
@@ -1430,6 +1431,11 @@ No, la implementación no es correcta, porque se intenta escribir en x3, un supu
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
+\begin{lstlisting}
+    lw x1, 256(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras (desplaza 8 bytes).
+    sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1 (desplaza 0 bytes)
+\end{lstlisting}
+¿Es correcta esta implementación?
 \subsection*{Desplazamiento de Bits para obtener un Byte particular}
 \label{subsec:desplazamiento_bits}
 Almacene, en un registro cualesquiera el segundo byte del siguiente hexadecimal: \#0x89ABCDEF sabiendo que el valor está en la memoria RAM; indique qué datos son relevantes, y qué mascara utilizará. \\
