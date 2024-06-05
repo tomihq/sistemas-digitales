@@ -1510,11 +1510,11 @@ TypeScript: Salto con retorno, y modificación de variable global.
 Equivale en RISC-V a:
 \begin{lstlisting}
     #s2 = destinatarios
-    lw a0, s2                               #0x0000 0000
-    addi sp, sp, -4                         #0x0000 0004
-    jal ra, hacerCero                       #0x0000 0008
-    sw v0, x3                               #0x0000 000C                                   
-    hacerCero:              
+    lw a0, s2                               #0x0000 0000                 
+    jal ra, hacerCero                       #0x0000 0004
+    sw v0, x3                               #0x0000 0008                                   
+    hacerCero:        
+        addi sp, sp, -4                     #0x0000 000C
         sw ra, 0(sp)                        #0x0000 0010 
         beq a0, zero, finHacerCero          #0x0000 0014
         addi a0, a0, -1                     #0x0000 0018
