@@ -955,10 +955,12 @@ Para esto se necesitan programas de compilado, ensamblado y enlazado.
 \subsection*{Aclaraciones sobre RISC V}
 \begin{itemize}
     \item Las operaciones que contiene son las justas y necesarias, son pocas y la idea es que los problemas se resuelvan formando expresiones atómicas. 
+    \item Los valores se extienden por el bit más significativo
     \item Las operaciones se llevan a cabo en el procesador.
     \item Todos los datos que se usan son de 32 bits.
-    \item Todas las operaciones que implican accesos a memoria, los valores inmediatos se indican en bytes. Ej: lw, sw.
-    \item Todas las operaciones que implican operaciones aritméticas o lógicas, los valores inmediatos se indican en bits. Ej: srli
+    \item Todas las operaciones que implican accesos a memoria, los valores inmediatos (se extienden a 12 bits) se indican en bytes. Ej: lw, sw. \\
+    lw s7, 8(s3): el 8 RISC-V lo lee como 0000 0000 0100
+    \item Todas las operaciones que implican operaciones aritméticas o lógicas, los valores inmediatos (se extienden a 12 bits) se indican en bits. Ej: srli
     \item Se acostumbra a decir 32 bits = 4 bytes = 1 palabra
 \end{itemize}
 \subsection*{Instrucciones atómicas y compuestas}
