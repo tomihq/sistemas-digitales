@@ -1685,9 +1685,9 @@ La asignación no bloqueante de d en q se hace cuando ocurre el evento posedge c
 \textbf{El paso a paso}: 
 \begin{itemize}
     \item El PC se coloca sobre la instrucción
-    \item Fetch: La instruction memory recibe el address de donde se encuentra la operación (ADD x1, x2, x3), y la respuesta es la operación en binario.
-    \item Decode: La unidad de control, recibe la operación en binario realizada por la instruction memory, y empieza a analizar el opcode, la función que debe realizar, los operandos, etc.
-    \item Execute: La unidad de control, una vez que decidió que debe realizarse (proceso decode), ejecuta las operaciones correspondientes en el orden.
+    \item Fetch: Gracias a la dirección proporcionada por el PC, busca la operación en la memoria RAM.
+    \item Decode: Recibe la operación de la memoria RAM, y la interpreta en base al instruction format. La instruction memory, quien es encargado de este proceso, le pasa el control al siguiente. 
+    \item Execute: Una vez que se decidió que debe realizarse, ejecuta las operaciones correspondientes en el orden. Quien dicta el orden y prioridades es la control unit, y el CPU quien las ejecuta.
     \begin{itemize}
         \item Toma las posiciones de memoria de x2 y x3; las solicita en el registro para obtener el valor; se envían los valores de x2 y x3 en binario, y una flag que le indica qué operación realizar a la ALU (ordenado por la unidad de control)
         \item El clock cambia de estado. 
