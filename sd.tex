@@ -1237,6 +1237,14 @@ La siguiente imagen puede ser abrumadora sin ningún tipo de contexto, pero no e
 Esta imagen es la que utiliza el procesador para hacer el proceso de \textbf{decode}, para poder entender qué es lo que realiza la instrucción almacenada en la RAM. Veamos como interpretar cada cosa. Iremos desde los campos que tienen en común. \\
 \begin{itemize}
     \item opcode: Es el código de operación. Nos dice qué familia (I, R, S, B, U, etc) de operaciones tiene la operación. Puede encontrar las distintas familias en la \textbf{la última columna} de la imagen de \hyperref[subsec:ins_risc_v]{\underline{la sección anterior}}
+    \begin{itemize}
+        \item R: Utilizan dos registros como operandos fuentes (rs1, rs2) y uno como operando destino rd. El campo op junto con funct7 y funct3 determinan el tipo de instrucción codificada.
+        \item I: Utilizan registros como operando fuente (rs1), un inmediato de 12 bits (imm) y uno como operando destino rd. El campo op junto con funct3 determinan el tipo de instrucción codificada.
+        \item S (instrucciones de carga): Codifica un inmediato de 12 bits en la instrucción. El desplazamiento (offset) siempre se desplaza una posición a izquierda antes de sumarlo al PC ya que se encuentra siempre en posiciones pares. Ej: sw.
+        \item B (instrucciones de saltos condicionales): Codifica un inmediato de 13 bits en la instrucción. El desplazamiento (offset) siempre se desplaza una posición a izquierda antes de sumarlo al PC ya que se encuentra siempre en posiciones pares. Ej: beq
+        \item U (instrucciones de inmediato superior): Codifica un inmediato de 20 bits en la instrucción. El desplazamiento (offset) siempre se desplaza una posición a izquierda antes de sumarlo al PC ya que se encuentra siempre en posiciones pares.
+        \item J (instrucciones de saltos incondicionales): Codifica un inmediato de 21 bits en la instrucción. El desplazamiento (offset) siempre se desplaza una posición a izquierda antes de sumarlo al PC ya que se encuentra siempre en posiciones pares.
+    \end{itemize}
     \item rd (Read Destination): Es donde se debe almacenar el resultado, usualmente es un registro. Imaginemos que esos bits, en nuestra instrucción es 00101, pasamos el valor a decimal (5) y esto equivale al registro x5/t0. Puede más información en \hyperref[subsec:registros_riscv]{\underline{la sección de Registros}}
     \item func: Es el código de la función. Es importante que el código de la función también depende de la familia. Por lo tanto hay que ver familia + código de función. Puede encontrar las distintas funciones de familia en la \textbf{la 3ra columna} de la imagen de \hyperref[subsec:ins_risc_v]{\underline{la sección anterior}}. \\
     Por fuera de la tabla dice Familia + Operación. \\
