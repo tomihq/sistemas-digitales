@@ -1039,7 +1039,7 @@ Cuando dice que la parte baja se expresa como un número negativo ¿está tratan
 Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\
 \subsection*{Lectura en Memoria} 
 \textbf{Instrucción lw (load word)} \\ 
-lw carga en destino, el \textbf{valor} que tiene un registro que tiene un puntero hacia la ram. Solo carga UNA palabra. \\ 
+lw carga en destino, el \textbf{valor} que tiene un registro que tiene un puntero hacia la ram, en caso de que no haya un puntero a la RAM pero si un valor, se pone ese valor como si fuese una posición de memoria en la RAM. Solo carga UNA palabra. \\ 
 \[lw \ destino, \ desplazamiento(registroALeer)\]
 Ejercicio TypeScript: 
 \begin{lstlisting}
@@ -1066,7 +1066,7 @@ Carga en el registro indicado, un puntero a un registro. NO pueden hacerse despl
 \end{lstlisting}
 \subsection*{Escritura en Memoria} 
 Instrucción sw (store word) \\
-sw guarda un contenido dado, en un registro que tiene un puntero hacia la ram. Es decir, pisa el valor.
+sw guarda un contenido dado, en un registro en una posición que esté en ram.
 \[sw \ registroAGuardar, \ desplazamiento(destino)\] 
 Ejercicio TypeScript: 
 \begin{lstlisting}
@@ -1449,7 +1449,7 @@ andi realiza la operación de AND y a ojo podemos ver, que en binario nos queda:
     sw x3, 0(x1) (se desplaza 0 bytes desde x1) -> se coloca el valor de x3 en x1
 \end{lstlisting}
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene el valor de 5. \\
-No, la implementación no es correcta, porque se intenta escribir en x3, un supuesto puntero a la RAM x1, pero x1 es un valor. Esto sería un error grave. \\ 
+Sí, la implementación es correcta. Carga en x3, el valor que tenga la posición \#0x00000005 \\ 
 \begin{lstlisting}
     lw x1, 8(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras (desplaza 8 bytes).
     sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1 (desplaza 0 bytes)
@@ -1457,10 +1457,11 @@ No, la implementación no es correcta, porque se intenta escribir en x3, un supu
 ¿Es correcta esta implementación? Considere que x2 tiene es un registro que tiene un puntero a la RAM, tal que su valor decodificado es 5. \\
 Sí, la implementación es correcta. Porque toma el registro x2 que tiene un puntero a la memoria, lo corre dos palabras y lo almacena en x1. Luego, x1 (que tiene una nueva dirección de memoria a la RAM (puntero)) lo guarda en x3. \\ 
 \begin{lstlisting}
-    lw x1, 256(x2) -> guarda en x1, la posicion de memoria de x2 corrida 2 palabras (desplaza 8 bytes).
-    sw x3, 0(x1) -> almacena el valor de x3 en la posicion de memoria de x1 (desplaza 0 bytes)
+    addi t0, t0, 4
+    addi t1, t1, 5
+    sw t1, 0(t0)
 \end{lstlisting}
-¿Es correcta esta implementación?
+¿Es correcta esta implementación? Sí, guarda el valor de t1(5) en la posición de memoria \#0x00000004 hasta \#0x00000007 inclusive en la RAM
 \subsection*{Desplazamiento de Bits para obtener un Byte particular}
 \label{subsec:desplazamiento_bits}
 Almacene, en un registro cualesquiera el segundo byte del siguiente hexadecimal: \#0x89ABCDEF sabiendo que el valor está en la memoria RAM; indique qué datos son relevantes, y qué mascara utilizará. \\
