@@ -1057,9 +1057,9 @@ Mapa mental: a \( \leftarrow \) b \\
 Carga en el registro indicado, un puntero a un registro. NO pueden hacerse desplazamientos.
 \[la \ registro, \ punteroARegistro\]
 \begin{lstlisting}
-    .data
-        arr: .word 1, 2, 3, 4, 5 #inicializo array. esto se ensambla, y arr se guarda en una posicion de memoria de la ram.
-        n: .word 5 #inicializo la longitud del array. para saber hasta donde poder iterar. esto se ensambla y n se guarda en una posicion de memoria de la ram.
+.data
+    arr: .word 1, 2, 3, 4, 5 #inicializo array. esto se ensambla, y arr se guarda en una posicion de memoria de la ram.
+    n: .word 5 #inicializo la longitud del array. para saber hasta donde poder iterar. esto se ensambla y n se guarda en una posicion de memoria de la ram.
 .text
     la a0, arr #cargo en a0 la posicion de memoria donde esta el array (es decir, el puntero)
     lw a1, n #cargo el valor de n, osea a1 = 5
