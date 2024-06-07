@@ -1186,9 +1186,16 @@ RISC-V tiene su propio registro de stack pointer (sp), donde sp contiene una lis
 
 \subsection*{Reglas de llamada}
 \begin{itemize}
-    \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7)
-    \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar
+    \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7) (porque la función llamada puede manipularlos, y si queremos recuperar el valor no podemos)
+    \item Regla para la llamada: Si va a utilizar los registros permanentes (s0-s11, ra) debe guardarlos al comenzar y restaurarlos antes de retornar (si llega a tocar t0-t6 o a0-a7 no es necesario restablecerlos porque no es su obligación. lo que si debe volver a la normalidad es el stack, ra y s0-s11).
 \end{itemize}
+Esto es importantísimo. Si vamos a usar librerías o cosas así, si no respetamos las convenciones nos va a fallar siempre. \\
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/reglas_llamada.png}
+    \label{fig:reglas_llamada}
+\end{minipage}\]
+Callee Saved: obligaciones de la llamada \\
+Caller Saved: obligaciones de la llamadora 
 \subsection*{Fetch \& Decode \& Execute}
 Es el núcleo del ciclo de instrucciones de un CPU, asegurando que las instrucciones se recuperen de memoria, se interpreten y se ejecuten. \\
 \begin{itemize}
