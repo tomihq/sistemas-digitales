@@ -26,7 +26,8 @@
     breaklines=true,                   % Partir líneas largas automáticamente
     frame=single,                      % Cuadro alrededor del código
     captionpos=b,                      % Poner la leyenda debajo del código
-    morekeywords={add, addi, sub, lui, auipc, 
+    morekeywords={add, 
+    la, addi, sub, lui, auipc, 
     and, andi, or, ori, xor, xori, li, ret
     sll, slli, srl, srli, sra, srai, 
     slt, slti, sltu, sltiu, 
@@ -1197,10 +1198,23 @@ Es el núcleo del ciclo de instrucciones de un CPU, asegurando que las instrucci
     \label{fig:memory_map}
 \end{minipage}\]
 \subsection*{Directivas de ensamblado}
+En la materia vamos a usar, .data, .text, .word. 
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/directivas_ensamblado.png}
     \label{fig:directivas_ensamblado}
 \end{minipage}\]
+\begin{itemize}
+    \item .text: es el código de risc-v compilado cargado en la memoria RAM. Cada etiqueta, al ser compilado pasa a tener una posición en memoria de la instrucción donde comienza ese bloque.
+    \item .data: es la data que vamos usar en nuestro código de risc-v, vive en la memoria RAM. Es posible utilizar etiquetas para esos valores, pero a la hora de usarlos en .text, si colocamos el nombre de la etiqueta en realidad hacemos referencia a la posición de memoria en la RAM donde está ese valor.
+\end{itemize}
+\begin{lstlisting}
+    .data
+        arr: .word 1, 2, 3, 4, 5 #inicializo array. esto se ensambla, y arr se guarda en una posicion de memoria de la ram.
+        n: .word 5 #inicializo la longitud del array. para saber hasta donde poder iterar. esto se ensambla y n se guarda en una posicion de memoria de la ram.
+    .text
+        la a0, arr #cargo en a0 la posicion de memoria donde esta el array (es decir, el puntero)
+        lw a1, n #cargo el valor de n, osea a1 = 5
+\end{lstlisting}
 \subsection*{Inicialización de datos}
 \[\begin{minipage}[b]{0.6\textwidth}
     \includegraphics[width=\linewidth]{assets/inicializacion_datos.png}
