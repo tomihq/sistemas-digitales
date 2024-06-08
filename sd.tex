@@ -1183,7 +1183,12 @@ Véase ejercicio en \hyperref[ejercicio:saltos_condicionales_argumentos]{\underl
 Es una parte de la memoria RAM que se utiliza para almacenar información temporaria. \\ 
 
 RISC-V tiene su propio registro de stack pointer (sp), donde sp contiene una lista de elementos, donde cada elemento es un puntero a la RAM.  \\
-
+\subsection*{Stack frame}
+El Stack Frame es el espacio reservado en cada llamada recursiva para poder mantener el estado de la misma.
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/stack_frame.png}
+    \label{fig:stack_frame}
+\end{minipage}\]
 \subsection*{Reglas de llamada}
 \begin{itemize}
     \item Regla para la llamadora: Antes de llamar debe guardar los valores de los registros temporarios que necesite utilizar al retornar (t0-t6, a0-a7) (porque la función llamada puede manipularlos, y si queremos recuperar el valor no podemos)
