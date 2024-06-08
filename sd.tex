@@ -1196,6 +1196,18 @@ Esto es importantísimo. Si vamos a usar librerías o cosas así, si no respetam
 \end{minipage}\]
 Callee Saved: obligaciones de la llamada \\
 Caller Saved: obligaciones de la llamadora 
+\subsection*{Pseudoinstrucciones}
+Como su nombre lo dice, son una etiqueta que realidad es una composición de operaciones \\
+\[\begin{minipage}[b]{0.6\textwidth}
+    \includegraphics[width=\linewidth]{assets/pseudoinstrucciones.png}
+    \label{fig:pseudoinstrucciones}
+\end{minipage}\]
+Las más importantes
+\begin{itemize}
+    \item j: salta a un label sin guardar retorno.
+    \item jal: salta a una direccion y guarda el retorno.
+    \item ret: vuelve al lugar de donde fue llamado con un jal. 
+\end{itemize}
 \subsection*{Fetch \& Decode \& Execute}
 Es el núcleo del ciclo de instrucciones de un CPU, asegurando que las instrucciones se recuperen de memoria, se interpreten y se ejecuten. \\
 \begin{itemize}
