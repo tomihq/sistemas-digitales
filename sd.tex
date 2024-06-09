@@ -1082,6 +1082,14 @@ Equivale en RISC-V a:
 Mapa mental: a \( \rightarrow \) b \\
 \textbf{Importante: destino, en los casos de lw y sw debe ser un puntero a la RAM y debe haber sido inicializado.} \\
 Véase \hyperref[subsec:punteros_ram_registros]{\underline{anexo}} para ver ejemplos más claros. 
+\subsection*{Position Independent Code}
+El código independiente de su posición significa que todos los branches (saltos) a instrucciones y referencias a datos en un archivo son correctos independientemente de donde sea puesto el código. \\
+Básicamente, cuando no hablamos de posiciones de memoria hardcodeadas a la hora de hacer saltos condicionales, incondicionales o a la hora de escribir en memoria o leer de memoria. \\
+Tener código que NO es position independent code es más propenso a errores porque dependemos de qué esperemos exactamente que lo que estamos cargando tenga lo que nosotros creemos por si dependemos de eso para hacer otra operación. \\
+\begin{itemize}
+    \item beq a0, a1, \#0x12 //position dependent code porque no sé que tiene \#0x12 pero quiza después agrego otra línea y \#0x12 no tiene lo que yo espero para saltar.
+    \item beq a0, a1, fin //position independent code porque el ensamblador se encarga de buscar en memoria donde está el fin y sin importar donde coloque fin en el código, siempre lo encontrará.
+\end{itemize}
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
 
