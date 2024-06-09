@@ -1108,6 +1108,9 @@ Véase \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB p
 Como son operaciones aritmético/lógicas, la unidad de desplazamiento es en bits.
 \begin{itemize}
     \item sll (shift left logical): desplaza a la izquierda tantas unidades como se diga, como es logico se añaden 0's a la derecha.
+    \begin{itemize}
+        \item Ej: slli en una unidad multiplica un número por dos. Ej: 10 (2) y desplazo una unidad a la izquierda el resultado es 100 (4).
+    \end{itemize}
     \item srl (shift right logical): desplaza a la derecha tantas unidades como se diga, como es lógico se añaden 0's a la izquierda.
     \item sra (shift right arithmetic): desplaza a la derecha tantas unidades como se diga, como es aritmético se añade el bit más significativo a la izquierda.
 \end{itemize}
@@ -1763,5 +1766,8 @@ La asignación no bloqueante de d en q se hace cuando ocurre el evento posedge c
     \item El clock cambia de estado. 
     \item Al no haber un salto condicional, PCNext está vacío e incrementa el PC actual 4 bytes (1 palabra) (ordenado por la unidad de control) para leer la instrucción. En este caso, termina el programa. 
 \end{itemize}
+
+\section*{Anexo - Preguntas Teóricas para el parcial}
+
 
 \end{document}
