@@ -1505,7 +1505,7 @@ Datos: \#89ABCDEF \\
 Sé que cada dígito hexadecimal son 4 bits, por lo tanto, si tengo que sacar el segundo byte: 4 + 4 = 8 bits (1 byte) por lo tanto tengo que sacar CD pues (4 + 4 + 4 + 4 = 16 $ \equiv $ 2 bytes) \\
 Sé que como CD debo llevarlo a los más significativos, aplico un srli 8 bits a la derecha.
 Sé tambien que si el valor es una posición de memoria en la RAM, voy a tener que usar li pues necesito cargarlo desde la memoria principal (RAM). \\
-Tengo que utilizar la máscara 0xFF (Rdo que al ser 32 bits, los últimos 8 son 1) con (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
+Tengo que utilizar la máscara 0x000000FF (Rdo que al ser 32 bits, los últimos 8 son 1) con (\#11111111) con un and pues necesito aislar los bytes que me interesan. \\
 ¿Por qué una máscara? porque una máscara se utiliza para seleccionar ciertos bits, descartando los que no necesitamos. Las máscaras las aplicamos haciendo operaciones lógicas bit a bit como AND, OR, XOR, NOT, entre otras.
 Código en RISC-V
 \begin{lstlisting}
