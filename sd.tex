@@ -1144,19 +1144,17 @@ Como hablamos de desplazamiento y byte en particular, sabemos que tendremos que 
 Esto es súper útil en el ámbito de procesamiento de gráficos donde se debe cambiar la intensidad de un color, aplicar filtros o analizar la composición de colores en una imagen. \\
 
 Un ejemplo para ponernos en contexto sería la forma de expresar los RGB colors con hexadecimal es decir, \#RRGGBB. \\
-¿Cómo es que hacemos este proceso de $"$extraer un byte$"$? Consideremos que tenemos el color RGB \#0xFF0044 donde como anteriormente mencionamos, solo nos interesa \#FF0044 y en este caso en particular: 00. \\
-Datos: 
-var = \#FF0044 
+¿Cómo es que hacemos este proceso de $"$extraer un byte$"$? Consideremos que tenemos el color RGB \#0xFF3344 donde como anteriormente mencionamos, solo nos interesa \#FF3344 y en este caso en particular: 33. \\
 \begin{itemize}
     \item Desplazamos la cantidad de bits necesarias para que el valor que queramos esté en los menos significativos.
     \begin{itemize}
-        \item En este caso particular, tenemos que hacer un desplazamiento desde el 00 unos 8 bits (4 bits cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
-        \item El resultado es t0 = 0x00FF00
+        \item En este caso particular, tenemos que hacer un desplazamiento desde el 33 unos 8 bits (4 bits cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
+        \item El resultado es t0 = 0x00FF33
     \end{itemize}
-    \item Aplicamos la máscara de 0xFF y guardamos el resultado
+    \item Aplicamos la máscara de 0x33 (0x33333333 - extendido con MSB) y guardamos el resultado
     \begin{itemize}
-        \item En este caso particular, tenemos andi s2, t0, 0xFF.
-        \item Luego, s2 tiene el valor de 00 (la intensidad del verde)
+        \item En este caso particular, tenemos andi s2, t0, 0x33.
+        \item Luego, s2 tiene el valor de 0x33 (la intensidad del verde)
     \end{itemize}
 \end{itemize} 
 Véase \hyperref[subsec:desplazamiento_bits]{\underline{anexo}} para más ejemplos de desplazamiento con bits.
