@@ -1093,8 +1093,6 @@ Tener código que NO es position independent code es más propenso a errores por
 \subsection*{Máscaras}
 Una máscara es un valor binario que se utiliza para seleccionar, filtrar o modificar bits específicos dentro de un registro durante operaciones de manipulación de bits. Las máscaras se aplican en conjunto con operaciones lógicas. \\
 
-Un ejemplo, utilizando la máscara \#0x00 $\rightarrow$ \#0x001010 AND \#0x00 = \#0x000000 \\
-
 Si bien este es un ejemplo que deja mucho que desear, véase la sección de \hyperref[subsec:byte_particular_desplazamiento]{\underline{colores RGB para obtener un color en particular.}}
 \subsection*{Instrucciones lógicas en RISC V}
 Sean dos registros cualesquiera, las operaciones lógicas se hacen bit a bit. Su uso viene combinado con máscaras. \\
@@ -1145,13 +1143,14 @@ Esto es súper útil en el ámbito de procesamiento de gráficos donde se debe c
 
 Un ejemplo para ponernos en contexto sería la forma de expresar los RGB colors con hexadecimal es decir, \#RRGGBB. \\
 ¿Cómo es que hacemos este proceso de $"$extraer un byte$"$? Consideremos que tenemos el color RGB \#0xFF3344 donde como anteriormente mencionamos, solo nos interesa \#FF3344 y en este caso en particular: 33. \\
+\textbf{Importantísimo}: Escriban las máscaras con todos los bytes, no dejen a RISC-V en decidir si extenderlo o no porque a veces lo extiende con el MSB y no nos sirve.
 \begin{itemize}
     \item Desplazamos la cantidad de bits necesarias para que el valor que queramos esté en los menos significativos.
     \begin{itemize}
         \item En este caso particular, tenemos que hacer un desplazamiento desde el 33 unos 8 bits (4 bits cada dígito en hexa) $ \rightarrow $ srli t0, var, 8
         \item El resultado es t0 = 0x00FF33
     \end{itemize}
-    \item Aplicamos la máscara de 0x33 (0x33333333 - extendido con MSB) y guardamos el resultado
+    \item Aplicamos la máscara de 0x33 (0x00000033) y guardamos el resultado
     \begin{itemize}
         \item En este caso particular, tenemos andi s2, t0, 0x33.
         \item Luego, s2 tiene el valor de 0x33 (la intensidad del verde)
