@@ -1001,7 +1001,7 @@ Nota: los valores que toman las operaciones no pueden ser de 32 bits porque la o
 \subsection*{Valores inmediatos}
 Son valores constantes que se utilizan como operandos. Se encuentran disponibles en la misma instrucción y no hace falta recuperar su valor a partir de un registro o desde la memoria. \\
 El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefijo 0b). \\
-\textbf{Los valores inmediatos son de 12 bits y se extiende con el bit de signo a 32 bits antes de operar.}
+\textbf{Los valores inmediatos son de 12 bits (si llegase a ser menor de 12 bits, se extiende con 0's del lado del bit más significativo) y se extiende con el bit de signo a 32 bits antes de operar.}
 \begin{itemize}
     \item \# s0 = a, s1 = b
     \item \(addi \ s0,\ s0,\ 4\) \# a = a + 4
@@ -1009,6 +1009,10 @@ El valor puede escribirse en decimal, hexadecimal (prefijo 0x) o binario (prefij
 \end{itemize}
 En este caso, el 4 y el -12 son extendidos a 32 bits para poder operar. \\ 
 \textbf{Ojo: cuando el número inmediato a representar no está en el rango de [-2048, 2047] ($2^{11} \ o \ 12 \ bits$) las operaciones deben realizar un addi y un lui (load upper immediate).} \\
+\begin{itemize}
+    \item addi t0, t0, 0xFF $ \rightarrow $ como FF son 8 bits, se extiende a 12 0x0FF. Ahora como ya es de 12 bits, extiende a 32 por signo $ \rightarrow $ 0x000000FF
+    \item addi t0, t0, 0xFF $ \rightarrow $ como FFF son 12 bits, se extiende a 32 por signo $ \rightarrow $ 0xFFFFFFFF
+\end{itemize}
 Véase ejercicio en \hyperref[subsec:TPRVC]{\underline{anexo}}
 
 \subsection*{Asignación}
