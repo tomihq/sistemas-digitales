@@ -1090,7 +1090,7 @@ Pero, ¿qué pasa en este caso?
         lh t1, 0(t0)
 \end{lstlisting}
 Acá es realmente importante notar, que como una half-word no son 32 bits, RISC-V debe extender el valor para operar antes. Por lo que, cargar 0x81BC como half-word guardaría en el registro t1 el valor de 0xFFFF81BC. Nótese que completa con F pues como el MSB de 8 (1000), una cadena de 4 bits de 1 forma F. \\
-Sabiendo esto, ¿qué pasará a la hora de querer cargar bytes?
+Sabiendo esto, ¿qué pasará a la hora de querer cargar bytes? \\
 \textbf{Cargando Bytes}
 \begin{lstlisting}
     .data
@@ -1151,13 +1151,18 @@ Como son operaciones aritmético/lógicas, la unidad de desplazamiento es en bit
 \begin{itemize}
     \item sll (shift left logical): desplaza a la izquierda tantas unidades como se diga, como es logico se añaden 0's a la derecha.
     \begin{itemize}
-        \item Ej: slli en una unidad multiplica un número por dos. Ej: 10 (2) y desplazo una unidad a la izquierda el resultado es 100 (4).
+        \item Ej: slli en una unidad multiplica un número por dos. 
+        010 (2) y desplazo una unidad a la izquierda el resultado es 100 (4).
     \end{itemize}
     \item srl (shift right logical): desplaza a la derecha tantas unidades como se diga, como es lógico se añaden 0's a la izquierda.
     \begin{itemize}
-        \item Ej: srli en una unidad divide un número por dos. Ej: 10 (2) y desplazo una unidad a la derecha el resultado es 01 (1).
+        \item Ej: srli en una unidad divide un número por dos (no conserva signo)
+        100 (4) y desplazo una unidad a la derecha el resultado es 010 (2)
     \end{itemize}
     \item sra (shift right arithmetic): desplaza a la derecha tantas unidades como se diga, como es aritmético se añade el bit más significativo a la izquierda.
+    \begin{itemize}
+        \item Ej: srai en una unidad divide un número por dos (conservando signo)
+    \end{itemize}
 \end{itemize}
 Nota: También existen las versiones de estas operaciones con el immediate (i) para usar una constante.
 \begin{table}[h!]
