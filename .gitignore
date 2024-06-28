@@ -38,3 +38,4 @@
 !.keep
 !.gitignore
 !*.pdf
+!*.circ
