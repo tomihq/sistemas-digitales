@@ -1228,7 +1228,9 @@ En RISC V la función llamadora puede utilizar los registros del a0 hasta a7 par
 
 La función llamada no debe interferir con el estado de la función llamadora, es decir, debe respetar los valores de los registros (s0 a s11) y el registro ra (dirección de retorno). \\
 
-El stack de la función llamadora debe mantenerse invariante al ingresar a la función llamada.
+El stack de la función llamadora debe mantenerse invariante al ingresar a la función llamada. \\
+
+Llamamos función a toda etiqueta que es llamada a través de saltos incondicionales.
 \subsection*{Llamando funciones \& enviando parámetros}
 Los inicializamos en la función llamadora, y luego en la función llamada simplemente accedemos a ellos. \\ 
 Véase ejercicio en \hyperref[ejercicio:saltos_condicionales_argumentos]{\underline{anexo}}
@@ -1253,7 +1255,8 @@ Esto es importantísimo. Si vamos a usar librerías o cosas así, si no respetam
     \label{fig:reglas_llamada}
 \end{minipage}\]
 Callee Saved: obligaciones de la llamada \\
-Caller Saved: obligaciones de la llamadora 
+Caller Saved: obligaciones de la llamadora \\
+\textbf{Importante}: Si no va a utilizar funciones (es decir, considere función cuando utiliza un salto incondicional hacia una etiqueta) no es necesario respetar ninguna convención, sin embargo, considere no abusar de los registros.
 \subsection*{Pseudoinstrucciones}
 Como su nombre lo dice, son una etiqueta que realidad es una composición de operaciones \\
 \[\begin{minipage}[b]{0.6\textwidth}
