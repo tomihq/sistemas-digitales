@@ -1038,9 +1038,10 @@ Véase \hyperref[subsec:valores_inmediatos_32_bits]{anexo} para un ejemplo de es
     \includegraphics[width=\linewidth]{assets/valores_inmediatos_neg.png}
     \label{fig:valores_neg}
 \end{minipage}\]
-Cuando dice que la parte baja se expresa como un número negativo ¿está tratando de decir que el valor inmediato de la suma es -1657?
+\subsection*{Instrucciones Sin Signo}
+Figuran al final de la instrucción con la letra $u$ que indica \textbf{unsigned}.
 \subsection*{Memoria}
-Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. \\
+Se estructura y se accede como si fuera un arreglo de elementos de 32 bits (4 bytes). El acceso a memoria es significativamente más lento que el acceso a registros pero nos permite guardar más data. 
 \subsection*{Lectura en Memoria} 
 \textbf{Instrucción lw (load word)} \\ 
 lw carga en destino, el \textbf{valor} que tiene un registro que tiene un puntero hacia la ram, en caso de que no haya un puntero a la RAM pero si un valor, se pone ese valor como si fuese una posición de memoria en la RAM. Solo carga UNA palabra. \\ 
@@ -1068,6 +1069,37 @@ Carga en el registro indicado, un puntero a un registro. NO pueden hacerse despl
         la a0, arr #cargo en a0 la posicion de memoria donde esta el array (es decir, el puntero)
         lw a1, n #cargo el valor de n, osea a1 = 5
 \end{lstlisting}
+\subsection*{Lectura en Memoria en Half-Words y Bytes}
+Además de poder cargar words (palabras) podemos cargar half-words y bytes. ¿Para qué necesitamos esto? Bueno, en muchas ocasiones la información viene de esa manera.
+Recordemos el por qué cargabamos words:
+\begin{lstlisting}
+    .data
+        arr: .word 0x11111111 0x22222222 0x33333333
+    .text
+        la t0, arr 
+        lw t1, 0(t0)
+\end{lstlisting}
+En este caso, cargamos la primera palabra de t0 que, en este caso es 0x11111111. \\
+\textbf{Cargando Half-Words}
+Pero, ¿qué pasa en este caso? 
+\begin{lstlisting}
+    .data
+        arr: .half 0x81BC 0x00F0 0xA200 0x1000
+    .text
+        la t0, arr
+        lh t1, 0(t0)
+\end{lstlisting}
+Acá es realmente importante notar, que como una half-word no son 32 bits, RISC-V debe extender el valor para operar antes. Por lo que, cargar 0x81BC como half-word guardaría en el registro t1 el valor de 0xFFFF81BC. Nótese que completa con F pues como el MSB de 8 (1000), una cadena de 4 bits de 1 forma F. \\
+Sabiendo esto, ¿qué pasará a la hora de querer cargar bytes?
+\textbf{Cargando Bytes}
+\begin{lstlisting}
+    .data
+        arr: .byte 0x2C 0xF0 0x00 0x00
+    .text
+        la t0, arr
+        lb t1, 0(t0)
+\end{lstlisting}
+Como claramente cargar un byte no son 32 bits, sino que solamente tenemos 8, RISC-V extenderá el valor antes de usarlo para operar. Luego, cargará en t1 el valor de 0x0000002C. Nótese que completa con 0s pues el MSB de 2 (0010) es 0.
 \subsection*{Escritura en Memoria} 
 Instrucción sw (store word) \\
 sw guarda un contenido dado, en un registro en una posición que esté en ram.
